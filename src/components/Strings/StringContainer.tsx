@@ -1,10 +1,12 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import Button from '../Button';
 
 const StringContainer: FC = function String() {
   const params = useParams();
   const [string, setString] = useState<any>({});
+  const [isEditMode, setIsEditMode] = useState(true);
   const user = useUser();
 
   useEffect(() => {
@@ -18,15 +20,39 @@ const StringContainer: FC = function String() {
     (id: string) => id === params.stringId,
   );
 
+  const editButtonHandler = () => setIsEditMode(true);
+
+  const deleteButtonHandler = () => {};
+
   return (
     <div>
-      {isCurrentUserAuthor && <p>you are the author of this string</p>}
-      <String title={string.title} content={string.content} />
-      {string.knots.map((knot) => {
-        <div key={knot.id}>
-          <Knot id={knot.id} />
-        </div>;
-      })}
+      {isCurrentUserAuthor && (
+        <div>
+          <p>you are the author of this string</p>
+          <Button
+            textContent="Edit"
+            type="button"
+            clickHandler={editButtonHandler}
+          />
+          <Button
+            textContent="Delete"
+            type="button"
+            clickHandler={deleteButtonHandler}
+          />
+        </div>
+      )}
+      {isEditMode ? (
+        <StringEdit data={string} />
+      ) : (
+        <div>
+          <String title={string.title} content={string.content} />
+          {string.knots.map((knot) => {
+            <div key={knot.id}>
+              <Knot id={knot.id} />
+            </div>;
+          })}
+        </div>
+      )}
     </div>
   );
 };
