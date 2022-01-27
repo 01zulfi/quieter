@@ -29,6 +29,9 @@
         "import/extensions": ["error", "ignorePackages", { "ts": "never", "tsx": "never" } ],
         "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-        "implicit-arrow-linebreak": 0
+        "implicit-arrow-linebreak": 0,
+        "object-curly-newline": ["error", {
+            "ObjectPattern": {"multiline": true}
+          }]
     }
 }
