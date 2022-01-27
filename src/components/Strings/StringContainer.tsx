@@ -2,11 +2,12 @@ import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import Button from '../Button';
+import String from './String';
 
-const StringContainer: FC = function String() {
+const StringContainer: FC = function StringContainer() {
   const params = useParams();
   const [string, setString] = useState<any>({});
-  const [isEditMode, setIsEditMode] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
   const user = useUser();
 
   useEffect(() => {
