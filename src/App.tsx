@@ -1,5 +1,7 @@
 import React, { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Routes, Route } from 'react-router-dom';
+import UserProvider from './context/UserContext';
+import StringContainer from './components/Strings/StringContainer';
 import firebase from './utils/firebase';
 
 const App: FC = function App() {
@@ -14,7 +16,16 @@ const App: FC = function App() {
     return null;
   }
 
-  return <div>signed in</div>;
+  return (
+    <UserProvider>
+      <Routes>
+        <Route
+          path="box/:boxId/string/:stringId"
+          element={<StringContainer />}
+        />
+      </Routes>
+    </UserProvider>
+  );
 };
 
 export default App;
