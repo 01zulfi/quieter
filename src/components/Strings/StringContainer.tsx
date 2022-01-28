@@ -4,6 +4,7 @@ import { useUser } from '../../context/UserContext';
 import StringContext from '../../context/StringContext';
 import Button from '../Button';
 import String from './String';
+import StringEdit from './StringEdit';
 
 const StringContainer: FC = function StringContainer() {
   const params = useParams();
@@ -49,11 +50,11 @@ const StringContainer: FC = function StringContainer() {
         ) : (
           <div>
             <String />
-            {string.knots.map((knot) => {
-              <div key={knot.id}>
-                <Knot id={knot.id} />
-              </div>;
-            })}
+            {string.knots.map((knotId: string) => (
+              <div key={knotId}>
+                <Knot id={knotId} />
+              </div>
+            ))}
           </div>
         )}
       </StringContext.Provider>
