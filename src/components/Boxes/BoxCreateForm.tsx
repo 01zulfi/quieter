@@ -23,7 +23,7 @@ const BoxCreateForm: FC = function BoxCreateForm() {
     <div>
       {isSubmitted ? (
         <div>
-          <h1>Success! Your string has started.</h1>
+          <h1>Success! The box has been created.</h1>
         </div>
       ) : (
         <form onSubmit={submitHandler}>
