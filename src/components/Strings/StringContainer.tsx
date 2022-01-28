@@ -5,6 +5,8 @@ import StringContext from '../../context/StringContext';
 import Button from '../Button';
 import String from './String';
 import StringEdit from './StringEdit';
+import Knot from '../Knots/Knot';
+import KnotCreate from '../Knots/KnotCreate';
 
 const StringContainer: FC = function StringContainer() {
   const params = useParams();
@@ -55,6 +57,7 @@ const StringContainer: FC = function StringContainer() {
                 <Knot id={knotId} />
               </div>
             ))}
+            <KnotCreate />
           </div>
         )}
       </StringContext.Provider>
