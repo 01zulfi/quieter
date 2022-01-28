@@ -1,15 +1,13 @@
 import React, { FC } from 'react';
+import { useString } from '../../context/StringContext';
 
-interface StringProps {
-  title: string;
-  content: string;
-}
+const String: FC = function String() {
+  const string = useString();
 
-const String: FC<StringProps> = function String({ title, content }) {
   return (
     <section>
-      <h2>{title}</h2>
-      <p>{content}</p>
+      <h2>{string.title}</h2>
+      <p>{string.content}</p>
     </section>
   );
 };
