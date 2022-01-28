@@ -5,14 +5,17 @@ import '@testing-library/jest-dom';
 import StringCreateForm from '../../components/Strings/StringCreateForm';
 
 describe('tests StringCreateForm component', () => {
-  test('textarea has correct values', () => {
+  test('textarea and input has correct values', () => {
     const { getByPlaceholderText } = render(<StringCreateForm />);
+    const input = getByPlaceholderText('give a title to your string');
     const textarea = getByPlaceholderText(
-      'start a string by writing something here',
+      'populate your string with content by writing something here',
     );
 
+    userEvent.type(input, 'test{space}title');
     userEvent.type(textarea, 'this{space}is{space}a{space}test');
 
+    expect(input).toHaveValue('test title');
     expect(textarea).toHaveValue('this is a test');
   });
 
