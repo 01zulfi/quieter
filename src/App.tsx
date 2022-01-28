@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import UserProvider from './context/UserContext';
 import StringContainer from './components/Strings/StringContainer';
+import BoxContainer from './components/Boxes/BoxContainer';
 import firebase from './utils/firebase';
 
 const App: FC = function App() {
@@ -23,6 +24,7 @@ const App: FC = function App() {
           path="box/:boxId/string/:stringId"
           element={<StringContainer />}
         />
+        <Route path="box/:boxId" element={<BoxContainer />} />
       </Routes>
     </UserProvider>
   );
