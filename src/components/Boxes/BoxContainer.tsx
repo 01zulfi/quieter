@@ -2,6 +2,8 @@ import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import BoxContext from '../../context/BoxContext';
+import BoxAdminView from './BoxAdminView';
+import Button from '../Button';
 
 const BoxContainer: FC = function BoxContainer() {
   const params = useParams();
@@ -22,8 +24,13 @@ const BoxContainer: FC = function BoxContainer() {
   return (
     <div>
       <BoxContext.Provider value={box}>
-        {isCurrentUserAdmin && <p>you are the admin of this box</p>}
-        <Box />
+        {isCurrentUserAdmin && <BoxAdminView />}
+        <BoxRegularView />
+        <Button
+          type="button"
+          textContent="Start a string here"
+          clickHandler={() => {}}
+        />
       </BoxContext.Provider>
     </div>
   );
