@@ -5,11 +5,11 @@ import BoxContext from '../../context/BoxContext';
 import BoxAdminView from './BoxAdminView';
 import BoxRegularView from './BoxRegularView';
 import StringCreateModal from '../Strings/StringCreateModal';
-import Button from '../Button';
 
 const BoxContainer: FC = function BoxContainer() {
   const params = useParams();
   const [box, setBox] = useState<any>({});
+  const [hasStrings, setHasStrings] = useState(false);
   const [showStringCreateModal, setShowStringCreateModal] = useState(false);
   const user = useUser();
 
@@ -17,6 +17,7 @@ const BoxContainer: FC = function BoxContainer() {
     (async () => {
       const fetchBox = await firebase.getBox(params.boxId);
       setBox(fetchBox);
+      setHasStrings(fetchBox.hasStrings);
     })();
   }, []);
 
@@ -36,11 +37,15 @@ const BoxContainer: FC = function BoxContainer() {
         {showStringCreateModal && (
           <StringCreateModal closeModal={onCloseModal} />
         )}
-        <Button
-          type="button"
-          textContent="Start a string here"
-          clickHandler={() => {}}
-        />
+        {hasStrings ? (
+          <section>
+            {box.associatedStrings.map((stringId: string) => (
+              <StringCompactView stringId={stringId} />
+            ))}
+          </section>
+        ) : (
+          <div>this box has no strings</div>
+        )}
       </BoxContext.Provider>
     </div>
   );
