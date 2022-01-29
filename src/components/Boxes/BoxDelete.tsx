@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useBox } from '../../context/BoxContext';
+import firebase from '../../utils/firebase';
 import Button from '../Button';
 
 const BoxDelete: FC = function BoxDelete() {

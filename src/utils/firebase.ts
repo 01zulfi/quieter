@@ -1,5 +1,7 @@
 const isUserSignedIn = (): boolean => false;
 
-const firebase = { isUserSignedIn };
+const deleteBox = () => {};
+
+const firebase = { isUserSignedIn, deleteBox };
 
 export default firebase;
