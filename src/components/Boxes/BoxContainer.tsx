@@ -25,12 +25,16 @@ const BoxContainer: FC = function BoxContainer() {
 
   const onCreateStringClick = (): void => setShowStringCreateModal(true);
 
+  const onCloseModal = (): void => setShowStringCreateModal(false);
+
   return (
     <div>
       <BoxContext.Provider value={box}>
         {isCurrentUserAdmin && <BoxAdminView />}
         <BoxRegularView onButtonClick={onCreateStringClick} />
-        {showStringCreateModal && <StringCreateModal />}
+        {showStringCreateModal && (
+          <StringCreateModal closeModal={onCloseModal} />
+        )}
         <Button
           type="button"
           textContent="Start a string here"
