@@ -5,6 +5,7 @@ import BoxContext from '../../context/BoxContext';
 import BoxAdminView from './BoxAdminView';
 import BoxRegularView from './BoxRegularView';
 import StringCreateModal from '../Strings/StringCreateModal';
+import StringCompactView from '../Strings/StringCompactView';
 
 const BoxContainer: FC = function BoxContainer() {
   const params = useParams();
