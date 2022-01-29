@@ -3,11 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import BoxContext from '../../context/BoxContext';
 import BoxAdminView from './BoxAdminView';
+import BoxRegularView from './BoxRegularView';
 import Button from '../Button';
 
 const BoxContainer: FC = function BoxContainer() {
   const params = useParams();
   const [box, setBox] = useState<any>({});
+  const [showStringCreateModal, setShowStringCreateModal] = useState(false);
   const user = useUser();
 
   useEffect(() => {
@@ -21,11 +23,14 @@ const BoxContainer: FC = function BoxContainer() {
     (id: string) => id === params.boxId,
   );
 
+  const onCreateStringClick = (): void => setShowStringCreateModal(true);
+
   return (
     <div>
       <BoxContext.Provider value={box}>
         {isCurrentUserAdmin && <BoxAdminView />}
-        <BoxRegularView />
+        <BoxRegularView onButtonClick={onCreateStringClick} />
+        {showStringCreateModal && <StringCreateModal />}
         <Button
           type="button"
           textContent="Start a string here"
