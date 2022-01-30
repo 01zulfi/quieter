@@ -10,7 +10,9 @@ const Feed: FC = function Feed() {
   return (
     <section>
       {strings.map((stringId: string) => (
-        <StringCompactView stringId={stringId} />
+        <div key={stringId}>
+          <StringCompactView stringId={stringId} />
+        </div>
       ))}
     </section>
   );
