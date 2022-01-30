@@ -6,6 +6,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  deleteDoc,
 } from 'firebase/firestore';
 import uniqueId from './unique-id';
 
@@ -104,8 +105,6 @@ const getString = async (stringId: string) => {
 };
 
 const createString = async (
-  // TODO: add authoredString, associatedString in "users"
-  // TODO: add associatedUsers in "strings"
   boxId: string,
   { title, content }: { title: string; content: string },
 ) => {
@@ -121,6 +120,19 @@ const createString = async (
   };
 
   await setDoc(doc(db, 'strings', id), stringData);
+
+  const userRef = doc(db, 'users', userId);
+
+  await updateDoc(userRef, {
+    authoredStrings: arrayUnion(id),
+    associatedStrings: arrayUnion(id),
+  });
+
+  const boxRef = doc(db, 'boxes', 'boxId');
+
+  await updateDoc(boxRef, {
+    associatedStrings: arrayUnion(id),
+  });
 };
 
 const editString = async (
@@ -135,10 +147,46 @@ const editString = async (
   });
 };
 
+const deleteString = async (stringId: string) => {
+  const stringRef = doc(db, 'strings', stringId);
+  // TODO: delete from authoredStrings associatedStrings in 'users'
+  // delete associatedKnots
+  // remove from associatedStrings in 'boxes
+  await deleteDoc(stringRef);
+};
+
+const getKnot = async (knotId: string) => {
+  const knotRef = doc(db, 'knots', knotId);
+  const knotSnap = await getDoc(knotRef);
+  return knotSnap.data();
+};
+
+const createKnot = async (
+  stringId: string,
+  { content }: { content: string },
+) => {
+  const id = uniqueId();
+  const knotData = {
+    associatedString: stringId,
+    content,
+    author: userId,
+    id,
+  };
+
+  await setDoc(doc(db, 'knots', id), knotData);
+
+  const stringRef = doc(db, 'strings', stringId);
+
+  await updateDoc(stringRef, {
+    associatedKnots: arrayUnion(id),
+  });
+};
+
 const firebase = {
   getString,
   createString,
   editString,
+  deleteString,
   getBox,
   joinBox,
   leaveBox,
@@ -146,6 +194,8 @@ const firebase = {
   deleteBox,
   editBox,
   getBoxStrings,
+  getKnot,
+  createKnot,
 };
 
 export default firebase;
