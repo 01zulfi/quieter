@@ -72,6 +72,31 @@ const createBox = async ({
   });
 };
 
+const deleteBox = async () => {
+  // delete box
+  // delete from adminBoxes joinedBoxes in 'users'
+  // delete strings
+  // delete knots
+  // delete relevant fields in 'users'
+};
+
+const editBox = async (
+  boxId: string,
+  { name, description }: { name: string; description: string },
+) => {
+  const boxRef = doc(db, 'boxes', boxId);
+
+  await updateDoc(boxRef, {
+    name,
+    description,
+  });
+};
+
+const getBoxStrings = async (boxId: string) => {
+  const box = await getBox(boxId);
+  return box?.associatedStrings;
+};
+
 const getString = async (stringId: string) => {
   const stringRef = doc(db, 'strings', stringId);
   const stringSnap = await getDoc(stringRef);
@@ -118,6 +143,9 @@ const firebase = {
   joinBox,
   leaveBox,
   createBox,
+  deleteBox,
+  editBox,
+  getBoxStrings,
 };
 
 export default firebase;
