@@ -6,6 +6,7 @@ import BoxAdminView from './BoxAdminView';
 import BoxRegularView from './BoxRegularView';
 import StringCreateModal from '../Strings/StringCreateModal';
 import StringCompactView from '../Strings/StringCompactView';
+import Button from '../Button';
 
 const BoxContainer: FC = function BoxContainer() {
   const params = useParams();
@@ -26,7 +27,14 @@ const BoxContainer: FC = function BoxContainer() {
     (id: string) => id === params.boxId,
   );
 
+  const isUserMember = user.joinedBoxes.some(
+    (id: string) => id === params.boxId,
+  );
+
   const onCreateStringClick = (): void => setShowStringCreateModal(true);
+
+  const onJoinButtonClick = async () => await firebase.joinBox(params.boxId);
+  const onLeaveButtonClick = async () => await firebase.leaveBox(params.boxId);
 
   const onCloseModal = (): void => setShowStringCreateModal(false);
 
@@ -34,10 +42,27 @@ const BoxContainer: FC = function BoxContainer() {
     <div>
       <BoxContext.Provider value={box}>
         {isCurrentUserAdmin && <BoxAdminView />}
+
         <BoxRegularView onButtonClick={onCreateStringClick} />
+
+        {isUserMember ? (
+          <Button
+            type="button"
+            textContent="Leave box"
+            clickHandler={onLeaveButtonClick}
+          />
+        ) : (
+          <Button
+            textContent="Join Box"
+            type="button"
+            clickHandler={onJoinButtonClick}
+          />
+        )}
+
         {showStringCreateModal && (
           <StringCreateModal closeModal={onCloseModal} />
         )}
+
         {hasStrings ? (
           <section>
             {box.associatedStrings.map((stringId: string) => (
