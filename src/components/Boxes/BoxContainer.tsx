@@ -41,7 +41,9 @@ const BoxContainer: FC = function BoxContainer() {
         {hasStrings ? (
           <section>
             {box.associatedStrings.map((stringId: string) => (
-              <StringCompactView stringId={stringId} />
+              <div key={stringId}>
+                <StringCompactView stringId={stringId} />
+              </div>
             ))}
           </section>
         ) : (
