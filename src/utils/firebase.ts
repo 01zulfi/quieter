@@ -20,17 +20,55 @@ const getBox = async (boxId: string) => {
 
 const joinBox = async (boxId: string) => {
   const boxRef = doc(db, 'boxes', boxId);
+  const userRef = doc(db, 'users', userId);
 
   await updateDoc(boxRef, {
     joinedUsers: arrayUnion(userId),
+  });
+
+  await updateDoc(userRef, {
+    joinedBoxes: arrayUnion(boxId),
   });
 };
 
 const leaveBox = async (boxId: string) => {
   const boxRef = doc(db, 'boxes', boxId);
+  const userRef = doc(db, 'users', userId);
 
   await updateDoc(boxRef, {
     joinedUsers: arrayRemove(userId),
+  });
+
+  await updateDoc(userRef, {
+    joinedBoxes: arrayRemove(boxId),
+  });
+};
+
+const createBox = async ({
+  name,
+  description,
+}: {
+  name: string;
+  description: string;
+}) => {
+  const id = uniqueId();
+  const boxData = {
+    admin: userId,
+    id,
+    name,
+    description,
+    hasStrings: false,
+    joinedUsers: [userId],
+    joinedUsersCount: 1,
+  };
+
+  await setDoc(doc(db, 'boxes', id), boxData);
+
+  const userRef = doc(db, 'users', userId);
+
+  await updateDoc(userRef, {
+    adminBoxes: arrayUnion(id),
+    joinedBoxes: arrayUnion(id),
   });
 };
 
@@ -79,6 +117,7 @@ const firebase = {
   getBox,
   joinBox,
   leaveBox,
+  createBox,
 };
 
 export default firebase;
