@@ -4,6 +4,7 @@ import UserProvider from './context/UserContext';
 import StringContainer from './components/Strings/StringContainer';
 import BoxContainer from './components/Boxes/BoxContainer';
 import Navbar from './components/Navbar';
+import Feed from './components/Feed';
 import firebase from './utils/firebase';
 
 const App: FC = function App() {
@@ -22,6 +23,7 @@ const App: FC = function App() {
     <UserProvider>
       <Routes>
         <Route path="*" element={<Navbar />} />
+        <Route path="home" element={<Feed />} />
         <Route
           path="box/:boxId/string/:stringId"
           element={<StringContainer />}
