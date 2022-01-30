@@ -33,8 +33,13 @@ const BoxContainer: FC = function BoxContainer() {
 
   const onCreateStringClick = (): void => setShowStringCreateModal(true);
 
-  const onJoinButtonClick = async () => await firebase.joinBox(params.boxId);
-  const onLeaveButtonClick = async () => await firebase.leaveBox(params.boxId);
+  const onJoinButtonClick = async () => {
+    await firebase.joinBox(params.boxId);
+  };
+
+  const onLeaveButtonClick = async () => {
+    await firebase.leaveBox(params.boxId);
+  };
 
   const onCloseModal = (): void => setShowStringCreateModal(false);
 
