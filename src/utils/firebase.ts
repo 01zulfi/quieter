@@ -4,6 +4,8 @@ import {
   setDoc,
   getFirestore,
   updateDoc,
+  arrayUnion,
+  arrayRemove,
 } from 'firebase/firestore';
 import uniqueId from './unique-id';
 
@@ -14,6 +16,22 @@ const getBox = async (boxId: string) => {
   const boxRef = doc(db, 'boxes', boxId);
   const boxSnap = await getDoc(boxRef);
   return boxSnap.data();
+};
+
+const joinBox = async (boxId: string) => {
+  const boxRef = doc(db, 'boxes', boxId);
+
+  await updateDoc(boxRef, {
+    joinedUsers: arrayUnion(userId),
+  });
+};
+
+const leaveBox = async (boxId: string) => {
+  const boxRef = doc(db, 'boxes', boxId);
+
+  await updateDoc(boxRef, {
+    joinedUsers: arrayRemove(userId),
+  });
 };
 
 const getString = async (stringId: string) => {
@@ -59,6 +77,8 @@ const firebase = {
   createString,
   editString,
   getBox,
+  joinBox,
+  leaveBox,
 };
 
 export default firebase;
