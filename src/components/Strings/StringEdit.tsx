@@ -17,7 +17,7 @@ const StringEdit: FC = function StringEdit() {
   const onFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // TODO: navigate to string route after updating
-    await firebase.updateString(string.id, { title, content });
+    await firebase.editString(string.id, { title, content });
   };
 
   return (
