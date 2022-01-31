@@ -2,8 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import firebase from '../../utils/firebase';
 import BoxDelete from '../../components/Boxes/BoxDelete';
+
+const mockFn = jest.fn();
 
 jest.mock('../../context/BoxContext', () => ({
   useBox: () => ({
@@ -11,7 +12,9 @@ jest.mock('../../context/BoxContext', () => ({
   }),
 }));
 
-const spy = jest.spyOn(firebase, 'deleteBox');
+jest.mock('../../utils/firebase', () => ({
+  deleteBox: (id: string) => mockFn(id),
+}));
 
 describe('tests BoxDelete component', () => {
   test('renders box has been deleted text when button clicks', () => {
@@ -30,6 +33,6 @@ describe('tests BoxDelete component', () => {
 
     userEvent.click(deleteButton);
 
-    expect(spy).toHaveBeenCalledWith('123');
+    expect(mockFn).toHaveBeenCalledWith('123');
   });
 });
