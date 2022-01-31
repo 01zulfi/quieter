@@ -5,7 +5,6 @@ import '@testing-library/jest-dom';
 import BoxEdit from '../../components/Boxes/BoxEdit';
 
 const mockEditBox = jest.fn();
-// const mockNavigate = jest.fn();
 
 const mockBox = {
   id: '123',
