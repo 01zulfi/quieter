@@ -16,11 +16,11 @@ const BoxEdit: FC = function BoxEdit() {
   const onDescriptionEdit = (event: React.ChangeEvent<HTMLInputElement>) =>
     setDescription(event.target.value);
 
-  const onFinishEditing = (event: React.FormEvent<HTMLFormElement>) => {
+  const onFinishEditing = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    firebase.editBox(box.id, { name, description });
+    await firebase.editBox(box.id, { name, description });
     // TODO: navigate to box route
-    navigate('/box/:box.id');
+    navigate(`/box/${box.id}`);
   };
 
   return (
