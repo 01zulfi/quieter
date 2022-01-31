@@ -73,14 +73,6 @@ const createBox = async ({
   });
 };
 
-const deleteBox = async () => {
-  // delete box
-  // delete from adminBoxes joinedBoxes in 'users'
-  // delete strings
-  // delete knots
-  // delete relevant fields in 'users'
-};
-
 const editBox = async (
   boxId: string,
   { name, description }: { name: string; description: string },
@@ -149,10 +141,33 @@ const editString = async (
 
 const deleteString = async (stringId: string) => {
   const stringRef = doc(db, 'strings', stringId);
-  // TODO: delete from authoredStrings associatedStrings in 'users'
-  // delete associatedKnots
-  // remove from associatedStrings in 'boxes
+
+  const stringData = await getString(stringId);
+  const boxId = stringData?.associatedBox;
+
+  const boxRef = doc(db, 'boxes', boxId);
+
+  await updateDoc(boxRef, {
+    associatedStrings: arrayRemove(stringId),
+  });
+
   await deleteDoc(stringRef);
+
+  const userRef = doc(db, 'users', userId);
+
+  await updateDoc(userRef, {
+    authoredStrings: arrayRemove(stringId),
+    associatedStrings: arrayRemove(stringId),
+  });
+
+  const knotIds = stringData?.associatedKnots;
+  knotIds.forEach(async (knotId: string) => {
+    const knotRef = doc(db, 'knots', knotId);
+    await updateDoc(userRef, {
+      associatedKnots: arrayRemove(knotId),
+    });
+    await deleteDoc(knotRef);
+  });
 };
 
 const getKnot = async (knotId: string) => {
@@ -180,6 +195,26 @@ const createKnot = async (
   await updateDoc(stringRef, {
     associatedKnots: arrayUnion(id),
   });
+};
+
+const deleteBox = async (boxId: string) => {
+  const boxRef = doc(db, 'boxes', boxId);
+
+  const userRef = doc(db, 'users', userId);
+
+  await updateDoc(userRef, {
+    adminBoxes: arrayRemove(boxId),
+    joinedBoxes: arrayRemove(boxId),
+  });
+
+  const boxData = await getBox(boxId);
+  const stringIds = boxData?.associatedStrings;
+
+  stringIds.forEach(async (stringId: string) => {
+    await deleteString(stringId);
+  });
+
+  await deleteDoc(boxRef);
 };
 
 const firebase = {
