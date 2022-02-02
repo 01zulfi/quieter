@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import BoxEdit from '../../components/Boxes/BoxEdit';
@@ -19,10 +19,15 @@ jest.mock('../../context/BoxContext', () => ({
 }));
 
 jest.mock('../../utils/firebase', () => ({
-  editBox: async (
-    boxId: string,
-    { name, description }: { name: string; description: string },
-  ) => mockEditBox(boxId, { name, description }),
+  editBox: async ({
+    boxId,
+    name,
+    description,
+  }: {
+    name: string;
+    description: string;
+    boxId: string;
+  }) => mockEditBox(boxId, { name, description }),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -30,21 +35,21 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('tests BoxEdit component', () => {
-  test('inputs has correct values', () => {
-    const { getAllByRole } = render(<BoxEdit />);
+  it('inputs has correct values', () => {
+    render(<BoxEdit />);
 
-    const nameEditInput = getAllByRole('textbox')[0];
-    const descriptionEditInput = getAllByRole('textbox')[1];
+    const nameEditInput = screen.getAllByRole('textbox')[0];
+    const descriptionEditInput = screen.getAllByRole('textbox')[1];
 
     expect(nameEditInput).toHaveValue('test test');
     expect(descriptionEditInput).toHaveValue('lorem ipsum test string content');
   });
 
-  test('editString is called with correct values after edit submits', () => {
-    const { getAllByRole, getByRole } = render(<BoxEdit />);
-    const nameEditInput = getAllByRole('textbox')[0];
-    const descriptionEditInput = getAllByRole('textbox')[1];
-    const button = getByRole('button');
+  it('editString is called with correct values after edit submits', () => {
+    render(<BoxEdit />);
+    const nameEditInput = screen.getAllByRole('textbox')[0];
+    const descriptionEditInput = screen.getAllByRole('textbox')[1];
+    const button = screen.getByRole('button');
 
     userEvent.type(nameEditInput, '{selectall}{backspace}');
     userEvent.type(nameEditInput, 'edited name');
