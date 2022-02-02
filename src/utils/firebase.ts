@@ -97,14 +97,20 @@ const getString = async (stringId: string) => {
   return stringSnap.data();
 };
 
-const createString = async (
-  boxId: string,
-  { title, content }: { title: string; content: string },
-) => {
-  const id = uniqueId();
+const createString = async ({
+  title,
+  content,
+  stringId,
+  boxId,
+}: {
+  title: string;
+  content: string;
+  boxId: string;
+  stringId: string;
+}) => {
   const stringData = {
     associatedBox: boxId,
-    id,
+    stringId,
     title,
     content,
     author: userId,
@@ -112,19 +118,19 @@ const createString = async (
     hasKnots: false,
   };
 
-  await setDoc(doc(db, 'strings', id), stringData);
+  await setDoc(doc(db, 'strings', stringId), stringData);
 
   const userRef = doc(db, 'users', userId);
 
   await updateDoc(userRef, {
-    authoredStrings: arrayUnion(id),
-    associatedStrings: arrayUnion(id),
+    authoredStrings: arrayUnion(stringId),
+    associatedStrings: arrayUnion(stringId),
   });
 
-  const boxRef = doc(db, 'boxes', 'boxId');
+  const boxRef = doc(db, 'boxes', boxId);
 
   await updateDoc(boxRef, {
-    associatedStrings: arrayUnion(id),
+    associatedStrings: arrayUnion(stringId),
   });
 };
 
