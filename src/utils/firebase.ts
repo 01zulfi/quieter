@@ -134,10 +134,15 @@ const createString = async ({
   });
 };
 
-const editString = async (
-  stringId: string,
-  { title, content }: { title: string; content: string },
-) => {
+const editString = async ({
+  stringId,
+  title,
+  content,
+}: {
+  title: string;
+  content: string;
+  stringId: string;
+}) => {
   const stringRef = doc(db, 'strings', stringId);
 
   await updateDoc(stringRef, {
