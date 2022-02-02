@@ -48,14 +48,15 @@ const leaveBox = async (boxId: string) => {
 const createBox = async ({
   name,
   description,
+  boxId,
 }: {
   name: string;
   description: string;
+  boxId: string;
 }) => {
-  const id = uniqueId();
   const boxData = {
     admin: userId,
-    id,
+    id: boxId,
     name,
     description,
     hasStrings: false,
@@ -63,13 +64,13 @@ const createBox = async ({
     joinedUsersCount: 1,
   };
 
-  await setDoc(doc(db, 'boxes', id), boxData);
+  await setDoc(doc(db, 'boxes', boxId), boxData);
 
   const userRef = doc(db, 'users', userId);
 
   await updateDoc(userRef, {
-    adminBoxes: arrayUnion(id),
-    joinedBoxes: arrayUnion(id),
+    adminBoxes: arrayUnion(boxId),
+    joinedBoxes: arrayUnion(boxId),
   });
 };
 
