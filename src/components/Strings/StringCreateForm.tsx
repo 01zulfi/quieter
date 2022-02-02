@@ -1,11 +1,17 @@
 import React, { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useBox } from '../../context/BoxContext';
+import firebase from '../../utils/firebase';
+import uniqueId from '../../utils/unique-id';
 import Button from '../Button';
 
 const StringCreateForm: FC = function StringCreateForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  // TODO: use firebase to createString
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const box = useBox();
+
+  const stringId = uniqueId();
 
   const onTitleInput = (event: React.ChangeEvent<HTMLInputElement>) =>
     setTitle(event.target.value);
@@ -13,18 +19,18 @@ const StringCreateForm: FC = function StringCreateForm() {
   const onContentInput = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
     setContent(event.target.value);
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    await firebase.createString({ boxId: box.id, title, content, stringId });
     setIsSubmitted(true);
   };
 
-  // TODO: add link to string route
   return (
     <div>
       {isSubmitted ? (
         <div>
           <h1>Success! Your string has started.</h1>
-          <p>view it here</p>
+          <Link to={`/box/${box.id}/string/${stringId}`}>view it here</Link>
         </div>
       ) : (
         <form onSubmit={submitHandler}>
