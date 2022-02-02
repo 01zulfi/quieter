@@ -1,11 +1,15 @@
 import React, { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
+import firebase from '../../utils/firebase';
+import uniqueId from '../../utils/unique-id';
 import Button from '../Button';
 
 const BoxCreateForm: FC = function BoxCreateForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  // TODO: use firebase to create boxes
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+  const boxId = uniqueId();
 
   const onNameInput = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
@@ -13,17 +17,18 @@ const BoxCreateForm: FC = function BoxCreateForm() {
   const onDescriptionInput = (event: React.ChangeEvent<HTMLInputElement>) =>
     setDescription(event.target.value);
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    await firebase.createBox({ name, description, boxId });
     setIsSubmitted(true);
   };
 
-  // TODO: add route to box
   return (
     <div>
       {isSubmitted ? (
         <div>
           <h1>Success! The box has been created.</h1>
+          <Link to={`/box/${boxId}`}>view it here</Link>
         </div>
       ) : (
         <form onSubmit={submitHandler}>
