@@ -74,10 +74,15 @@ const createBox = async ({
   });
 };
 
-const editBox = async (
-  boxId: string,
-  { name, description }: { name: string; description: string },
-) => {
+const editBox = async ({
+  boxId,
+  name,
+  description,
+}: {
+  name: string;
+  description: string;
+  boxId: string;
+}) => {
   const boxRef = doc(db, 'boxes', boxId);
 
   await updateDoc(boxRef, {
