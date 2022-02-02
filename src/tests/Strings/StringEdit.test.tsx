@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import StringEdit from '../../components/Strings/StringEdit';
@@ -19,28 +19,37 @@ jest.mock('../../context/StringContext', () => ({
 }));
 
 jest.mock('../../utils/firebase', () => ({
-  editString: async (
-    id: string,
-    { title, content }: { title: string; content: string },
-  ) => mockFn(id, { title, content }),
+  editString: async ({
+    stringId,
+    title,
+    content,
+  }: {
+    stringId: string;
+    title: string;
+    content: string;
+  }) => mockFn({ stringId, title, content }),
+}));
+
+jest.mock('react-router-dom', () => ({
+  useNavigate: () => () => {},
 }));
 
 describe('tests StringEdit component', () => {
-  test('input and textarea has correct values', () => {
-    const { getAllByRole } = render(<StringEdit />);
+  it('input and textarea has correct values', () => {
+    render(<StringEdit />);
 
-    const input = getAllByRole('textbox')[0];
-    const textarea = getAllByRole('textbox')[1];
+    const input = screen.getAllByRole('textbox')[0];
+    const textarea = screen.getAllByRole('textbox')[1];
 
     expect(input).toHaveValue('test test');
     expect(textarea).toHaveValue('lorem ipsum test string content');
   });
 
-  test('invokes string with correct arguments after editing', () => {
-    const { getAllByRole, getByRole } = render(<StringEdit />);
-    const input = getAllByRole('textbox')[0];
-    const textarea = getAllByRole('textbox')[1];
-    const submitButton = getByRole('button', { name: 'Submit changes' });
+  it('invokes editString with correct arguments after editing', async () => {
+    render(<StringEdit />);
+    const input = screen.getAllByRole('textbox')[0];
+    const textarea = screen.getAllByRole('textbox')[1];
+    const submitButton = screen.getByRole('button', { name: 'Submit changes' });
 
     userEvent.type(input, '{selectall}{backspace}');
     userEvent.type(input, 'edited title');
@@ -48,9 +57,12 @@ describe('tests StringEdit component', () => {
     userEvent.type(textarea, 'edited content');
     userEvent.click(submitButton);
 
-    expect(mockFn).toHaveBeenCalledWith('123', {
-      title: 'edited title',
-      content: 'edited content',
-    });
+    await waitFor(() =>
+      expect(mockFn).toHaveBeenCalledWith({
+        stringId: '123',
+        title: 'edited title',
+        content: 'edited content',
+      }),
+    );
   });
 });
