@@ -1,23 +1,24 @@
 import React, { FC, useState, useEffect } from 'react';
+import firebase from '../../utils/firebase';
 import { useUser } from '../../context/UserContext';
 
 interface KnotProps {
-  id: string;
+  knotId: string;
 }
 
-const Knot: FC<KnotProps> = function Knot({ id }) {
+const Knot: FC<KnotProps> = function Knot({ knotId }) {
   const [knot, setKnot] = useState<any>({});
   const user = useUser();
 
   useEffect(() => {
     (async () => {
-      const fetchKnot = await firebase.getKnot(id);
+      const fetchKnot = await firebase.getKnot(knotId);
       setKnot(fetchKnot);
     })();
   }, []);
 
   const isCurrentUserAuthor = user.authoredKnots.find(
-    (knotId: string) => knotId === id,
+    (id: string) => knotId === id,
   );
 
   // TODO: show user name & avatar
