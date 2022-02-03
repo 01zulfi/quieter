@@ -12,7 +12,7 @@ const KnotCreate: FC = function KnotCreate() {
 
   const onKnotSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await firebase.createKnot({ stringId: string.id, knotContent: knot });
+    await firebase.createKnot({ stringId: string.id, content: knot });
     setKnot('');
   };
 
