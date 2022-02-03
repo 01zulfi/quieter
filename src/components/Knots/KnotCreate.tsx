@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useString } from '../../context/StringContext';
+import firebase from '../../utils/firebase';
 import Button from '../Button';
 
 const KnotCreate: FC = function KnotCreate() {
@@ -11,7 +12,7 @@ const KnotCreate: FC = function KnotCreate() {
 
   const onKnotSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await firebase.addKnot({ stringId: string.id, knotContent: knot });
+    await firebase.createKnot({ stringId: string.id, knotContent: knot });
     setKnot('');
   };
 

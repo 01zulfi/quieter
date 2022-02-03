@@ -193,10 +193,13 @@ const getKnot = async (knotId: string) => {
   return knotSnap.data();
 };
 
-const createKnot = async (
-  stringId: string,
-  { content }: { content: string },
-) => {
+const createKnot = async ({
+  stringId,
+  content,
+}: {
+  content: string;
+  stringId: string;
+}) => {
   const id = uniqueId();
   const knotData = {
     associatedString: stringId,
