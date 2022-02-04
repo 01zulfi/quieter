@@ -15,11 +15,11 @@ jest.mock('../../context/StringContext', () => ({
 jest.mock('../../utils/firebase', () => ({
   createKnot: async ({
     stringId,
-    knotContent,
+    content,
   }: {
     stringId: string;
-    knotContent: string;
-  }) => mockCreateKnot({ stringId, knotContent }),
+    content: string;
+  }) => mockCreateKnot({ stringId, content }),
 }));
 
 describe('KnotCreate component', () => {
@@ -34,7 +34,7 @@ describe('KnotCreate component', () => {
     await waitFor(() =>
       expect(mockCreateKnot).toHaveBeenCalledWith({
         stringId: '1234',
-        knotContent: 'knot content test',
+        content: 'knot content test',
       }),
     );
   });
