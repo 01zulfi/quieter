@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import BoxAdminView from '../../components/Boxes/BoxAdminView';
@@ -36,80 +36,84 @@ jest.mock(
 jest.mock(
   '../../components/Boxes/BoxDelete',
   () =>
-    function BoxEditMock() {
+    function BoxDeleteMock() {
       return <h2>BoxDelete component rendered</h2>;
     },
 );
 
 describe('tests BoxAdminView component', () => {
-  test('clicking edit button renders BoxEdit component', () => {
-    const { getByRole } = render(<BoxAdminView />);
-    const editButton = getByRole('button', { name: 'Edit box details' });
+  it('renders BoxEdit component when edit button is clicked', () => {
+    render(<BoxAdminView />);
+    const editButton = screen.getByRole('button', { name: 'Edit box details' });
 
     userEvent.click(editButton);
 
-    const heading = getByRole('heading', {
+    const heading = screen.getByRole('heading', {
       name: 'BoxEdit component rendered',
     });
     expect(heading).toBeInTheDocument();
     expect(editButton).not.toBeInTheDocument();
   });
 
-  test('unmounts BoxEdit when close modal for BoxEdit clicks', () => {
-    const { getByRole, queryByText } = render(<BoxAdminView />);
-    const editButton = getByRole('button', { name: 'Edit box details' });
+  it('unmounts BoxEdit when close modal button for BoxEdit clicks', () => {
+    render(<BoxAdminView />);
+    const editButton = screen.getByRole('button', { name: 'Edit box details' });
 
     userEvent.click(editButton);
 
-    const heading = getByRole('heading', {
+    const heading = screen.getByRole('heading', {
       name: 'BoxEdit component rendered',
     });
     expect(heading).toBeInTheDocument();
     expect(editButton).not.toBeInTheDocument();
 
-    const closeModalButton = getByRole('button', { name: 'close modal mock' });
+    const closeModalButton = screen.getByRole('button', {
+      name: 'close modal mock',
+    });
 
     userEvent.click(closeModalButton);
 
-    const boxDeleteText = queryByText('BoxDelete component rendered');
-    const adminText = queryByText('you are the admin of this box');
+    const boxDeleteText = screen.queryByText('BoxDelete component rendered');
+    const adminText = screen.queryByText('you are the admin of this box');
 
     expect(boxDeleteText).not.toBeInTheDocument();
     expect(heading).not.toBeInTheDocument();
     expect(adminText).toBeInTheDocument();
   });
 
-  test('clicking delete button renders BoxDelete component', () => {
-    const { getByRole } = render(<BoxAdminView />);
-    const deleteButton = getByRole('button', { name: 'Delete box' });
+  it('renders BoxDelete component when delete button is clicked', () => {
+    render(<BoxAdminView />);
+    const deleteButton = screen.getByRole('button', { name: 'Delete box' });
 
     userEvent.click(deleteButton);
 
-    const heading = getByRole('heading', {
+    const heading = screen.getByRole('heading', {
       name: 'BoxDelete component rendered',
     });
     expect(heading).toBeInTheDocument();
     expect(deleteButton).not.toBeInTheDocument();
   });
 
-  test('unmounts BoxDelete when close modal for BoxDelete clicks', () => {
-    const { getByRole, queryByText } = render(<BoxAdminView />);
-    const deleteButton = getByRole('button', { name: 'Delete box' });
+  it('unmounts BoxDelete when close modal button for BoxDelete clicks', () => {
+    render(<BoxAdminView />);
+    const deleteButton = screen.getByRole('button', { name: 'Delete box' });
 
     userEvent.click(deleteButton);
 
-    const heading = getByRole('heading', {
+    const heading = screen.getByRole('heading', {
       name: 'BoxDelete component rendered',
     });
     expect(heading).toBeInTheDocument();
     expect(deleteButton).not.toBeInTheDocument();
 
-    const closeModalButton = getByRole('button', { name: 'close modal mock' });
+    const closeModalButton = screen.getByRole('button', {
+      name: 'close modal mock',
+    });
 
     userEvent.click(closeModalButton);
 
-    const boxEditText = queryByText('BoxEdit component rendered');
-    const adminText = queryByText('you are the admin of this box');
+    const boxEditText = screen.queryByText('BoxEdit component rendered');
+    const adminText = screen.queryByText('you are the admin of this box');
 
     expect(boxEditText).not.toBeInTheDocument();
     expect(heading).not.toBeInTheDocument();
