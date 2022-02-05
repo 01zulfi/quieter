@@ -31,7 +31,7 @@ const StringContainer: FC = function StringContainer() {
           <String />
           {string.knots.map((knotId: string) => (
             <div key={knotId}>
-              <Knot id={knotId} />
+              <Knot knotId={knotId} />
             </div>
           ))}
           <KnotCreate />
