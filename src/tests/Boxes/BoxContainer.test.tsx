@@ -26,16 +26,30 @@ jest.mock(
 jest.mock(
   '../../components/Boxes/BoxRegularView',
   () =>
-    function BoxRegularView() {
-      return <h2>BoxRegularView component rendered</h2>;
+    function BoxRegularView({ onButtonClick }: { onButtonClick: any }) {
+      return (
+        <>
+          <h2>BoxRegularView component rendered</h2>
+          <button type="button" onClick={onButtonClick}>
+            mock button in BoxRegularView
+          </button>
+        </>
+      );
     },
 );
 
 jest.mock(
   '../../components/Strings/StringCreateModal',
   () =>
-    function StringCreateModal() {
-      return <h2>StringCreateModal component rendered</h2>;
+    function StringCreateModal({ closeModal }: { closeModal: any }) {
+      return (
+        <>
+          <h2>StringCreateModal component rendered</h2>
+          <button onClick={closeModal} type="button">
+            mock button in StringCreateModal
+          </button>
+        </>
+      );
     },
 );
 
@@ -56,6 +70,8 @@ jest.mock(
 );
 
 const mockGetBox = jest.fn();
+const mockLeaveBox = jest.fn();
+const mockJoinBox = jest.fn();
 
 jest.mock('../../utils/firebase', () => ({
   getBox: (boxId: string) => {
@@ -65,6 +81,8 @@ jest.mock('../../utils/firebase', () => ({
       associatedStrings: ['first string', 'second string'],
     };
   },
+  leaveBox: (boxId: string) => mockLeaveBox(boxId),
+  joinBox: (boxId: string) => mockJoinBox(boxId),
 }));
 
 describe('tests BoxContainer component', () => {
@@ -76,5 +94,101 @@ describe('tests BoxContainer component', () => {
         screen.queryByRole('heading', { name: 'Loading component rendered' }),
       ).not.toBeInTheDocument(),
     );
+  });
+
+  it('invokes firebase.getBox with correct argument', async () => {
+    render(<BoxContainer />);
+
+    await waitFor(() => expect(mockGetBox).toHaveBeenCalledWith('001122'));
+  });
+
+  it('renders BoxAdminView component when user is admin', async () => {
+    render(<BoxContainer />);
+
+    const renderText = await screen.findByRole('heading', {
+      name: 'BoxAdminView component rendered',
+    });
+
+    expect(renderText).toBeInTheDocument();
+  });
+
+  it('renders BoxRegularView component', async () => {
+    render(<BoxContainer />);
+
+    const renderText = await screen.findByRole('heading', {
+      name: 'BoxRegularView component rendered',
+    });
+
+    expect(renderText).toBeInTheDocument();
+  });
+
+  it('renders leave box button when user is member', async () => {
+    render(<BoxContainer />);
+
+    const leaveButton = await screen.findByRole('button', {
+      name: 'Leave box',
+    });
+
+    expect(leaveButton).toBeInTheDocument();
+  });
+
+  it('clicking leave box invokes firebase.leaveBox', async () => {
+    render(<BoxContainer />);
+
+    const leaveButton = await screen.findByRole('button', {
+      name: 'Leave box',
+    });
+
+    userEvent.click(leaveButton);
+
+    expect(mockLeaveBox).toHaveBeenCalledWith('001122');
+  });
+
+  it('clicking button in BoxRegularView renders StringCreateModal', async () => {
+    render(<BoxContainer />);
+
+    const button = await screen.findByRole('button', {
+      name: 'mock button in BoxRegularView',
+    });
+
+    userEvent.click(button);
+
+    const renderText = screen.getByRole('heading', {
+      name: 'StringCreateModal component rendered',
+    });
+
+    expect(renderText).toBeInTheDocument();
+  });
+
+  it('unmounts StringCreateModal when button with closeModal handler is clicked', async () => {
+    render(<BoxContainer />);
+
+    const buttonInRegular = await screen.findByRole('button', {
+      name: 'mock button in BoxRegularView',
+    });
+    userEvent.click(buttonInRegular);
+    const buttonInModal = screen.getByRole('button', {
+      name: 'mock button in StringCreateModal',
+    });
+    userEvent.click(buttonInModal);
+    const renderText = screen.queryByText(
+      'StringCreateModal component rendered',
+    );
+
+    expect(renderText).not.toBeInTheDocument();
+  });
+
+  it('renders StringCompactView correctly', async () => {
+    render(<BoxContainer />);
+
+    const stringOne = await screen.findByRole('heading', {
+      name: 'first string',
+    });
+    const stringTwo = await screen.findByRole('heading', {
+      name: 'second string',
+    });
+
+    expect(stringOne).toBeInTheDocument();
+    expect(stringTwo).toBeInTheDocument();
   });
 });
