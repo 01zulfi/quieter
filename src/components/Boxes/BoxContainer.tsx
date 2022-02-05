@@ -1,17 +1,19 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import firebase from '../../utils/firebase';
 import BoxContext from '../../context/BoxContext';
 import BoxAdminView from './BoxAdminView';
 import BoxRegularView from './BoxRegularView';
 import StringCreateModal from '../Strings/StringCreateModal';
 import StringCompactView from '../Strings/StringCompactView';
 import Button from '../Button';
+import Loading from '../Loading';
 
 const BoxContainer: FC = function BoxContainer() {
   const params = useParams();
   const [box, setBox] = useState<any>({});
-  const [hasStrings, setHasStrings] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [showStringCreateModal, setShowStringCreateModal] = useState(false);
   const user = useUser();
 
@@ -19,9 +21,11 @@ const BoxContainer: FC = function BoxContainer() {
     (async () => {
       const fetchBox = await firebase.getBox(params.boxId);
       setBox(fetchBox);
-      setHasStrings(fetchBox.hasStrings);
+      setIsLoaded(true);
     })();
   }, []);
+
+  if (!isLoaded) return <Loading />;
 
   const isCurrentUserAdmin = user.adminBoxes.some(
     (id: string) => id === params.boxId,
@@ -68,7 +72,7 @@ const BoxContainer: FC = function BoxContainer() {
           <StringCreateModal closeModal={onCloseModal} />
         )}
 
-        {hasStrings ? (
+        {box.hasStrings ? (
           <section>
             {box.associatedStrings.map((stringId: string) => (
               <div key={stringId}>
