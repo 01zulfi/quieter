@@ -61,6 +61,12 @@ describe('tests StringContainer component', () => {
     );
   });
 
+  it('invokes firebase.getString with correct argument', async () => {
+    render(<StringContainer />);
+
+    await waitFor(() => expect(mockGetString).toHaveBeenCalledWith('012'));
+  });
+
   it('renders StringAuthorView when user is the author', async () => {
     render(<StringContainer />);
 
