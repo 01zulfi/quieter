@@ -15,6 +15,7 @@ const BoxContainer: FC = function BoxContainer() {
   const [box, setBox] = useState<any>({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [showStringCreateModal, setShowStringCreateModal] = useState(false);
+  const [isCurrentUserMember, setIsCurrentUserMember] = useState(false);
   const user = useUser();
 
   useEffect(() => {
@@ -25,13 +26,17 @@ const BoxContainer: FC = function BoxContainer() {
     })();
   }, []);
 
+  useEffect(() => {
+    const isUserMember = user.joinedBoxes.some(
+      (id: string) => id === params.boxId,
+    );
+
+    setIsCurrentUserMember(isUserMember);
+  });
+
   if (!isLoaded) return <Loading />;
 
   const isCurrentUserAdmin = user.adminBoxes.some(
-    (id: string) => id === params.boxId,
-  );
-
-  const isUserMember = user.joinedBoxes.some(
     (id: string) => id === params.boxId,
   );
 
@@ -54,7 +59,7 @@ const BoxContainer: FC = function BoxContainer() {
 
         <BoxRegularView onButtonClick={onCreateStringClick} />
 
-        {isUserMember ? (
+        {isCurrentUserMember ? (
           <Button
             type="button"
             textContent="Leave box"
