@@ -21,8 +21,37 @@ import uniqueId from './unique-id';
 
 const db = getFirestore();
 let userId = '';
+let userAnon = false;
 
 const isUserSignedIn = () => userId !== '';
+
+const isUserAnon = () => userAnon;
+
+const getUserDoc = async (id: string) => {
+  const userRef = doc(db, 'users', id);
+  const userSnap = await getDoc(userRef);
+  return userSnap.data();
+};
+
+const createUserDoc = async ({
+  username,
+  id,
+}: {
+  username: string;
+  id: string;
+}) => {
+  const userData = {
+    username,
+    id,
+    joinedBoxes: [],
+    associatedStrings: [],
+    authoredKnots: [],
+    authoredStrings: [],
+    adminBoxes: [],
+  };
+
+  await setDoc(doc(db, 'users', id), userData);
+};
 
 const signInAsGuest = async () => {
   const auth = getAuth();
@@ -30,6 +59,7 @@ const signInAsGuest = async () => {
   onAuthStateChanged(auth, (user) => {
     userId = user?.uid || '';
   });
+  userAnon = true;
 };
 
 const signInWithGoogle = async () => {
@@ -37,8 +67,12 @@ const signInWithGoogle = async () => {
   const auth = getAuth();
   signInWithRedirect(auth, provider);
   getRedirectResult(auth).then((result) => {
-    const { user } = result || { user: { uid: '' } };
+    if (!result) return;
+    const { user } = result;
     userId = user.uid;
+    if (!getUserDoc(user.uid)) {
+      createUserDoc({ username: user.displayName || '', id: user.uid });
+    }
   });
 };
 
@@ -54,6 +88,9 @@ const signInWithEmail = async ({
     .then((userCredential) => {
       const { user } = userCredential;
       userId = user.uid;
+      if (!getUserDoc(user.uid)) {
+        createUserDoc({ username: user.displayName || '', id: user.uid });
+      }
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -289,6 +326,7 @@ const deleteBox = async (boxId: string) => {
 
 const firebase = {
   isUserSignedIn,
+  isUserAnon,
   signInAsGuest,
   signInWithGoogle,
   signInWithEmail,
