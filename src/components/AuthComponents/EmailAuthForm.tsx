@@ -3,12 +3,9 @@ import firebase from '../../utils/firebase';
 import Button from '../Button';
 
 const EmailAuthForm: FC = function EmailAuthForm() {
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onUsernameInput = (event: React.ChangeEvent<HTMLInputElement>): void =>
-    setUsername(event.target.value);
   const onEmailInput = (event: React.ChangeEvent<HTMLInputElement>): void =>
     setEmail(event.target.value);
   const onPasswordInput = (event: React.ChangeEvent<HTMLInputElement>): void =>
@@ -16,22 +13,13 @@ const EmailAuthForm: FC = function EmailAuthForm() {
 
   const emailFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await firebase.signInWithEmail({ username, email, password });
+    await firebase.signInWithEmail({ email, password });
   };
 
   return (
     <section>
       <h3>lets do this</h3>
       <form onSubmit={emailFormHandler}>
-        <label htmlFor="username-input">
-          username
-          <input
-            type="text"
-            id="username-input"
-            value={username}
-            onChange={onUsernameInput}
-          />
-        </label>
         <label htmlFor="email-input">
           email
           <input
