@@ -27,8 +27,9 @@ const isUserSignedIn = () => userId !== '';
 
 const isUserAnon = () => userAnon;
 
-const getUserDoc = async (id: string) => {
-  const userRef = doc(db, 'users', id);
+const getUserDoc = async () => {
+  if (isUserAnon()) return null;
+  const userRef = doc(db, 'users', userId);
   const userSnap = await getDoc(userRef);
   return userSnap.data();
 };
@@ -70,7 +71,7 @@ const signInWithGoogle = async () => {
     if (!result) return;
     const { user } = result;
     userId = user.uid;
-    if (!getUserDoc(user.uid)) {
+    if (!getUserDoc()) {
       createUserDoc({ username: user.displayName || '', id: user.uid });
     }
   });
@@ -88,7 +89,7 @@ const signInWithEmail = async ({
     .then((userCredential) => {
       const { user } = userCredential;
       userId = user.uid;
-      if (!getUserDoc(user.uid)) {
+      if (!getUserDoc()) {
         createUserDoc({ username: user.displayName || '', id: user.uid });
       }
     })
@@ -327,6 +328,7 @@ const deleteBox = async (boxId: string) => {
 const firebase = {
   isUserSignedIn,
   isUserAnon,
+  getUserDoc,
   signInAsGuest,
   signInWithGoogle,
   signInWithEmail,
