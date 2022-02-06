@@ -28,10 +28,10 @@ const isUserSignedIn = () => userId !== '';
 const isUserAnon = () => userAnon;
 
 const getUserDoc = async () => {
-  if (isUserAnon()) return null;
+  if (isUserAnon()) return { id: 'DEFAULT', username: 'DEFAULT' };
   const userRef = doc(db, 'users', userId);
   const userSnap = await getDoc(userRef);
-  return userSnap.data();
+  return userSnap.data() || { id: 'DEFAULT', username: 'DEFAULT' };
 };
 
 const createUserDoc = async ({
