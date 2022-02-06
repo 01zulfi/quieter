@@ -8,10 +8,38 @@ import {
   arrayRemove,
   deleteDoc,
 } from 'firebase/firestore';
+import {
+  signInWithRedirect,
+  signInAnonymously,
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  getRedirectResult,
+} from 'firebase/auth';
 import uniqueId from './unique-id';
 
 const db = getFirestore();
-const userId = '';
+let userId = '';
+
+const isUserSignedIn = () => userId !== '';
+
+const signInAsGuest = async () => {
+  const auth = getAuth();
+  signInAnonymously(auth);
+  onAuthStateChanged(auth, (user) => {
+    userId = user?.uid || '';
+  });
+};
+
+const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  signInWithRedirect(auth, provider);
+  getRedirectResult(auth).then((result) => {
+    const { user } = result || { user: { uid: '' } };
+    userId = user.uid;
+  });
+};
 
 const getBox = async (boxId: string) => {
   const boxRef = doc(db, 'boxes', boxId);
@@ -238,6 +266,9 @@ const deleteBox = async (boxId: string) => {
 };
 
 const firebase = {
+  isUserSignedIn,
+  signInAsGuest,
+  signInWithGoogle,
   getString,
   createString,
   editString,

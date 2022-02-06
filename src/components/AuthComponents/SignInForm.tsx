@@ -1,13 +1,17 @@
 import React, { FC, useState } from 'react';
-import Button from './Button';
-import Modal from './Modal';
+import firebase from '../../utils/firebase';
+import Button from '../Button';
+import EmailAuthForm from './EmailAuthForm';
+import Modal from '../Modal';
 
 const SignInForm: FC = function SignInForm() {
   const [showEmailSignInModal, setShowEmailSignInModal] = useState(false);
 
   const emailSignInHandler = (): void => setShowEmailSignInModal(true);
-
   const onCloseEmailModal = (): void => setShowEmailSignInModal(false);
+
+  const googleSignInHandler = (): void => firebase.signInWithGoogle();
+  const guestSignInHandler = (): void => firebase.signInAsGuest();
 
   return (
     <div>
@@ -33,7 +37,7 @@ const SignInForm: FC = function SignInForm() {
 
       {showEmailSignInModal && (
         <Modal closeModal={onCloseEmailModal}>
-          <EmailSignUpForm />
+          <EmailAuthForm />
         </Modal>
       )}
     </div>
