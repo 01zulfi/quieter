@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   doc,
   getDoc,
@@ -26,6 +27,15 @@ let userAnon = false;
 const isUserSignedIn = () => userId !== '';
 
 const isUserAnon = () => userAnon;
+
+const updateStateUponSignIn =
+  (setStateFunction: React.Dispatch<any>) => (stateValue: any) => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (!user) return;
+      setStateFunction(stateValue);
+    });
+  };
 
 const getUserDoc = async () => {
   if (isUserAnon()) return { id: 'DEFAULT', username: 'DEFAULT' };
@@ -328,6 +338,7 @@ const deleteBox = async (boxId: string) => {
 const firebase = {
   isUserSignedIn,
   isUserAnon,
+  updateStateUponSignIn,
   getUserDoc,
   signInAsGuest,
   signInWithGoogle,
