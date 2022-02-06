@@ -10,8 +10,12 @@ const SignInForm: FC = function SignInForm() {
   const emailSignInHandler = (): void => setShowEmailSignInModal(true);
   const onCloseEmailModal = (): void => setShowEmailSignInModal(false);
 
-  const googleSignInHandler = (): void => firebase.signInWithGoogle();
-  const guestSignInHandler = (): void => firebase.signInAsGuest();
+  const googleSignInHandler = async () => {
+    await firebase.signInWithGoogle();
+  };
+  const guestSignInHandler = async () => {
+    await firebase.signInAsGuest();
+  };
 
   return (
     <div>
@@ -25,12 +29,12 @@ const SignInForm: FC = function SignInForm() {
         />
         <Button
           type="button"
-          textContent="Sign in with email"
+          textContent="Sign in with Email"
           clickHandler={emailSignInHandler}
         />
         <Button
           type="button"
-          textContent="Sign in with Guest (Limited view)"
+          textContent="Sign in as Guest (Limited view)"
           clickHandler={guestSignInHandler}
         />
       </div>
