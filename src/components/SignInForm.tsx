@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Button from './Button';
 
-const SignIn: FC = function SignIn() {
+const SignInForm: FC = function SignInForm() {
   return (
     <div>
       <h1>Sign in to continue</h1>
@@ -19,4 +19,4 @@ const SignIn: FC = function SignIn() {
   );
 };
 
-export default SignIn;
+export default SignInForm;
