@@ -15,6 +15,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   getRedirectResult,
+  createUserWithEmailAndPassword,
 } from 'firebase/auth';
 import uniqueId from './unique-id';
 
@@ -39,6 +40,27 @@ const signInWithGoogle = async () => {
     const { user } = result || { user: { uid: '' } };
     userId = user.uid;
   });
+};
+
+const signInWithEmail = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const { user } = userCredential;
+      userId = user.uid;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      /* eslint-disable no-console */
+      console.log({ errorCode, errorMessage });
+    });
 };
 
 const getBox = async (boxId: string) => {
@@ -269,6 +291,7 @@ const firebase = {
   isUserSignedIn,
   signInAsGuest,
   signInWithGoogle,
+  signInWithEmail,
   getString,
   createString,
   editString,
