@@ -13,6 +13,7 @@ jest.mock('../../context/UserContext', () => ({
     joinedBoxes: ['001122'],
     adminBoxes: ['001122'],
   }),
+  useSetUser: () => () => {},
 }));
 
 jest.mock(

@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
+import { useUser, useSetUser } from '../../context/UserContext';
 import firebase from '../../utils/firebase';
 import BoxContext from '../../context/BoxContext';
 import BoxAdminView from './BoxAdminView';
@@ -16,18 +16,18 @@ const BoxContainer: FC = function BoxContainer() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showStringCreateModal, setShowStringCreateModal] = useState(false);
   const [isCurrentUserMember, setIsCurrentUserMember] = useState(false);
-  const user = useUser();
+  const user = useUser() || { joinedBoxes: [], adminBoxes: [] };
 
   useEffect(() => {
     (async () => {
-      const fetchBox = await firebase.getBox(params.boxId);
+      const fetchBox = await firebase.getBox(params.boxId || '');
       setBox(fetchBox);
       setIsLoaded(true);
     })();
   }, []);
 
   useEffect(() => {
-    const isUserMember = user.joinedBoxes.some(
+    const isUserMember = user?.joinedBoxes.some(
       (id: string) => id === params.boxId,
     );
 
@@ -43,11 +43,13 @@ const BoxContainer: FC = function BoxContainer() {
   const onCreateStringClick = (): void => setShowStringCreateModal(true);
 
   const onJoinButtonClick = async () => {
-    await firebase.joinBox(params.boxId);
+    await firebase.joinBox(params.boxId || '');
+    useSetUser()();
   };
 
   const onLeaveButtonClick = async () => {
-    await firebase.leaveBox(params.boxId);
+    await firebase.leaveBox(params.boxId || '');
+    useSetUser()();
   };
 
   const onCloseModal = (): void => setShowStringCreateModal(false);
@@ -77,7 +79,7 @@ const BoxContainer: FC = function BoxContainer() {
           <StringCreateModal closeModal={onCloseModal} />
         )}
 
-        {box.hasStrings ? (
+        {box.associatedStrings.length > 0 ? (
           <section>
             {box.associatedStrings.map((stringId: string) => (
               <div key={stringId}>
