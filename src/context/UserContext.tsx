@@ -4,14 +4,15 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useCallback,
 } from 'react';
 import UserInterface from '../interfaces/UserInterface';
 import firebase from '../utils/firebase';
 
 const emptyFunction = () => {};
 
-const UserContext = createContext(null);
-const SetUserContext = createContext<React.Dispatch<any>>(emptyFunction);
+const UserContext = createContext<any>(null);
+const SetUserContext = createContext<any>(emptyFunction);
 const UserAnonymousContext = createContext(false);
 
 const UserProvider: FC = function UserProvider({ children }) {
@@ -26,9 +27,18 @@ const UserProvider: FC = function UserProvider({ children }) {
     })();
   }, []);
 
+  const userContextUpdater = useCallback(() => {
+    (async () => {
+      const fetchedUserData: UserInterface = await firebase.getUserDoc();
+      setUser(fetchedUserData);
+    })();
+  }, []);
+
   return (
     <UserContext.Provider value={isUserAnon ? null : user}>
-      <SetUserContext.Provider value={isUserAnon ? emptyFunction : setUser}>
+      <SetUserContext.Provider
+        value={isUserAnon ? emptyFunction : userContextUpdater}
+      >
         <UserAnonymousContext.Provider value={isUserAnon}>
           {children}
         </UserAnonymousContext.Provider>
@@ -38,8 +48,8 @@ const UserProvider: FC = function UserProvider({ children }) {
 };
 
 const useUser = () => useContext(UserContext);
-const useUserAnon = () => useContext(UserAnonymousContext);
 const useSetUser = () => useContext(SetUserContext);
+const useUserAnon = () => useContext(UserAnonymousContext);
 
 export default UserProvider;
-export { useUser, useUserAnon, useSetUser };
+export { useUser, useSetUser, useUserAnon };
