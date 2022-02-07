@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar: FC = function Navbar() {
   return (
@@ -9,6 +10,9 @@ const Navbar: FC = function Navbar() {
       </div>
       <div>Search Component Placeholder</div>
       <div>Avatar Component Placeholder</div>
+      <div>
+        <Link to="/sign-out">Sign out</Link>
+      </div>
     </div>
   );
 };
