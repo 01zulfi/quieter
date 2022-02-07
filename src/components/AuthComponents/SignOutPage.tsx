@@ -1,9 +1,18 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
+import Loading from '../Loading';
+import firebase from '../../utils/firebase';
 
 const SignOutPage: FC = function SignOutPage() {
+  const [isSignedOut, setIsSignedOut] = useState(false);
+
+  useEffect(() => {
+    firebase.signOutUser();
+    setIsSignedOut(true);
+  }, []);
+
   return (
     <section>
-      <h2>successfully signed out</h2>
+      {isSignedOut ? <h2>successfully signed out</h2> : <Loading />}
     </section>
   );
 };
