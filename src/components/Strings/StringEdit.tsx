@@ -5,7 +5,12 @@ import { useString } from '../../context/StringContext';
 import firebase from '../../utils/firebase';
 
 const StringEdit: FC = function StringEdit() {
-  const string = useString();
+  const string = useString() || {
+    id: 'DEFAULT',
+    title: 'DEFAULT',
+    content: 'DEFAULT',
+    associatedBox: 'DEFAULT',
+  };
   const [title, setTitle] = useState(string.title);
   const [content, setContent] = useState(string.content);
   const navigate = useNavigate();

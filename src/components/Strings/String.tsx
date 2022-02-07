@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useString } from '../../context/StringContext';
 
 const String: FC = function String() {
-  const string = useString();
+  const string = useString() || { title: 'DEFAULT', content: 'DEFAULT' };
 
   return (
     <section>

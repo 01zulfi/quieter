@@ -17,7 +17,7 @@ const StringContainer: FC = function StringContainer() {
 
   useEffect(() => {
     (async () => {
-      const stringData = await firebase.getString(params.stringId);
+      const stringData = await firebase.getString(params.stringId || '');
       setString(stringData);
       setIsLoaded(true);
     })();

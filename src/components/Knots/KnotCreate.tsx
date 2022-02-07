@@ -5,7 +5,7 @@ import Button from '../Button';
 
 const KnotCreate: FC = function KnotCreate() {
   const [knot, setKnot] = useState('');
-  const string = useString();
+  const string = useString() || { id: 'DEFAULT' };
 
   const onKnotInput = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
     setKnot(event.target.value);

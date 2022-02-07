@@ -5,7 +5,7 @@ import { useString } from '../../context/StringContext';
 import Button from '../Button';
 
 const StringDelete: FC = function StringDelete() {
-  const string = useString();
+  const string = useString() || { id: 'DEFAULT', associatedBox: 'DEFAULT' };
   const [isDeleted, setIsDeleted] = useState(false);
 
   const onBoxDelete = async () => {

@@ -9,7 +9,7 @@ const StringCreateForm: FC = function StringCreateForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const box = useBox();
+  const box = useBox() || { id: 'DEFAULT' };
 
   const stringId = uniqueId();
 
