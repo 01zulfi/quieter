@@ -17,6 +17,7 @@ import {
   onAuthStateChanged,
   getRedirectResult,
   createUserWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 import uniqueId from './unique-id';
 
@@ -27,6 +28,17 @@ let userAnon = false;
 const isUserSignedIn = () => userId !== '';
 
 const isUserAnon = () => userAnon;
+
+const signOutUser = () => {
+  const auth = getAuth();
+  signOut(auth)
+    .then(() => {
+      userId = '';
+      userAnon = false;
+    })
+    /* eslint-disable no-console */
+    .catch((error: any) => console.log(error));
+};
 
 const updateStateUponSignIn =
   (setStateFunction: React.Dispatch<any>) => (stateValue: any) => {
@@ -338,6 +350,7 @@ const deleteBox = async (boxId: string) => {
 const firebase = {
   isUserSignedIn,
   isUserAnon,
+  signOutUser,
   updateStateUponSignIn,
   getUserDoc,
   signInAsGuest,
