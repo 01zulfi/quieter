@@ -5,6 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
+import UserInterface from '../interfaces/UserInterface';
 import firebase from '../utils/firebase';
 
 const emptyFunction = () => {};
@@ -20,7 +21,7 @@ const UserProvider: FC = function UserProvider({ children }) {
   useEffect(() => {
     (async () => {
       if (isUserAnon) return;
-      const fetchedUserData = await firebase.getUserDoc();
+      const fetchedUserData: UserInterface = await firebase.getUserDoc();
       setUser(fetchedUserData);
     })();
   }, []);

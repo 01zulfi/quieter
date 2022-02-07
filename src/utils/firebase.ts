@@ -53,7 +53,12 @@ const getUserDoc = async () => {
   if (isUserAnon()) return { id: 'DEFAULT', username: 'DEFAULT' };
   const userRef = doc(db, 'users', userId);
   const userSnap = await getDoc(userRef);
-  return userSnap.data() || { id: 'DEFAULT', username: 'DEFAULT' };
+  if (userSnap.exists()) return { id: 'DEFAULT', username: 'DEFAULT' };
+  const { id, username } = userSnap.data() || {
+    id: 'DEFAULT',
+    username: 'DEFAULT',
+  };
+  return { id, username };
 };
 
 const createUserDoc = async ({
