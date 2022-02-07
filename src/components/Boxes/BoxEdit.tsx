@@ -5,7 +5,11 @@ import firebase from '../../utils/firebase';
 import Button from '../Button';
 
 const BoxEdit: FC = function BoxEdit() {
-  const box = useBox();
+  const box = useBox() || {
+    id: 'DEFAULT',
+    name: 'DEFAULT',
+    description: 'DEFAULT',
+  };
   const [name, setName] = useState(box.name);
   const [description, setDescription] = useState(box.description);
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ import firebase from '../../utils/firebase';
 import Button from '../Button';
 
 const BoxDelete: FC = function BoxDelete() {
-  const box = useBox();
+  const box = useBox() || { id: 'DEFAULT' };
   const [isDeleted, setIsDeleted] = useState(false);
 
   const onBoxDelete = async () => {
