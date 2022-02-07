@@ -39,6 +39,7 @@ const UserProvider: FC = function UserProvider({ children }) {
 
 const useUser = () => useContext(UserContext);
 const useUserAnon = () => useContext(UserAnonymousContext);
+const useSetUser = () => useContext(SetUserContext);
 
 export default UserProvider;
-export { useUser, useUserAnon };
+export { useUser, useUserAnon, useSetUser };
