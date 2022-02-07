@@ -9,7 +9,7 @@ interface BoxRegularViewProps {
 const BoxRegularView: FC<BoxRegularViewProps> = function BoxRegularView({
   onButtonClick,
 }) {
-  const box = useBox();
+  const box = useBox() || { name: '', description: '' };
 
   return (
     <div>
