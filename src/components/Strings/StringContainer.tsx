@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
+import { useUser, useUserAnon } from '../../context/UserContext';
 import StringContext from '../../context/StringContext';
 import StringAuthorView from './StringAuthorView';
 import String from './String';
@@ -14,6 +14,7 @@ const StringContainer: FC = function StringContainer() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [string, setString] = useState<any>({});
   const user = useUser();
+  const isUserAnon = useUserAnon();
 
   useEffect(() => {
     (async () => {
@@ -23,9 +24,9 @@ const StringContainer: FC = function StringContainer() {
     })();
   }, []);
 
-  const isCurrentUserAuthor = user.authoredStrings.some(
-    (id: string) => id === params.stringId,
-  );
+  const isCurrentUserAuthor =
+    !isUserAnon &&
+    user.authoredStrings.some((id: string) => id === params.stringId);
 
   if (!isLoaded) return <Loading />;
 
@@ -44,7 +45,7 @@ const StringContainer: FC = function StringContainer() {
               </div>
             ))}
 
-          <KnotCreate />
+          {!isUserAnon && <KnotCreate />}
         </div>
       </StringContext.Provider>
     </section>

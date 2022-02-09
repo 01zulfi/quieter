@@ -7,8 +7,11 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({ stringId: '012' }),
 }));
 
+const mockUseUserAnon = jest.fn();
+
 jest.mock('../../context/UserContext', () => ({
   useUser: () => ({ authoredStrings: ['012'] }),
+  useUserAnon: () => mockUseUserAnon(),
 }));
 
 jest.mock(
@@ -105,5 +108,27 @@ describe('tests StringContainer component', () => {
     });
 
     expect(renderText).toBeInTheDocument();
+  });
+
+  it('does not render StringAuthorView when user is anonymous/guest', async () => {
+    mockUseUserAnon.mockImplementation(() => true);
+    render(<StringContainer />);
+
+    await waitFor(() =>
+      expect(screen.queryByText('StringAuthorView')).not.toBeInTheDocument(),
+    );
+  });
+
+  it('does not render KnotCreate component when user is anonymous/guest', async () => {
+    mockUseUserAnon.mockImplementation(() => true);
+    render(<StringContainer />);
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('heading', {
+          name: 'KnotCreate component rendered',
+        }),
+      ).not.toBeInTheDocument(),
+    );
   });
 });
