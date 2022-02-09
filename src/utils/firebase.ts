@@ -1,4 +1,5 @@
 import React from 'react';
+import { initializeApp } from 'firebase/app';
 import {
   doc,
   getDoc,
@@ -20,6 +21,9 @@ import {
   signOut,
 } from 'firebase/auth';
 import uniqueId from './unique-id';
+import firebaseConfig from './firebase-config';
+
+initializeApp(firebaseConfig);
 
 const db = getFirestore();
 let userId = '';
