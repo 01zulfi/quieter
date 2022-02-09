@@ -24,10 +24,24 @@ import uniqueId from './unique-id';
 import firebaseConfig from './firebase-config';
 
 initializeApp(firebaseConfig);
-
 const db = getFirestore();
-let userId = '';
-let userAnon = false;
+
+let userId = (() => {
+  if (localStorage.getItem('isSignedIn') === 'true') {
+    const id = localStorage.getItem('userId');
+    if (!id) return '';
+    return id;
+  }
+  return '';
+})();
+
+let userAnon = (() => {
+  if (localStorage.getItem('isSignedIn') === 'true') {
+    if (localStorage.getItem('isAnon') === 'true') return true;
+    return false;
+  }
+  return false;
+})();
 
 const isUserSignedIn = () => userId !== '';
 
@@ -40,6 +54,8 @@ const signOutUser = () => {
       userId = '';
       userAnon = false;
       localStorage.setItem('isSignedIn', 'false');
+      localStorage.setItem('userId', '');
+      localStorage.setItem('isAnon', 'false');
     })
     /* eslint-disable no-console */
     .catch((error: any) => console.log(error));
@@ -56,8 +72,15 @@ const updateStateUponSignIn =
     });
   };
 
+const doesUserDocExist = async () => {
+  const userRef = doc(db, 'users', userId);
+  const userSnap = await getDoc(userRef);
+  return userSnap.exists();
+};
+
 const getUserDoc = async () => {
   if (isUserAnon()) return { id: 'DEFAULT', username: 'DEFAULT' };
+  console.log(userId);
   const userRef = doc(db, 'users', userId);
   const userSnap = await getDoc(userRef);
   if (userSnap.exists()) return { id: 'DEFAULT', username: 'DEFAULT' };
@@ -89,28 +112,31 @@ const createUserDoc = async ({
 };
 
 const signInAsGuest = async () => {
+  userAnon = true;
   const auth = getAuth();
   signInAnonymously(auth);
   onAuthStateChanged(auth, (user) => {
     if (!user) return;
-    userId = user.uid || '';
+    userId = user.uid;
     localStorage.setItem('isSignedIn', 'true');
+    localStorage.setItem('isAnon', 'true');
+    localStorage.setItem('userId', userId);
   });
-  userAnon = true;
 };
 
 const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   signInWithRedirect(auth, provider);
-  getRedirectResult(auth).then((result) => {
+  getRedirectResult(auth).then(async (result) => {
     if (!result) return;
-    localStorage.setItem('isSignedIn', 'true');
     const { user } = result;
+    localStorage.setItem('isSignedIn', 'true');
+    localStorage.setItem('isAnon', 'false');
+    localStorage.setItem('userId', user.uid);
     userId = user.uid;
-    if (!getUserDoc()) {
-      createUserDoc({ username: user.displayName || '', id: user.uid });
-    }
+    if (await doesUserDocExist()) return;
+    createUserDoc({ username: user.displayName || '', id: user.uid });
   });
 };
 
@@ -123,13 +149,14 @@ const signInWithEmail = async ({
 }) => {
   const auth = getAuth();
   createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
       const { user } = userCredential;
       localStorage.setItem('isSignedIn', 'true');
+      localStorage.setItem('isAnon', 'false');
+      localStorage.setItem('userId', user.uid);
       userId = user.uid;
-      if (!getUserDoc()) {
-        createUserDoc({ username: user.displayName || '', id: user.uid });
-      }
+      if (await doesUserDocExist()) return;
+      createUserDoc({ username: user.displayName || '', id: user.uid });
     })
     .catch((error) => {
       localStorage.setItem('isSignedIn', 'false');
