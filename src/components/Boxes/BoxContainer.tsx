@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useUser, useSetUser } from '../../context/UserContext';
+import { useUser, useSetUser, useUserAnon } from '../../context/UserContext';
 import firebase from '../../utils/firebase';
 import BoxContext from '../../context/BoxContext';
 import BoxAdminView from './BoxAdminView';
@@ -17,6 +17,7 @@ const BoxContainer: FC = function BoxContainer() {
   const [showStringCreateModal, setShowStringCreateModal] = useState(false);
   const [isCurrentUserMember, setIsCurrentUserMember] = useState(false);
   const user = useUser() || { joinedBoxes: [], adminBoxes: [] };
+  const isUserAnon = useUserAnon();
 
   useEffect(() => {
     (async () => {
@@ -27,6 +28,7 @@ const BoxContainer: FC = function BoxContainer() {
   }, []);
 
   useEffect(() => {
+    if (isUserAnon) return;
     const isUserMember = user?.joinedBoxes.some(
       (id: string) => id === params.boxId,
     );
@@ -36,9 +38,8 @@ const BoxContainer: FC = function BoxContainer() {
 
   if (!isLoaded) return <Loading />;
 
-  const isCurrentUserAdmin = user.adminBoxes.some(
-    (id: string) => id === params.boxId,
-  );
+  const isCurrentUserAdmin =
+    !isUserAnon && user.adminBoxes.some((id: string) => id === params.boxId);
 
   const onCreateStringClick = (): void => setShowStringCreateModal(true);
 
@@ -71,11 +72,11 @@ const BoxContainer: FC = function BoxContainer() {
           <Button
             textContent="Join Box"
             type="button"
-            clickHandler={onJoinButtonClick}
+            clickHandler={isUserAnon ? () => {} : onJoinButtonClick}
           />
         )}
 
-        {showStringCreateModal && (
+        {!isUserAnon && showStringCreateModal && (
           <StringCreateModal closeModal={onCloseModal} />
         )}
 
