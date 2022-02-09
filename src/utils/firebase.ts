@@ -39,6 +39,7 @@ const signOutUser = () => {
     .then(() => {
       userId = '';
       userAnon = false;
+      localStorage.setItem('isSignedIn', 'false');
     })
     /* eslint-disable no-console */
     .catch((error: any) => console.log(error));
@@ -49,7 +50,9 @@ const updateStateUponSignIn =
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (!user) return;
+      userId = user.uid;
       setStateFunction(stateValue);
+      localStorage.setItem('isSignedIn', 'true');
     });
   };
 
@@ -89,7 +92,9 @@ const signInAsGuest = async () => {
   const auth = getAuth();
   signInAnonymously(auth);
   onAuthStateChanged(auth, (user) => {
-    userId = user?.uid || '';
+    if (!user) return;
+    userId = user.uid || '';
+    localStorage.setItem('isSignedIn', 'true');
   });
   userAnon = true;
 };
@@ -100,6 +105,7 @@ const signInWithGoogle = async () => {
   signInWithRedirect(auth, provider);
   getRedirectResult(auth).then((result) => {
     if (!result) return;
+    localStorage.setItem('isSignedIn', 'true');
     const { user } = result;
     userId = user.uid;
     if (!getUserDoc()) {
@@ -119,12 +125,14 @@ const signInWithEmail = async ({
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const { user } = userCredential;
+      localStorage.setItem('isSignedIn', 'true');
       userId = user.uid;
       if (!getUserDoc()) {
         createUserDoc({ username: user.displayName || '', id: user.uid });
       }
     })
     .catch((error) => {
+      localStorage.setItem('isSignedIn', 'false');
       const errorCode = error.code;
       const errorMessage = error.message;
       /* eslint-disable no-console */

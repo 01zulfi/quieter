@@ -1,36 +1,39 @@
-import React, { FC, useEffect } from 'react';
-import { useNavigate, Routes, Route } from 'react-router-dom';
+import React, { FC } from 'react';
+import { Link, Routes, Route } from 'react-router-dom';
 import UserProvider from './context/UserContext';
 import StringContainer from './components/Strings/StringContainer';
 import BoxContainer from './components/Boxes/BoxContainer';
 import Navbar from './components/Navbar';
 import Feed from './components/Feed';
-import firebase from './utils/firebase';
+
+function SignInPrompt() {
+  return (
+    <div>
+      not signed in
+      <Link to="sign-in">sign in here</Link>
+    </div>
+  );
+}
 
 const App: FC = function App() {
-  const navigate = useNavigate();
-  const isSignedIn = firebase.isUserSignedIn();
+  const isUserSignedIn = localStorage.getItem('isSignedIn') === 'true';
 
-  useEffect(() => {
-    if (!isSignedIn) navigate('/sign-in');
-  }, []);
-
-  if (!isSignedIn) {
-    return null;
-  }
+  if (!isUserSignedIn) return <SignInPrompt />;
 
   return (
-    <UserProvider>
-      <Routes>
-        <Route path="*" element={<Navbar />} />
-        <Route path="home" element={<Feed />} />
-        <Route
-          path="box/:boxId/string/:stringId"
-          element={<StringContainer />}
-        />
-        <Route path="box/:boxId" element={<BoxContainer />} />
-      </Routes>
-    </UserProvider>
+    <div>
+      <UserProvider>
+        <Routes>
+          <Route path="*" element={<Navbar />} />
+          <Route path="/home" element={<Feed />} />
+          <Route
+            path="/box/:boxId/string/:stringId"
+            element={<StringContainer />}
+          />
+          <Route path="/box/:boxId" element={<BoxContainer />} />
+        </Routes>
+      </UserProvider>
+    </div>
   );
 };
 
