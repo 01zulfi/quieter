@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import firebase from '../../utils/firebase';
-import { useUser } from '../../context/UserContext';
+import { useUser, useUserAnon } from '../../context/UserContext';
 
 interface KnotProps {
   knotId: string;
@@ -9,6 +9,7 @@ interface KnotProps {
 const Knot: FC<KnotProps> = function Knot({ knotId }) {
   const [knot, setKnot] = useState<any>({});
   const user = useUser();
+  const isUserAnon = useUserAnon();
 
   useEffect(() => {
     (async () => {
@@ -17,9 +18,8 @@ const Knot: FC<KnotProps> = function Knot({ knotId }) {
     })();
   }, []);
 
-  const isCurrentUserAuthor = user.authoredKnots.find(
-    (id: string) => knotId === id,
-  );
+  const isCurrentUserAuthor =
+    !isUserAnon && user.authoredKnots.find((id: string) => knotId === id);
 
   // TODO: show user name & avatar
   return (
