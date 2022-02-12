@@ -37,6 +37,9 @@ const BoxContainer: FC = function BoxContainer() {
   });
 
   if (!isLoaded) return <Loading />;
+  if (box === null) {
+    return <h2>we couldn&apos;t find what you&apos;re looking for</h2>;
+  }
 
   const isCurrentUserAdmin =
     !isUserAnon && user.adminBoxes.some((id: string) => id === params.boxId);

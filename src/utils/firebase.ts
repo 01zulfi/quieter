@@ -174,9 +174,26 @@ const signInWithEmail = async ({
 };
 
 const getBox = async (boxId: string) => {
+  if (boxId === '') return null;
+
   const boxRef = doc(db, 'boxes', boxId);
   const boxSnap = await getDoc(boxRef);
-  return boxSnap.data();
+  if (!boxSnap.exists()) return null;
+
+  const { admin, associatedStrings, description, id, joinedUsers, name } =
+    boxSnap.data();
+  const hasStrings = associatedStrings.length > 0;
+  const joinedUsersCount = joinedUsers.length;
+  return {
+    admin,
+    associatedStrings,
+    description,
+    id,
+    joinedUsers,
+    name,
+    hasStrings,
+    joinedUsersCount,
+  };
 };
 
 const joinBox = async (boxId: string) => {
