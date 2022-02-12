@@ -80,7 +80,6 @@ const doesUserDocExist = async () => {
 
 const getUserDoc = async () => {
   if (isUserAnon()) return { id: 'DEFAULT', username: 'DEFAULT' };
-  console.log(userId);
   const userRef = doc(db, 'users', userId);
   const userSnap = await getDoc(userRef);
   if (userSnap.exists()) return { id: 'DEFAULT', username: 'DEFAULT' };
@@ -128,7 +127,14 @@ const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   signInWithRedirect(auth, provider);
-  getRedirectResult(auth).then(async (result) => {
+  localStorage.setItem('redirectedForGoogle', 'true');
+};
+
+if (localStorage.getItem('redirectedForGoogle') === 'true') {
+  localStorage.setItem('redirectedForGoogle', 'false');
+  // for google sign in
+  const authGlobal = getAuth();
+  getRedirectResult(authGlobal).then(async (result) => {
     if (!result) return;
     const { user } = result;
     localStorage.setItem('isSignedIn', 'true');
@@ -138,7 +144,7 @@ const signInWithGoogle = async () => {
     if (await doesUserDocExist()) return;
     createUserDoc({ username: user.displayName || '', id: user.uid });
   });
-};
+}
 
 const signInWithEmail = async ({
   email,
