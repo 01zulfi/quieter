@@ -274,9 +274,32 @@ const getBoxStrings = async (boxId: string) => {
 };
 
 const getString = async (stringId: string) => {
+  if (stringId === '') return null;
+
   const stringRef = doc(db, 'strings', stringId);
   const stringSnap = await getDoc(stringRef);
-  return stringSnap.data();
+  if (!stringSnap.exists()) return null;
+
+  const {
+    associatedBox,
+    associatedKnots,
+    id,
+    title,
+    content,
+    author,
+    associatedUsers,
+  } = stringSnap.data();
+  const hasKnots = associatedKnots.length > 0;
+  return {
+    associatedBox,
+    associatedKnots,
+    id,
+    title,
+    content,
+    author,
+    hasKnots,
+    associatedUsers,
+  };
 };
 
 const createString = async ({

@@ -1,8 +1,8 @@
 interface StringInterface {
-  associatedBox: string;
+  associatedBox: { name: string; id: string };
   hasKnots: boolean;
   associatedKnots?: string[];
-  author: string;
+  author: { name: string; id: string };
   associatedUsers: string[];
   id: string;
   title: string;
