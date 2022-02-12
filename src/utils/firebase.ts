@@ -80,14 +80,27 @@ const doesUserDocExist = async () => {
 
 const getUserDoc = async () => {
   if (isUserAnon()) return { id: 'DEFAULT', username: 'DEFAULT' };
+
   const userRef = doc(db, 'users', userId);
   const userSnap = await getDoc(userRef);
-  if (userSnap.exists()) return { id: 'DEFAULT', username: 'DEFAULT' };
-  const { id, username } = userSnap.data() || {
-    id: 'DEFAULT',
-    username: 'DEFAULT',
+  if (!userSnap.exists()) return { id: 'DEFAULT', username: 'DEFAULT' };
+
+  const {
+    id,
+    username,
+    adminBoxes,
+    associatedStrings,
+    authoredStrings,
+    joinedBoxes,
+  } = userSnap.data();
+  return {
+    id,
+    username,
+    adminBoxes,
+    associatedStrings,
+    authoredStrings,
+    joinedBoxes,
   };
-  return { id, username };
 };
 
 const createUserDoc = async ({

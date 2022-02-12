@@ -16,7 +16,7 @@ const BoxContainer: FC = function BoxContainer() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showStringCreateModal, setShowStringCreateModal] = useState(false);
   const [isCurrentUserMember, setIsCurrentUserMember] = useState(false);
-  const user = useUser() || { joinedBoxes: [], adminBoxes: [] };
+  const user = useUser();
   const isUserAnon = useUserAnon();
 
   useEffect(() => {
@@ -41,8 +41,9 @@ const BoxContainer: FC = function BoxContainer() {
     return <h2>we couldn&apos;t find what you&apos;re looking for</h2>;
   }
 
-  const isCurrentUserAdmin =
-    !isUserAnon && user.adminBoxes.some((id: string) => id === params.boxId);
+  const isCurrentUserAdmin = !isUserAnon
+    ? user.adminBoxes.some((id: string) => id === params.boxId)
+    : isUserAnon;
 
   const onCreateStringClick = (): void => setShowStringCreateModal(true);
 

@@ -16,14 +16,18 @@ const SetUserContext = createContext<any>(emptyFunction);
 const UserAnonymousContext = createContext(false);
 
 const UserProvider: FC = function UserProvider({ children }) {
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<any>({});
+  const [isLoaded, setIsLoaded] = useState(false);
   const isUserAnon = firebase.isUserAnon();
 
   useEffect(() => {
     (async () => {
-      if (isUserAnon) return;
+      if (isUserAnon) {
+        setIsLoaded(true);
+      }
       const fetchedUserData: UserInterface = await firebase.getUserDoc();
       setUser(fetchedUserData);
+      setIsLoaded(true);
     })();
   }, []);
 
@@ -40,7 +44,7 @@ const UserProvider: FC = function UserProvider({ children }) {
         value={isUserAnon ? emptyFunction : userContextUpdater}
       >
         <UserAnonymousContext.Provider value={isUserAnon}>
-          {children}
+          {isLoaded && children}
         </UserAnonymousContext.Provider>
       </SetUserContext.Provider>
     </UserContext.Provider>
