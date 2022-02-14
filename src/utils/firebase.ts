@@ -225,6 +225,13 @@ const signInWithEmail = async ({
     });
 };
 
+const editUserDoc = async ({ username }: { username: string }) => {
+  const userRef = doc(db, 'users', userId);
+  await updateDoc(userRef, {
+    username,
+  });
+};
+
 const getBox = async (boxId: string) => {
   if (boxId === '') return null;
 
@@ -506,6 +513,7 @@ const firebase = {
   signOutUser,
   updateStateUponSignIn,
   getUserDoc,
+  editUserDoc,
   signInAsGuest,
   signInWithGoogle,
   signInWithEmail,
