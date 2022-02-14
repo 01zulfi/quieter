@@ -116,6 +116,32 @@ const getUserDoc = async () => {
   };
 };
 
+const getNotSignedInUserDoc = async (id: string) => {
+  if (id === '') return { id: 'DEFAULT', username: 'DEFAULT' };
+
+  const userRef = doc(db, 'users', userId);
+  const userSnap = await getDoc(userRef);
+  if (!userSnap.exists()) return { id: 'DEFAULT', username: 'DEFAULT' };
+
+  const {
+    username,
+    adminBoxes,
+    associatedStrings,
+    authoredStrings,
+    authoredKnots,
+    joinedBoxes,
+  } = userSnap.data();
+  return {
+    id,
+    username,
+    adminBoxes,
+    associatedStrings,
+    authoredStrings,
+    joinedBoxes,
+    authoredKnots,
+  };
+};
+
 const createUserDoc = async ({
   username,
   id,
@@ -496,6 +522,7 @@ const firebase = {
   getBoxStrings,
   getKnot,
   createKnot,
+  getNotSignedInUserDoc,
 };
 
 export default firebase;
