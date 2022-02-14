@@ -9,7 +9,7 @@ const StringCreateForm: FC = function StringCreateForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const box = useBox() || { id: 'DEFAULT' };
+  const box = useBox() || { id: 'DEFAULT', name: 'DEFAULT' };
 
   const stringId = uniqueId();
 
@@ -21,7 +21,13 @@ const StringCreateForm: FC = function StringCreateForm() {
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await firebase.createString({ boxId: box.id, title, content, stringId });
+    await firebase.createString({
+      boxName: box.name,
+      boxId: box.id,
+      title,
+      content,
+      stringId,
+    });
     setIsSubmitted(true);
   };
 

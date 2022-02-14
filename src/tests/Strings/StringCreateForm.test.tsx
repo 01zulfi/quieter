@@ -17,6 +17,7 @@ jest.mock('../../utils/unique-id', () => () => '123');
 jest.mock('../../context/BoxContext', () => ({
   useBox: () => ({
     id: '456',
+    name: 'box name here',
   }),
 }));
 
@@ -26,12 +27,14 @@ jest.mock('../../utils/firebase', () => ({
     stringId,
     title,
     content,
+    boxName,
   }: {
     boxId: string;
     title: string;
     stringId: string;
     content: string;
-  }) => mockCreateString({ stringId, boxId, title, content }),
+    boxName: string;
+  }) => mockCreateString({ stringId, boxId, title, content, boxName }),
 }));
 
 describe('tests StringCreateForm component', () => {
@@ -83,6 +86,7 @@ describe('tests StringCreateForm component', () => {
         stringId: '123',
         title: 'test title',
         content: 'this is a test',
+        boxName: 'box name here',
       }),
     );
   });

@@ -336,18 +336,20 @@ const createString = async ({
   content,
   stringId,
   boxId,
+  boxName,
 }: {
   title: string;
   content: string;
   boxId: string;
+  boxName: string;
   stringId: string;
 }) => {
   const stringData = {
-    associatedBox: boxId,
+    associatedBox: { name: boxName, id: boxId },
     stringId,
     title,
     content,
-    author: userId,
+    author: { username: getUsername(), id: userId },
     associatedUsers: [userId],
     hasKnots: false,
   };

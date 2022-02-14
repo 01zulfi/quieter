@@ -3,7 +3,7 @@ interface StringInterface {
   hasKnots: boolean;
   associatedKnots?: string[];
   latestTwoKnots?: string[];
-  author: { name: string; id: string };
+  author: { username: string; id: string };
   associatedUsers: string[];
   id: string;
   title: string;
