@@ -91,6 +91,7 @@ const getUserDoc = async () => {
     adminBoxes,
     associatedStrings,
     authoredStrings,
+    authoredKnots,
     joinedBoxes,
   } = userSnap.data();
   return {
@@ -100,6 +101,7 @@ const getUserDoc = async () => {
     associatedStrings,
     authoredStrings,
     joinedBoxes,
+    authoredKnots,
   };
 };
 
@@ -303,6 +305,8 @@ const getString = async (stringId: string) => {
     associatedUsers,
   } = stringSnap.data();
   const hasKnots = associatedKnots.length > 0;
+  const latestTwoKnots =
+    associatedKnots.length > 0 ? associatedKnots.slice(0, 2) : [];
   return {
     associatedBox,
     associatedKnots,
@@ -312,6 +316,7 @@ const getString = async (stringId: string) => {
     author,
     hasKnots,
     associatedUsers,
+    latestTwoKnots,
   };
 };
 
@@ -427,6 +432,12 @@ const createKnot = async ({
 
   await updateDoc(stringRef, {
     associatedKnots: arrayUnion(id),
+  });
+
+  const userRef = doc(db, 'users', userId);
+
+  await updateDoc(userRef, {
+    authoredKnots: arrayUnion(id),
   });
 };
 
