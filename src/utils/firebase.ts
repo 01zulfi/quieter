@@ -435,7 +435,7 @@ const createKnot = async ({
   const knotData = {
     associatedString: stringId,
     content,
-    author: userId,
+    author: { username: getUsername(), id: userId },
     id,
   };
 

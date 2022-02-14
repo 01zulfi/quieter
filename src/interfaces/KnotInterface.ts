@@ -1,6 +1,6 @@
 interface KnotInterface {
   associatedString: string;
-  author: string;
+  author: { username: string; id: string };
   content: string;
   id: string;
   time: any;
