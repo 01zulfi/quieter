@@ -2,6 +2,7 @@ interface StringInterface {
   associatedBox: { name: string; id: string };
   hasKnots: boolean;
   associatedKnots?: string[];
+  latestTwoKnots?: string[];
   author: { name: string; id: string };
   associatedUsers: string[];
   id: string;
