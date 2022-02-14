@@ -43,7 +43,7 @@ const BoxContainer: FC = function BoxContainer() {
 
   const isCurrentUserAdmin = !isUserAnon
     ? user.adminBoxes.some((id: string) => id === params.boxId)
-    : isUserAnon;
+    : !isUserAnon;
 
   const onCreateStringClick = (): void => setShowStringCreateModal(true);
 
