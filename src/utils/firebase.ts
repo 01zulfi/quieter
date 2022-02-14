@@ -43,6 +43,17 @@ let userAnon = (() => {
   return false;
 })();
 
+const getUsername = async () => {
+  if (userId === '') return '';
+
+  const userRef = doc(db, 'users', userId);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) return '';
+
+  return userSnap.data().username;
+};
+
 const isUserSignedIn = () => userId !== '';
 
 const isUserAnon = () => userAnon;
