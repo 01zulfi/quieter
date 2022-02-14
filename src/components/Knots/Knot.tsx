@@ -19,7 +19,7 @@ const Knot: FC<KnotProps> = function Knot({ knotId }) {
   }, []);
 
   const isCurrentUserAuthor =
-    !isUserAnon && user.authoredKnots.find((id: string) => knotId === id);
+    !isUserAnon && user.authoredKnots.some((id: string) => knotId === id);
 
   // TODO: show user name & avatar
   return (
