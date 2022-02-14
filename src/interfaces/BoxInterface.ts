@@ -1,5 +1,5 @@
 interface BoxInterface {
-  admin: string;
+  admin: { username: string; id: string };
   hasStrings: boolean;
   associatedStrings?: string[];
   id: string;

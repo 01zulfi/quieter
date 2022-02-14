@@ -258,7 +258,7 @@ const createBox = async ({
   boxId: string;
 }) => {
   const boxData = {
-    admin: userId,
+    admin: { username: await getUsername(), id: userId },
     id: boxId,
     name,
     description,
@@ -349,7 +349,7 @@ const createString = async ({
     stringId,
     title,
     content,
-    author: { username: getUsername(), id: userId },
+    author: { username: await getUsername(), id: userId },
     associatedUsers: [userId],
     hasKnots: false,
   };
@@ -435,7 +435,7 @@ const createKnot = async ({
   const knotData = {
     associatedString: stringId,
     content,
-    author: { username: getUsername(), id: userId },
+    author: { username: await getUsername(), id: userId },
     id,
   };
 
