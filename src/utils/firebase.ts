@@ -507,6 +507,26 @@ const deleteBox = async (boxId: string) => {
   await deleteDoc(boxRef);
 };
 
+const getFeedStrings = async () => {
+  const user = await getUserDoc();
+  const boxStrings = user.joinedBoxes.reduce(
+    async (prev: any, next: string) => {
+      const box = await getBox(next);
+      if (!box) return [...prev];
+      return [...prev, ...box.associatedStrings];
+    },
+    [],
+  );
+
+  const allStrings = [...user.associatedStrings, ...boxStrings];
+
+  const uniqueArray = allStrings.filter(
+    (item: any, index: any, self: any) => self.indexOf(item) === index,
+  );
+
+  return uniqueArray;
+};
+
 const firebase = {
   isUserSignedIn,
   isUserAnon,
@@ -531,6 +551,7 @@ const firebase = {
   getKnot,
   createKnot,
   getNotSignedInUserDoc,
+  getFeedStrings,
 };
 
 export default firebase;
