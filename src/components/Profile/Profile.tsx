@@ -14,6 +14,7 @@ const Profile: FC = function Profile() {
 
   useEffect(() => {
     if (params.userId === signedInUser.id) {
+      setUser(signedInUser);
       setIsLoaded(true);
       return;
     }
