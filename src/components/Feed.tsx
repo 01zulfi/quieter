@@ -1,15 +1,29 @@
-import React, { FC } from 'react';
-import { useUser } from '../context/UserContext';
+import React, { FC, useState, useEffect } from 'react';
 import StringCompactView from './Strings/StringCompactView';
+import firebase from '../utils/firebase';
+import Loading from './Loading';
 
 const Feed: FC = function Feed() {
-  const user = useUser();
+  const [feedStrings, setFeedStrings] = useState<any>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const strings = user.associatedStrings;
+  useEffect(() => {
+    (async () => {
+      const fetchData = await firebase.getFeedStrings();
+      setFeedStrings(fetchData);
+      setIsLoaded(true);
+    })();
+  }, []);
+
+  if (!isLoaded) return <Loading />;
+
+  if (feedStrings.length === 0) {
+    return <h2>No feed available. Populate it by getting involved!</h2>;
+  }
 
   return (
     <section>
-      {strings.map((stringId: string) => (
+      {feedStrings.map((stringId: string) => (
         <div key={stringId}>
           <StringCompactView stringId={stringId} />
         </div>
