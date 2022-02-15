@@ -4,6 +4,7 @@ import UserProvider from './context/UserContext';
 import StringContainer from './components/Strings/StringContainer';
 import BoxContainer from './components/Boxes/BoxContainer';
 import Navbar from './components/Navbar';
+import Profile from './components/Profile/Profile';
 import Feed from './components/Feed';
 
 function SignInPrompt() {
@@ -31,6 +32,7 @@ const App: FC = function App() {
             element={<StringContainer />}
           />
           <Route path="/box/:boxId" element={<BoxContainer />} />
+          <Route path="/profile/:userId" element={<Profile />} />
         </Routes>
       </UserProvider>
     </div>
