@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import firebase from '../../utils/firebase';
 import uniqueId from '../../utils/unique-id';
@@ -8,8 +8,11 @@ const BoxCreateForm: FC = function BoxCreateForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [boxId, setBoxId] = useState('');
 
-  const boxId = uniqueId();
+  useEffect(() => {
+    setBoxId(uniqueId());
+  }, []);
 
   const onNameInput = (event: React.ChangeEvent<HTMLInputElement>) =>
     setName(event.target.value);
