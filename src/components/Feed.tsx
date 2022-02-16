@@ -17,6 +17,10 @@ const Feed: FC = function Feed() {
 
   if (!isLoaded) return <Loading />;
 
+  if (!feedStrings) {
+    return <h2>No feed available. Populate it by getting involved!</h2>;
+  }
+
   if (feedStrings.length === 0) {
     return <h2>No feed available. Populate it by getting involved!</h2>;
   }
