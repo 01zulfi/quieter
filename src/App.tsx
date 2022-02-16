@@ -5,7 +5,7 @@ import StringContainer from './components/Strings/StringContainer';
 import BoxContainer from './components/Boxes/BoxContainer';
 import Navbar from './components/Navbar';
 import Profile from './components/Profile/Profile';
-import Feed from './components/Feed';
+import Home from './components/Home';
 
 function SignInPrompt() {
   return (
@@ -26,7 +26,7 @@ const App: FC = function App() {
       <UserProvider>
         <Routes>
           <Route path="*" element={<Navbar />} />
-          <Route path="/home" element={<Feed />} />
+          <Route path="/home" element={<Home />} />
           <Route
             path="/box/:boxId/string/:stringId"
             element={<StringContainer />}
