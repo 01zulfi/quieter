@@ -241,7 +241,7 @@ const getBox = async (boxId: string) => {
 
   const { admin, associatedStrings, description, id, joinedUsers, name } =
     boxSnap.data();
-  const hasStrings = associatedStrings.length > 0;
+  const hasStrings = associatedStrings ? associatedStrings.length > 0 : false;
   const joinedUsersCount = joinedUsers.length;
   return {
     admin,

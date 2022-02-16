@@ -84,7 +84,7 @@ const BoxContainer: FC = function BoxContainer() {
           <StringCreateModal closeModal={onCloseModal} />
         )}
 
-        {box.associatedStrings.length > 0 ? (
+        {box.hasStrings ? (
           <section>
             {box.associatedStrings.map((stringId: string) => (
               <div key={stringId}>
