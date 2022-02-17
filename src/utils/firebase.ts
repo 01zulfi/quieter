@@ -378,7 +378,7 @@ const createString = async ({
 }) => {
   const stringData = {
     associatedBox: { name: boxName, id: boxId },
-    stringId,
+    id: stringId,
     title,
     content,
     author: { username: await getUsername(), id: userId },
