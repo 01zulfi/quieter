@@ -51,7 +51,7 @@ jest.mock(
 jest.mock('../../utils/firebase', () => ({
   getString: async (stringId: string) => {
     mockGetString(stringId);
-    return { associatedKnots: ['first knot', 'second knot'] };
+    return { associatedKnots: ['first knot', 'second knot'], hasKnots: true };
   },
 }));
 
