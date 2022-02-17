@@ -509,14 +509,14 @@ const deleteBox = async (boxId: string) => {
 
 const getFeedStrings = async () => {
   const user = await getUserDoc();
-  const boxStrings = user.joinedBoxes.reduce(
-    async (prev: any, next: string) => {
-      const box = await getBox(next);
-      if (!box) return [...prev];
-      return [...prev, ...box.associatedStrings];
-    },
-    [],
-  );
+  const boxStrings: string[] = [];
+
+  user.joinedBoxes.forEach(async (boxId: string) => {
+    const box = await getBox(boxId);
+    if (box) {
+      boxStrings.concat(box.associatedStrings);
+    }
+  });
 
   const allStrings = [...user.associatedStrings, ...boxStrings];
 
