@@ -3,7 +3,6 @@ import { Link, Routes, Route } from 'react-router-dom';
 import UserProvider from './context/UserContext';
 import StringContainer from './components/Strings/StringContainer';
 import BoxContainer from './components/Boxes/BoxContainer';
-import Navbar from './components/Navbar';
 import Profile from './components/Profile/Profile';
 import Home from './components/Home';
 
@@ -25,7 +24,7 @@ const App: FC = function App() {
     <div>
       <UserProvider>
         <Routes>
-          <Route path="*" element={<Navbar />} />
+          <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route
             path="/box/:boxId/string/:stringId"
