@@ -348,9 +348,8 @@ const getString = async (stringId: string) => {
     author,
     associatedUsers,
   } = stringSnap.data();
-  const hasKnots = associatedKnots.length > 0;
-  const latestTwoKnots =
-    associatedKnots.length > 0 ? associatedKnots.slice(0, 2) : [];
+  const hasKnots = associatedKnots ? associatedKnots.length > 0 : false;
+  const latestTwoKnots = hasKnots ? associatedKnots.slice(0, 2) : [];
   return {
     associatedBox,
     associatedKnots,

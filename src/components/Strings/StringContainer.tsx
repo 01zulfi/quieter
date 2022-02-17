@@ -41,7 +41,7 @@ const StringContainer: FC = function StringContainer() {
         <div>
           <String />
 
-          {string.associatedKnots.length > 0 &&
+          {string.hasKnots &&
             string.associatedKnots.map((knotId: string) => (
               <div key={knotId}>
                 <Knot knotId={knotId} />
