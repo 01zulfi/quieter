@@ -1,20 +1,12 @@
 import React, { FC } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import UserProvider from './context/UserContext';
 import StringContainer from './components/Strings/StringContainer';
+import SignInPrompt from './components/AuthComponents/SignInPrompt';
 import BoxContainer from './components/Boxes/BoxContainer';
 import Profile from './components/Profile/Profile';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-
-function SignInPrompt() {
-  return (
-    <div>
-      not signed in
-      <Link to="sign-in">sign in here</Link>
-    </div>
-  );
-}
 
 const App: FC = function App() {
   const isUserSignedIn = localStorage.getItem('isSignedIn') === 'true';
