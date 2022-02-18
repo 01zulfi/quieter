@@ -4,6 +4,7 @@ import UserProvider from './context/UserContext';
 import StringContainer from './components/Strings/StringContainer';
 import BoxContainer from './components/Boxes/BoxContainer';
 import Profile from './components/Profile/Profile';
+import Navbar from './components/Navbar';
 import Home from './components/Home';
 
 function SignInPrompt() {
@@ -23,6 +24,9 @@ const App: FC = function App() {
   return (
     <div>
       <UserProvider>
+        <Routes>
+          <Route index element={<Navbar />} />
+        </Routes>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
