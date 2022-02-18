@@ -10,6 +10,12 @@ import App from './App';
 const AppWrapper = styled.section`
   background: ${(props: any) => props.theme.base.one};
   color: ${(props: any) => props.theme.text.one};
+
+  @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+  font-family: 'Rubik', sans-serif;
+
+  width: 100%;
+  height: 100%;
 `;
 
 const RouteSwitch: FC = function RouteSwitch() {
