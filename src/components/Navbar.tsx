@@ -4,6 +4,8 @@ import { useTheme } from 'styled-components';
 import { useSetTheme } from '../context/SetThemeContext';
 import theme from '../utils/themes';
 import Button from './Button';
+import logoDark from '../images/logo-dark.png';
+import logoLight from '../images/logo-light.png';
 
 const Navbar: FC = function Navbar() {
   const currentTheme = useTheme().name;
@@ -20,8 +22,7 @@ const Navbar: FC = function Navbar() {
   return (
     <div>
       <div>
-        <h1>quieter</h1>
-        <h2>social media for quiet folks</h2>
+        <img src={currentTheme === 'light' ? logoDark : logoLight} alt="logo" />
       </div>
       <div>Search Component Placeholder</div>
       <div>Avatar Component Placeholder</div>
