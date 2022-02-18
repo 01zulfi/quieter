@@ -1,7 +1,22 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from 'styled-components';
+import { useSetTheme } from '../context/SetThemeContext';
+import theme from '../utils/themes';
+import Button from './Button';
 
 const Navbar: FC = function Navbar() {
+  const currentTheme = useTheme().name;
+  const setCurrentTheme = useSetTheme();
+
+  const switchTheme = () => {
+    if (currentTheme === 'light') {
+      setCurrentTheme(theme.dark);
+      return;
+    }
+    setCurrentTheme(theme.light);
+  };
+
   return (
     <div>
       <div>
@@ -13,6 +28,11 @@ const Navbar: FC = function Navbar() {
       <div>
         <Link to="/sign-out">Sign out</Link>
       </div>
+      <Button
+        textContent={currentTheme === 'light' ? 'dark' : 'light'}
+        type="button"
+        clickHandler={switchTheme}
+      />
     </div>
   );
 };
