@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar/Navbar';
 
 jest.mock('react-router-dom', () => ({
   Link: function Link({ to, children }: { to: string; children: any }) {

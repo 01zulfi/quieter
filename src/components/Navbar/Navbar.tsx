@@ -1,14 +1,14 @@
 import React, { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
-import { useSetTheme } from '../context/SetThemeContext';
-import theme from '../utils/themes';
-import menuLight from '../icons/menu_white_24dp.svg';
-import menuDark from '../icons/menu_black_24dp.svg';
-import cancelLight from '../icons/cancel_white_24dp.svg';
-import cancelDark from '../icons/cancel_black_24dp.svg';
-import lightTheme from '../icons/light_mode_white_24dp.svg';
-import darkTheme from '../icons/dark_mode_black_24dp.svg';
+import { useSetTheme } from '../../context/SetThemeContext';
+import theme from '../../utils/themes';
+import menuLight from '../../icons/menu_white_24dp.svg';
+import menuDark from '../../icons/menu_black_24dp.svg';
+import cancelLight from '../../icons/cancel_white_24dp.svg';
+import cancelDark from '../../icons/cancel_black_24dp.svg';
+import lightTheme from '../../icons/light_mode_white_24dp.svg';
+import darkTheme from '../../icons/dark_mode_black_24dp.svg';
 
 const NavbarWrapper = styled.div`
   display: flex;
@@ -38,10 +38,10 @@ const H2Wrapper = styled.h2`
 const NavWrapper = styled.nav`
   display: ${(props: any) => (props.shouldShow ? 'flex' : 'none')};
   align-items: center;
+  font-weight: bold;
 
   @media only screen and (max-width: 680px) {
     background: rgba(255, 255, 255, 0.01);
-    font-weight: bold;
     font-size: 1.4em;
     position: absolute;
     right: 0;

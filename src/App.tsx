@@ -5,7 +5,7 @@ import StringContainer from './components/Strings/StringContainer';
 import SignInPrompt from './components/AuthComponents/SignInPrompt';
 import BoxContainer from './components/Boxes/BoxContainer';
 import Profile from './components/Profile/Profile';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home';
 
 const App: FC = function App() {
