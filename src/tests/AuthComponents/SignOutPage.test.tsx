@@ -11,6 +11,12 @@ jest.mock(
     },
 );
 
+jest.mock('react-router-dom', () => ({
+  Link: function Link({ to, children }: { to: string; children: any }) {
+    return <a href={to}>{children}</a>;
+  },
+}));
+
 const mockSignOutUser = jest.fn();
 
 jest.mock('../../utils/firebase', () => ({
@@ -32,7 +38,7 @@ describe('tests SignOutPage component', () => {
     render(<SignOutPage />);
 
     const heading = await screen.findByRole('heading', {
-      name: 'successfully signed out',
+      name: 'Successfully signed out of quieter',
     });
 
     expect(heading).toBeInTheDocument();
