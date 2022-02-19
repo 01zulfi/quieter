@@ -10,7 +10,7 @@ const NavbarWrapper = styled.div`
   justify-content: space-between;
   box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
   background: ${(props: any) => props.background};
-  height: 5rem;
+  height: 4rem;
 `;
 
 const HeadingWrapper = styled.div`
@@ -21,12 +21,12 @@ const HeadingWrapper = styled.div`
 `;
 
 const H1Wrapper = styled.h1`
-  font-size: 4rem;
+  font-size: 3rem;
   text-decoration: underline;
   color: ${(props: any) => props.theme.text.one};
 `;
 const H2Wrapper = styled.h2`
-  font-size: 3em;
+  font-size: 2em;
   color: ${(props: any) => props.theme.text.one};
 `;
 
