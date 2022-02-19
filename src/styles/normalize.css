@@ -349,7 +349,3 @@ template {
 [hidden] {
   display: none;
 }
-
-#root {
-  min-height: 100vh;
-}
