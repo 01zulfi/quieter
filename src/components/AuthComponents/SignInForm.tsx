@@ -26,16 +26,19 @@ const SignInForm: FC = function SignInForm() {
           type="button"
           textContent="Sign in with Google"
           clickHandler={googleSignInHandler}
+          status="primary"
         />
         <Button
           type="button"
           textContent="Sign in with Email"
           clickHandler={emailSignInHandler}
+          status="primary"
         />
         <Button
           type="button"
           textContent="Sign in as Guest (Limited view)"
           clickHandler={guestSignInHandler}
+          status="secondary"
         />
       </div>
 
