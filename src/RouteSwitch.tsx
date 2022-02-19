@@ -15,7 +15,7 @@ const AppWrapper = styled.section`
   font-family: 'Rubik', sans-serif;
 
   width: 100%;
-  height: 100%;
+  min-height: inherit;
 `;
 
 const RouteSwitch: FC = function RouteSwitch() {
