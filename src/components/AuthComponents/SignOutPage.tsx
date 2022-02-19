@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import StyledLink from '../StyledLink';
 import Loading from '../Loading';
 import StrippedNavbar from '../Navbar/StrippedNavbar';
 import firebase from '../../utils/firebase';
@@ -42,7 +43,9 @@ const SignOutPage: FC = function SignOutPage() {
       {isSignedOut ? (
         <MessageWrapper>
           <h3>Successfully signed out of quieter</h3>
-          <Link to="/sign-in">Sign in</Link>
+          <StyledLink size="2em" bold="800">
+            <Link to="/sign-in">Sign in</Link>
+          </StyledLink>
         </MessageWrapper>
       ) : (
         <Loading />

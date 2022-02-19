@@ -33,7 +33,14 @@ const H2Wrapper = styled.h2`
 const Icon = styled.button`
   background: transparent;
   border: 0;
-  margin-right: 3em;
+  margin-right: 1em;
+  align-self: center;
+  padding: 5px;
+  border-radius: 2px;
+
+  &:hover {
+    background: ${(props: any) => props.theme.base.four};
+  }
 `;
 
 const StrippedNavbar: FC = function StrippedNavbar() {
