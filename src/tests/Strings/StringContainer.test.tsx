@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, waitFor } from '@testing-library/react';
+import { screen, render, waitFor } from '../../utils/test-utils';
 import '@testing-library/jest-dom';
 import StringContainer from '../../components/Strings/StringContainer';
 

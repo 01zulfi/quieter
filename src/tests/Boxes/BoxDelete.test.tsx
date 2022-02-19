@@ -1,6 +1,6 @@
 import React from 'react';
-import { waitFor, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { waitFor, render, screen } from '../../utils/test-utils';
 import '@testing-library/jest-dom';
 import BoxDelete from '../../components/Boxes/BoxDelete';
 

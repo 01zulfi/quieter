@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitFor, render, screen } from '@testing-library/react';
+import { waitFor, render, screen } from '../../utils/test-utils';
 import '@testing-library/jest-dom';
 import Knot from '../../components/Knots/Knot';
 

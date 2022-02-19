@@ -1,6 +1,6 @@
 import React from 'react';
-import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { screen, render } from '../../utils/test-utils';
 import '@testing-library/jest-dom';
 import BoxAdminView from '../../components/Boxes/BoxAdminView';
 
