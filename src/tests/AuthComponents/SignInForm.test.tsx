@@ -5,31 +5,18 @@ import '@testing-library/jest-dom';
 import SignInForm from '../../components/AuthComponents/SignInForm';
 
 jest.mock(
-  '../../components/AuthComponents/EmailAuthForm',
+  '../../components/AuthComponents/EmailSignInForm',
   () =>
-    function EmailAuthFormMock() {
-      return <h2>EmailAuthForm component rendered</h2>;
+    function EmailSignInFormMock() {
+      return <h2>EmailSignInForm component rendered</h2>;
     },
 );
 
 jest.mock(
-  '../../components/Modal',
+  '../../components/AuthComponents/EmailSignUpForm',
   () =>
-    function ModalMock({
-      closeModal,
-      children,
-    }: {
-      closeModal: any;
-      children: any;
-    }) {
-      return (
-        <>
-          {children}
-          <button type="button" onClick={closeModal}>
-            close modal mock
-          </button>
-        </>
-      );
+    function EmailSignUpFormMock() {
+      return <h2>EmailSignUpForm component rendered</h2>;
     },
 );
 
@@ -64,36 +51,47 @@ describe('tests SignInForm component', () => {
     expect(mockSignInAsGuest).toHaveBeenCalledTimes(1);
   });
 
-  it('renders EmailAuthForm component when email sign in button is clicked', () => {
+  it('renders EmailSignInForm component', () => {
     render(<SignInForm />);
-    const emailButton = screen.getByRole('button', {
-      name: 'Sign in with Email',
-    });
-
-    userEvent.click(emailButton);
-
     const renderText = screen.getByRole('heading', {
-      name: 'EmailAuthForm component rendered',
+      name: 'EmailSignInForm component rendered',
     });
+
     expect(renderText).toBeInTheDocument();
   });
 
-  it('unmounts EmailAuthForm component when close modal button is clicked', () => {
+  it('renders EmailSignUpForm component when sign up button clicks', () => {
     render(<SignInForm />);
-    const emailButton = screen.getByRole('button', {
-      name: 'Sign in with Email',
+    const signUp = screen.getByRole('button', {
+      name: 'Sign Up',
     });
 
-    userEvent.click(emailButton);
+    userEvent.click(signUp);
 
-    const closeModalButton = screen.getByRole('button', {
-      name: 'close modal mock',
+    const renderText = screen.getByRole('heading', {
+      name: 'EmailSignUpForm component rendered',
     });
-    userEvent.click(closeModalButton);
 
-    const renderText = screen.queryByRole('heading', {
-      name: 'EmailAuthForm component rendered',
+    expect(renderText).toBeInTheDocument();
+  });
+
+  it('renders EmailSignInForm component when sign in button clicks', () => {
+    render(<SignInForm />);
+    const signUp = screen.getByRole('button', {
+      name: 'Sign Up',
     });
-    expect(renderText).not.toBeInTheDocument();
+
+    userEvent.click(signUp);
+    userEvent.click(
+      screen.getByRole('button', {
+        name: 'Sign in here',
+      }),
+    );
+
+    const renderText = screen.getByRole('heading', {
+      name: 'EmailSignInForm component rendered',
+    });
+
+    expect(renderText).toBeInTheDocument();
   });
 });
