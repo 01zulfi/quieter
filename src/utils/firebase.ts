@@ -145,9 +145,11 @@ const getNotSignedInUserDoc = async (id: string) => {
 const createUserDoc = async ({
   username,
   id,
+  email,
 }: {
   username: string;
   id: string;
+  email?: string;
 }) => {
   const userData = {
     username,
@@ -157,6 +159,7 @@ const createUserDoc = async ({
     authoredKnots: [],
     authoredStrings: [],
     adminBoxes: [],
+    email,
   };
 
   await setDoc(doc(db, 'users', id), userData);
@@ -213,8 +216,7 @@ const signInWithEmail = async ({
       localStorage.setItem('isAnon', 'false');
       localStorage.setItem('userId', user.uid);
       userId = user.uid;
-      if (await doesUserDocExist()) return;
-      createUserDoc({ username: user.displayName || '', id: user.uid });
+      createUserDoc({ username: user.displayName || '', id: user.uid, email });
     })
     .catch((error) => {
       localStorage.setItem('isSignedIn', 'false');

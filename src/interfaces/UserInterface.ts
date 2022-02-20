@@ -6,6 +6,7 @@ interface UserInterface {
   joinedBoxes?: string[];
   id: string;
   username: string;
+  email?: string;
 }
 
 export default UserInterface;
