@@ -3,12 +3,16 @@ import { initializeApp } from 'firebase/app';
 import {
   doc,
   getDoc,
+  getDocs,
   setDoc,
   getFirestore,
   updateDoc,
   arrayUnion,
   arrayRemove,
   deleteDoc,
+  query,
+  collection,
+  where,
 } from 'firebase/firestore';
 import {
   signInWithRedirect,
@@ -18,6 +22,7 @@ import {
   onAuthStateChanged,
   getRedirectResult,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
 import uniqueId from './unique-id';
@@ -225,6 +230,39 @@ const signUpWithEmail = async ({
       /* eslint-disable no-console */
       console.log({ errorCode, errorMessage });
     });
+};
+
+const signInWithEmail = async ({
+  email,
+  password,
+  setIsError,
+}: {
+  setIsError: any;
+  email: string;
+  password: string;
+}) => {
+  const auth = getAuth();
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const { user } = userCredential;
+      localStorage.setItem('isSignedIn', 'true');
+      localStorage.setItem('isAnon', 'false');
+      localStorage.setItem('userId', user.uid);
+    })
+    .catch(() => {
+      setIsError(true);
+    });
+};
+
+const checkIfEmailExists = async (email: string) => {
+  const usersRef = collection(db, 'users');
+  const emailQuery = query(usersRef, where('email', '==', email));
+  const querySnapshot = await getDocs(emailQuery);
+  let exists = false;
+  querySnapshot.forEach((docRef) => {
+    exists = docRef.exists();
+  });
+  return exists;
 };
 
 const editUserDoc = async ({ username }: { username: string }) => {
@@ -554,6 +592,7 @@ const firebase = {
   createKnot,
   getNotSignedInUserDoc,
   getFeedStrings,
+  checkIfEmailExists,
 };
 
 export default firebase;
