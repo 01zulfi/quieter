@@ -47,16 +47,27 @@ const EmailFormWrapper = styled.div`
   align-items: center;
   padding: 1em;
   gap: 1em;
+  width: 100%;
+
+  @media (min-width: 680px) {
+    width: 75%;
+  }
 `;
 
 const EmailButtonsWrapper = styled.div`
   background: ${(props: any) => props.theme.base.three};
+  color: ${(props: any) => props.theme.text.two};
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1em;
   padding: 0.4em;
   border-radius: 10px;
+  width: 100%;
+
+  @media (min-width: 680px) {
+    width: 75%;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -98,7 +109,7 @@ const SignInForm: FC = function SignInForm() {
           </EmailButtonsWrapper>
         ) : (
           <EmailButtonsWrapper>
-            <p>ALready have an account?</p>
+            <p>Already have an account?</p>
             <Button
               textContent="Sign in here"
               clickHandler={onSignInClick}

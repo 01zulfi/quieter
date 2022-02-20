@@ -75,6 +75,7 @@ const LinkWrapper = styled.div`
 const Wrapper = styled.section`
   display: flex;
   justify-content: center;
+  width: 100%;
 `;
 
 const Icon = styled.button`

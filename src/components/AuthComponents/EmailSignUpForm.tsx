@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import firebase from '../../utils/firebase';
 import Button from '../Button';
+import EmailFormWrapper from './EmailFormWrapper';
 
 const EmailSignUpForm: FC = function EmailSignUpForm() {
   const [email, setEmail] = useState('');
@@ -27,26 +28,28 @@ const EmailSignUpForm: FC = function EmailSignUpForm() {
   };
 
   return (
-    <section>
+    <EmailFormWrapper>
       <form onSubmit={emailFormHandler}>
         <label htmlFor="email-input">
-          email
+          Email:
           <input
             type="email"
             id="email-input"
+            placeholder="enter email here..."
             value={email}
             onChange={onEmailInput}
             required
           />
         </label>
         <label htmlFor="password-input">
-          password
+          Password:
           <input
             type="password"
             id="password-input"
             value={password}
             onChange={onPasswordInput}
             required
+            placeholder="enter password here..."
             minLength={6}
           />
         </label>
@@ -58,7 +61,7 @@ const EmailSignUpForm: FC = function EmailSignUpForm() {
           type="submit"
         />
       </form>
-    </section>
+    </EmailFormWrapper>
   );
 };
 
