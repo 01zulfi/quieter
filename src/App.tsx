@@ -17,7 +17,7 @@ const App: FC = function App() {
     <div>
       <UserProvider>
         <Routes>
-          <Route index element={<Navbar />} />
+          <Route path="*" element={<Navbar />} />
         </Routes>
         <Routes>
           <Route path="/" element={<Home />} />
