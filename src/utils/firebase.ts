@@ -180,6 +180,7 @@ const signInAsGuest = async () => {
     localStorage.setItem('isSignedIn', 'true');
     localStorage.setItem('isAnon', 'true');
     localStorage.setItem('userId', userId);
+    location.reload();
   });
 };
 
@@ -222,6 +223,7 @@ const signUpWithEmail = async ({
       localStorage.setItem('userId', user.uid);
       userId = user.uid;
       createUserDoc({ username: user.displayName || '', id: user.uid, email });
+      location.reload();
     })
     .catch((error) => {
       localStorage.setItem('isSignedIn', 'false');
@@ -248,6 +250,7 @@ const signInWithEmail = async ({
       localStorage.setItem('isSignedIn', 'true');
       localStorage.setItem('isAnon', 'false');
       localStorage.setItem('userId', user.uid);
+      location.reload();
     })
     .catch(() => {
       setIsError(true);
