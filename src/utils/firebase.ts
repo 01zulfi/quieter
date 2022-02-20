@@ -201,7 +201,7 @@ if (localStorage.getItem('redirectedForGoogle') === 'true') {
   });
 }
 
-const signInWithEmail = async ({
+const signUpWithEmail = async ({
   email,
   password,
 }: {
@@ -210,7 +210,7 @@ const signInWithEmail = async ({
 }) => {
   const auth = getAuth();
   createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
+    .then((userCredential) => {
       const { user } = userCredential;
       localStorage.setItem('isSignedIn', 'true');
       localStorage.setItem('isAnon', 'false');
@@ -537,6 +537,7 @@ const firebase = {
   editUserDoc,
   signInAsGuest,
   signInWithGoogle,
+  signUpWithEmail,
   signInWithEmail,
   getString,
   createString,
