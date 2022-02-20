@@ -22,8 +22,8 @@ describe('tests EmailSignUpForm component', () => {
   it('inputs have correct values after typing', () => {
     mockCheckIfEmailExists.mockImplementation(() => false);
     render(<EmailSignUpForm />);
-    const emailInput = screen.getByLabelText('email');
-    const passwordInput = screen.getByLabelText('password');
+    const emailInput = screen.getByLabelText('Email:');
+    const passwordInput = screen.getByLabelText('Password:');
 
     userEvent.type(emailInput, 'example@wow.com');
     userEvent.type(passwordInput, 'test password');
@@ -35,8 +35,8 @@ describe('tests EmailSignUpForm component', () => {
   it('invokes firebase.checkIfEmailExists with correct argument', () => {
     mockCheckIfEmailExists.mockImplementation(() => false);
     render(<EmailSignUpForm />);
-    const emailInput = screen.getByLabelText('email');
-    const passwordInput = screen.getByLabelText('password');
+    const emailInput = screen.getByLabelText('Email:');
+    const passwordInput = screen.getByLabelText('Password:');
     const submitButton = screen.getByRole('button');
 
     userEvent.type(emailInput, 'example@wow.com');
@@ -49,8 +49,8 @@ describe('tests EmailSignUpForm component', () => {
   it('invokes firebase.signUpWithEmail with correct argument', async () => {
     mockCheckIfEmailExists.mockImplementation(() => false);
     render(<EmailSignUpForm />);
-    const emailInput = screen.getByLabelText('email');
-    const passwordInput = screen.getByLabelText('password');
+    const emailInput = screen.getByLabelText('Email:');
+    const passwordInput = screen.getByLabelText('Password:');
     const submitButton = screen.getByRole('button');
 
     userEvent.type(emailInput, 'example@wow.com');
@@ -68,8 +68,8 @@ describe('tests EmailSignUpForm component', () => {
   it('does no invoke signUpWithEmail if checkIfEmailExists returns true', async () => {
     mockCheckIfEmailExists.mockImplementation(() => true);
     render(<EmailSignUpForm />);
-    const emailInput = screen.getByLabelText('email');
-    const passwordInput = screen.getByLabelText('password');
+    const emailInput = screen.getByLabelText('Email:');
+    const passwordInput = screen.getByLabelText('Password:');
     const submitButton = screen.getByRole('button');
 
     userEvent.type(emailInput, 'example@wow.com');

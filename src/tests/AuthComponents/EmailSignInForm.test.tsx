@@ -21,8 +21,8 @@ jest.mock('../../utils/firebase', () => ({
 describe('tests EmailSignInForm component', () => {
   it('inputs have correct values after typing', () => {
     render(<EmailSignInForm />);
-    const emailInput = screen.getByLabelText('email');
-    const passwordInput = screen.getByLabelText('password');
+    const emailInput = screen.getByLabelText('Email:');
+    const passwordInput = screen.getByLabelText('Password:');
 
     userEvent.type(emailInput, 'example@wow.com');
     userEvent.type(passwordInput, 'test password');
@@ -33,8 +33,8 @@ describe('tests EmailSignInForm component', () => {
 
   it('invokes firebase.signInWithEmail when form submits', async () => {
     render(<EmailSignInForm />);
-    const emailInput = screen.getByLabelText('email');
-    const passwordInput = screen.getByLabelText('password');
+    const emailInput = screen.getByLabelText('Email:');
+    const passwordInput = screen.getByLabelText('Password:');
     const submitButton = screen.getByRole('button', {
       name: 'Sign In with Email',
     });
