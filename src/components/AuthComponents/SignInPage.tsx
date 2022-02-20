@@ -72,7 +72,10 @@ const LinkWrapper = styled.div`
   align-items: center;
 `;
 
-const Wrapper = styled.section``;
+const Wrapper = styled.section`
+  display: flex;
+  justify-content: center;
+`;
 
 const Icon = styled.button`
   background: transparent;
