@@ -158,7 +158,7 @@ const SignInPage: FC = function SignInPage() {
 
         {isUserSignedIn ? (
           <div>
-            <h2>You&apos;re already signed in!</h2>
+            <h2>You&apos;re signed in!</h2>
             <StyledLink size="1.5em" bold="500">
               <Link to="/home">Go to homepage</Link>
             </StyledLink>
