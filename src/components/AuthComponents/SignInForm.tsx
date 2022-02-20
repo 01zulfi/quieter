@@ -1,14 +1,21 @@
 import React, { FC, useState } from 'react';
+import styled from 'styled-components';
 import firebase from '../../utils/firebase';
 import Button from '../Button';
-import EmailAuthForm from './EmailAuthForm';
-import Modal from '../Modal';
+import EmailSignInForm from './EmailSignInForm';
+import EmailSignUpForm from './EmailSignUpForm';
+
+const SignInFormWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const SignInForm: FC = function SignInForm() {
-  const [showEmailSignInModal, setShowEmailSignInModal] = useState(false);
+  const [showEmailSignInForm, setShowEmailSignInForm] = useState(true);
 
-  const emailSignInHandler = (): void => setShowEmailSignInModal(true);
-  const onCloseEmailModal = (): void => setShowEmailSignInModal(false);
+  const onSignUpClick = (): void => setShowEmailSignInForm(false);
+  const onSignInClick = (): void => setShowEmailSignInForm(true);
 
   const googleSignInHandler = async () => {
     await firebase.signInWithGoogle();
@@ -18,8 +25,32 @@ const SignInForm: FC = function SignInForm() {
   };
 
   return (
-    <div>
-      <h1>Sign in to continue</h1>
+    <SignInFormWrapper>
+      <h2>Sign in to continue</h2>
+
+      {showEmailSignInForm ? <EmailSignInForm /> : <EmailSignUpForm />}
+
+      {showEmailSignInForm ? (
+        <div>
+          <p>Don&apos;t have an account? </p>
+          <Button
+            textContent="Sign Up"
+            clickHandler={onSignUpClick}
+            status="secondary"
+            type="button"
+          />
+        </div>
+      ) : (
+        <div>
+          <p>ALready have an account?</p>
+          <Button
+            textContent="Sign in here"
+            clickHandler={onSignInClick}
+            status="secondary"
+            type="button"
+          />
+        </div>
+      )}
 
       <div>
         <Button
@@ -30,24 +61,12 @@ const SignInForm: FC = function SignInForm() {
         />
         <Button
           type="button"
-          textContent="Sign in with Email"
-          clickHandler={emailSignInHandler}
-          status="primary"
-        />
-        <Button
-          type="button"
           textContent="Sign in as Guest (Limited view)"
           clickHandler={guestSignInHandler}
           status="secondary"
         />
       </div>
-
-      {showEmailSignInModal && (
-        <Modal closeModal={onCloseEmailModal}>
-          <EmailAuthForm />
-        </Modal>
-      )}
-    </div>
+    </SignInFormWrapper>
   );
 };
 
