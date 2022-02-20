@@ -1,38 +1,49 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render } from '../utils/test-utils';
+import { render, screen } from '../utils/test-utils';
 import '@testing-library/jest-dom';
 import Button from '../components/Button';
 
 describe('button component tests', () => {
-  test('renders correct text content', () => {
-    const { getByRole } = render(
+  it('renders correct text content', () => {
+    render(
       <Button
         type="button"
         textContent="Click Me"
         clickHandler={(): void => {}}
+        status="primary"
       />,
     );
-    const button = getByRole('button', { name: 'Click Me' });
+    const button = screen.getByRole('button', { name: 'Click Me' });
 
     expect(button).toHaveTextContent('Click Me');
   });
 
-  test('has correct type', () => {
-    const { getByRole } = render(
-      <Button type="submit" textContent="" clickHandler={(): void => {}} />,
+  it('has correct type', () => {
+    render(
+      <Button
+        type="submit"
+        textContent=""
+        clickHandler={(): void => {}}
+        status="primary"
+      />,
     );
-    const button = getByRole('button');
+    const button = screen.getByRole('button');
 
     expect(button.getAttribute('type')).toMatch(/submit/);
   });
 
-  test('invokes click handler', () => {
+  it('invokes click handler', () => {
     const mockClickFn = jest.fn();
-    const { getByRole } = render(
-      <Button type="button" textContent="" clickHandler={mockClickFn} />,
+    render(
+      <Button
+        type="button"
+        textContent=""
+        clickHandler={mockClickFn}
+        status="primary"
+      />,
     );
-    const button = getByRole('button');
+    const button = screen.getByRole('button');
 
     userEvent.click(button);
 
