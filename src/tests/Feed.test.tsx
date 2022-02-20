@@ -4,9 +4,14 @@ import '@testing-library/jest-dom';
 import Feed from '../components/Feed';
 
 const mockGetFeedStrings = jest.fn();
+const mockUseUserAnon = jest.fn();
 
 jest.mock('../utils/firebase', () => ({
   getFeedStrings: async () => mockGetFeedStrings(),
+}));
+
+jest.mock('../context/UserContext', () => ({
+  useUserAnon: () => mockUseUserAnon(),
 }));
 
 jest.mock(
@@ -48,6 +53,18 @@ describe('tests Feed component', () => {
 
   it('renders no feed available message when feedStrings is an empty array', async () => {
     mockGetFeedStrings.mockImplementation(() => []);
+    render(<Feed />);
+
+    const heading = await screen.findByRole('heading', {
+      name: 'No feed available. Populate it by getting involved!',
+    });
+
+    expect(heading).toBeInTheDocument();
+  });
+
+  it('renders no feed available message when user is anonymous/guest', async () => {
+    mockGetFeedStrings.mockImplementation(() => []);
+    mockUseUserAnon.mockImplementation(() => true);
     render(<Feed />);
 
     const heading = await screen.findByRole('heading', {

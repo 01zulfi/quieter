@@ -2,13 +2,19 @@ import React, { FC, useState, useEffect } from 'react';
 import StringCompactView from './Strings/StringCompactView';
 import firebase from '../utils/firebase';
 import Loading from './Loading';
+import { useUserAnon } from '../context/UserContext';
 
 const Feed: FC = function Feed() {
   const [feedStrings, setFeedStrings] = useState<any>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const isUserAnon = useUserAnon();
 
   useEffect(() => {
     (async () => {
+      if (isUserAnon) {
+        setIsLoaded(true);
+        return;
+      }
       const fetchData = await firebase.getFeedStrings();
       setFeedStrings(fetchData);
       setIsLoaded(true);
