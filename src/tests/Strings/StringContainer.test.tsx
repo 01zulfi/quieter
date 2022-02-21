@@ -4,8 +4,38 @@ import '@testing-library/jest-dom';
 import StringContainer from '../../components/Strings/StringContainer';
 
 jest.mock('react-router-dom', () => ({
+  Link: function LinkMock({ to, children }: { to: string; children: any }) {
+    return (
+      <>
+        {to}
+        {children}
+      </>
+    );
+  },
   useParams: () => ({ stringId: '012' }),
 }));
+
+jest.mock(
+  '../../components/StyledLink',
+  () =>
+    function StyledLinkMock({
+      size,
+      bold,
+      children,
+    }: {
+      size: string;
+      bold: string;
+      children: any;
+    }) {
+      return (
+        <>
+          {size}
+          {bold}
+          {children}
+        </>
+      );
+    },
+);
 
 const mockUseUserAnon = jest.fn();
 
@@ -51,7 +81,11 @@ jest.mock(
 jest.mock('../../utils/firebase', () => ({
   getString: async (stringId: string) => {
     mockGetString(stringId);
-    return { associatedKnots: ['first knot', 'second knot'], hasKnots: true };
+    return {
+      associatedKnots: ['first knot', 'second knot'],
+      hasKnots: true,
+      associatedBox: { name: 'test box', id: 'hello' },
+    };
   },
 }));
 
@@ -68,6 +102,12 @@ describe('tests StringContainer component', () => {
     render(<StringContainer />);
 
     await waitFor(() => expect(mockGetString).toHaveBeenCalledWith('012'));
+  });
+
+  it('renders box name link', async () => {
+    render(<StringContainer />);
+    const link = await screen.findByText(/test box/);
+    expect(link).toBeInTheDocument();
   });
 
   it('renders StringAuthorView when user is the author', async () => {
