@@ -21,7 +21,7 @@ const NavbarWrapper = styled.div`
 const HeadingWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 3pxj
+  gap: 3px;
   margin-left: 1em;
 `;
 
