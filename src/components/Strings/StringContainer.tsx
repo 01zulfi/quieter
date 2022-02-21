@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useUser, useUserAnon } from '../../context/UserContext';
 import StringContext from '../../context/StringContext';
 import StringAuthorView from './StringAuthorView';
@@ -8,6 +8,7 @@ import Knot from '../Knots/Knot';
 import KnotCreate from '../Knots/KnotCreate';
 import Loading from '../Loading';
 import firebase from '../../utils/firebase';
+import StyledLink from '../StyledLink';
 
 const StringContainer: FC = function StringContainer() {
   const params = useParams();
@@ -36,6 +37,15 @@ const StringContainer: FC = function StringContainer() {
   return (
     <section>
       <StringContext.Provider value={string}>
+        <div>
+          <p>posted in</p>
+          <StyledLink size="1em" bold="normal">
+            <Link to={`../../../../box/${string.associatedBox.id}`} replace>
+              {string.associatedBox.name}
+            </Link>
+          </StyledLink>
+        </div>
+
         {isCurrentUserAuthor && <StringAuthorView />}
 
         <div>
