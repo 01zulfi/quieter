@@ -13,3 +13,7 @@ h2,
 h3 {
   text-align: center;
 }
+
+* {
+  transition: background ease-out 200ms;
+}
