@@ -105,6 +105,13 @@ const NavbarResponsiveWrapper = styled.div`
   }
 `;
 
+const SignedInWrapper = styled.div`
+  margin-top: 2em;
+  @media (min-width: 680px) {
+    margin-top: 4em;
+  }
+`;
+
 const SignInPage: FC = function SignInPage() {
   const currentTheme = useTheme();
   const setCurrentTheme = useSetTheme();
@@ -161,12 +168,12 @@ const SignInPage: FC = function SignInPage() {
         </Icon>
 
         {isUserSignedIn ? (
-          <div>
+          <SignedInWrapper>
             <h2>You&apos;re signed in!</h2>
             <StyledLink size="1.5em" bold="500">
               <Link to="/home">Go to homepage</Link>
             </StyledLink>
-          </div>
+          </SignedInWrapper>
         ) : (
           <SignInForm />
         )}
