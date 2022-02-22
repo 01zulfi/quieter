@@ -17,6 +17,8 @@ const StringWrapper = styled.section`
   border-radius: 10px;
   box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
   background: ${(props: any) => props.theme.base.two};
+  flex-grow: 0.7;
+  margin: 1em;
 `;
 
 const MetaInfoWrapper = styled.div`
