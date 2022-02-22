@@ -15,15 +15,14 @@ import {
   where,
 } from 'firebase/firestore';
 import {
-  signInWithRedirect,
   signInAnonymously,
   getAuth,
   GoogleAuthProvider,
   onAuthStateChanged,
-  getRedirectResult,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  signInWithPopup,
 } from 'firebase/auth';
 import uniqueId from './unique-id';
 import firebaseConfig from './firebase-config';
@@ -187,25 +186,24 @@ const signInAsGuest = async () => {
 const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
-  signInWithRedirect(auth, provider);
-  localStorage.setItem('redirectedForGoogle', 'true');
+  signInWithPopup(auth, provider)
+    .then(async (result) => {
+      const { user } = result;
+      if (!user) return;
+      localStorage.setItem('isSignedIn', 'true');
+      localStorage.setItem('isAnon', 'false');
+      localStorage.setItem('userId', user.uid);
+      userId = user.uid;
+      if (await doesUserDocExist()) {
+        location.reload();
+        return;
+      }
+      createUserDoc({ username: user.displayName || '', id: user.uid });
+      location.reload();
+      // eslint-disable no-console
+    })
+    .catch((error) => console.error(error));
 };
-
-if (localStorage.getItem('redirectedForGoogle') === 'true') {
-  localStorage.setItem('redirectedForGoogle', 'false');
-  // for google sign in
-  const authGlobal = getAuth();
-  getRedirectResult(authGlobal).then(async (result) => {
-    if (!result) return;
-    const { user } = result;
-    localStorage.setItem('isSignedIn', 'true');
-    localStorage.setItem('isAnon', 'false');
-    localStorage.setItem('userId', user.uid);
-    userId = user.uid;
-    if (await doesUserDocExist()) return;
-    createUserDoc({ username: user.displayName || '', id: user.uid });
-  });
-}
 
 const signUpWithEmail = async ({
   email,
