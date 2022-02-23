@@ -527,6 +527,28 @@ const createKnot = async ({
   });
 };
 
+const deleteKnot = async ({
+  knotId,
+  stringId,
+}: {
+  knotId: string;
+  stringId: string;
+}) => {
+  const knotRef = doc(db, 'knots', knotId);
+
+  const userRef = doc(db, 'users', userId);
+  await updateDoc(userRef, {
+    authoredKnots: arrayRemove(knotId),
+  });
+
+  const stringRef = doc(db, 'strings', stringId);
+  await updateDoc(stringRef, {
+    associatedKnots: arrayRemove(knotId),
+  });
+
+  await deleteDoc(knotRef);
+};
+
 const deleteBox = async (boxId: string) => {
   const boxRef = doc(db, 'boxes', boxId);
 
@@ -591,6 +613,7 @@ const firebase = {
   getBoxStrings,
   getKnot,
   createKnot,
+  deleteKnot,
   getNotSignedInUserDoc,
   getFeedStrings,
   checkIfEmailExists,
