@@ -85,6 +85,7 @@ jest.mock('../../utils/firebase', () => ({
       associatedKnots: ['first knot', 'second knot'],
       hasKnots: true,
       associatedBox: { name: 'test box', id: 'hello' },
+      author: { username: 'test user', id: '000' },
     };
   },
 }));
@@ -107,6 +108,12 @@ describe('tests StringContainer component', () => {
   it('renders box name link', async () => {
     render(<StringContainer />);
     const link = await screen.findByText(/test box/);
+    expect(link).toBeInTheDocument();
+  });
+
+  it('renders author name link', async () => {
+    render(<StringContainer />);
+    const link = await screen.findByText(/test user/);
     expect(link).toBeInTheDocument();
   });
 
