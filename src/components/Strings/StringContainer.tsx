@@ -10,6 +10,7 @@ import KnotCreate from '../Knots/KnotCreate';
 import Loading from '../Loading';
 import firebase from '../../utils/firebase';
 import StyledLink from '../StyledLink';
+import Avatar from '../Profile/Avatar';
 
 const StringContainerWrapper = styled.section``;
 
@@ -37,6 +38,8 @@ const MetaInfoWrapper = styled.div`
   div {
     flex-grow: 1;
     max-width: fit-content;
+    display: flex;
+    padding: 0.3em;
   }
 `;
 
@@ -54,8 +57,14 @@ const KnotWrapper = styled.div`
 
 const KnotLeft = styled.div`
   background: ${(props: any) => props.theme.base.four};
+  align-self: flex-start;
+  margin-top: 0.6em;
   padding: 0.1em;
-  width: 20%;
+  width: 5%;
+
+  @media (max-width: 680px) {
+    display: none;
+  }
 `;
 
 const StringContainer: FC = function StringContainer() {
@@ -97,6 +106,7 @@ const StringContainer: FC = function StringContainer() {
             </div>
 
             <div>
+              <Avatar />
               <StyledLink size="1em" bold="normal" black>
                 <Link to={`../../../../profile/${string.author.id}`} replace>
                   {string.author.username}
@@ -115,6 +125,7 @@ const StringContainer: FC = function StringContainer() {
           {string.hasKnots ? (
             string.associatedKnots.map((knotId: string) => (
               <KnotWrapper key={knotId}>
+                <Avatar />
                 <KnotLeft />
                 <Knot knotId={knotId} />
               </KnotWrapper>
