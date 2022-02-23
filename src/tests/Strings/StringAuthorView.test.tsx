@@ -76,11 +76,11 @@ describe('tests StringAuthorView component', () => {
     const stringDeleteText = screen.queryByText(
       'StringDelete component rendered',
     );
-    const authorText = screen.queryByText('you are the author of this string');
+    const editButtonRerender = screen.getByRole('button', { name: 'Edit' });
 
     expect(stringDeleteText).not.toBeInTheDocument();
     expect(heading).not.toBeInTheDocument();
-    expect(authorText).toBeInTheDocument();
+    expect(editButtonRerender).toBeInTheDocument();
   });
 
   it('renders StringDelete component when delete button is clicked', () => {
@@ -115,10 +115,10 @@ describe('tests StringAuthorView component', () => {
     userEvent.click(closeModalButton);
 
     const stringEditText = screen.queryByText('StringEdit component rendered');
-    const authorText = screen.queryByText('you are the author of this string');
+    const deleteButtonRerender = screen.getByRole('button', { name: 'Delete' });
 
     expect(stringEditText).not.toBeInTheDocument();
     expect(heading).not.toBeInTheDocument();
-    expect(authorText).toBeInTheDocument();
+    expect(deleteButtonRerender).toBeInTheDocument();
   });
 });
