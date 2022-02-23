@@ -1,23 +1,37 @@
 import React from 'react';
-import { render } from '../../utils/test-utils';
+import { screen, render } from '../../utils/test-utils';
 import '@testing-library/jest-dom';
 import String from '../../components/Strings/String';
 
+const mockUseString = jest.fn();
+
 jest.mock('../../context/StringContext', () => ({
-  useString: () => ({
-    title: 'This is a test  string',
-    content: 'this is a test content, this',
-  }),
+  useString: () => mockUseString(),
 }));
 
 describe('test String component', () => {
-  test('title and content renders', () => {
-    const { getByRole, getByText } = render(<String />);
+  it('renders title and content', () => {
+    mockUseString.mockImplementation(() => ({
+      title: 'This is a test  string',
+      content: 'this is a test content, this',
+    }));
+    render(<String />);
 
-    const queryTitle = getByRole('heading', { name: 'This is a test string' });
-    const queryContent = getByText(/this is a test content, this/i);
+    const queryTitle = screen.getByRole('heading', {
+      name: 'This is a test string',
+    });
+    const queryContent = screen.getByText(/this is a test content, this/i);
 
     expect(queryTitle).toBeInTheDocument();
     expect(queryContent).toBeInTheDocument();
+  });
+
+  it('renders error message when string is null', () => {
+    mockUseString.mockImplementation(() => null);
+    render(<String />);
+    const queryTitle = screen.getByRole('heading', {
+      name: 'Unable to load, try refreshing.',
+    });
+    expect(queryTitle).toBeInTheDocument();
   });
 });
