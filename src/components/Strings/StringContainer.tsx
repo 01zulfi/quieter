@@ -5,8 +5,7 @@ import { useUser, useUserAnon } from '../../context/UserContext';
 import StringContext from '../../context/StringContext';
 import StringAuthorView from './StringAuthorView';
 import String from './String';
-import Knot from '../Knots/Knot';
-import KnotCreate from '../Knots/KnotCreate';
+import KnotsContainer from '../Knots/KnotsContainer';
 import Loading from '../Loading';
 import firebase from '../../utils/firebase';
 import StyledLink from '../StyledLink';
@@ -40,30 +39,6 @@ const MetaInfoWrapper = styled.div`
     max-width: fit-content;
     display: flex;
     padding: 0.3em;
-  }
-`;
-
-const KnotSectionWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  padding: 1em;
-  margin: 1em;
-`;
-
-const KnotWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const KnotLeft = styled.div`
-  background: ${(props: any) => props.theme.base.four};
-  align-self: flex-start;
-  margin-top: 0.6em;
-  padding: 0.1em;
-  width: 5%;
-
-  @media (max-width: 680px) {
-    display: none;
   }
 `;
 
@@ -121,20 +96,8 @@ const StringContainer: FC = function StringContainer() {
             <String />
           </div>
         </StringWrapper>
-        <KnotSectionWrapper>
-          {string.hasKnots ? (
-            string.associatedKnots.map((knotId: string) => (
-              <KnotWrapper key={knotId}>
-                <Avatar />
-                <KnotLeft />
-                <Knot knotId={knotId} />
-              </KnotWrapper>
-            ))
-          ) : (
-            <p>This string has no knots</p>
-          )}
-          {!isUserAnon && <KnotCreate />}
-        </KnotSectionWrapper>
+
+        <KnotsContainer string={string} isUserAnon={isUserAnon} />
       </StringContext.Provider>
     </StringContainerWrapper>
   );
