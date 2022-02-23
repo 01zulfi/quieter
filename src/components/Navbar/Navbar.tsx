@@ -16,6 +16,9 @@ const NavbarWrapper = styled.div`
   box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
   background: ${(props: any) => props.background};
   height: 4rem;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 `;
 
 const HeadingWrapper = styled.div`
