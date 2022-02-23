@@ -11,6 +11,8 @@ import Loading from '../Loading';
 import firebase from '../../utils/firebase';
 import StyledLink from '../StyledLink';
 
+const StringContainerWrapper = styled.section``;
+
 const StringWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -38,6 +40,24 @@ const MetaInfoWrapper = styled.div`
   }
 `;
 
+const KnotSectionWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  margin: 1em;
+`;
+
+const KnotWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const KnotLeft = styled.div`
+  background: ${(props: any) => props.theme.base.four};
+  padding: 0.1em;
+  width: 20%;
+`;
+
 const StringContainer: FC = function StringContainer() {
   const params = useParams();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -63,43 +83,49 @@ const StringContainer: FC = function StringContainer() {
   }
 
   return (
-    <StringWrapper>
+    <StringContainerWrapper>
       <StringContext.Provider value={string}>
-        <MetaInfoWrapper>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <p>posted in</p>
-            <StyledLink size="1em" bold="normal" black>
-              <Link to={`../../../../box/${string.associatedBox.id}`} replace>
-                {string.associatedBox.name}
-              </Link>
-            </StyledLink>
-          </div>
+        <StringWrapper>
+          <MetaInfoWrapper>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <p>posted in</p>
+              <StyledLink size="1em" bold="normal" black>
+                <Link to={`../../../../box/${string.associatedBox.id}`} replace>
+                  {string.associatedBox.name}
+                </Link>
+              </StyledLink>
+            </div>
+
+            <div>
+              <StyledLink size="1em" bold="normal" black>
+                <Link to={`../../../../profile/${string.author.id}`} replace>
+                  {string.author.username}
+                </Link>
+              </StyledLink>
+            </div>
+          </MetaInfoWrapper>
+
+          {isCurrentUserAuthor && <StringAuthorView />}
 
           <div>
-            <StyledLink size="1em" bold="normal" black>
-              <Link to={`../../../../profile/${string.author.id}`} replace>
-                {string.author.username}
-              </Link>
-            </StyledLink>
+            <String />
           </div>
-        </MetaInfoWrapper>
-
-        {isCurrentUserAuthor && <StringAuthorView />}
-
-        <div>
-          <String />
-
-          {string.hasKnots &&
+        </StringWrapper>
+        <KnotSectionWrapper>
+          {string.hasKnots ? (
             string.associatedKnots.map((knotId: string) => (
-              <div key={knotId}>
+              <KnotWrapper key={knotId}>
+                <KnotLeft />
                 <Knot knotId={knotId} />
-              </div>
-            ))}
-
+              </KnotWrapper>
+            ))
+          ) : (
+            <p>This string has no knots</p>
+          )}
           {!isUserAnon && <KnotCreate />}
-        </div>
+        </KnotSectionWrapper>
       </StringContext.Provider>
-    </StringWrapper>
+    </StringContainerWrapper>
   );
 };
 
