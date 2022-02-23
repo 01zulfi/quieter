@@ -1,8 +1,44 @@
 import React, { FC, useState } from 'react';
+import styled from 'styled-components';
 import { useString } from '../../context/StringContext';
 import { useSetUser } from '../../context/UserContext';
 import firebase from '../../utils/firebase';
 import Button from '../Button';
+
+const KnotCreateWrapper = styled.div`
+  form {
+    display: flex;
+    height: 5rem;
+    justify-content: flex-end;
+    align-items: center;
+
+    textarea {
+      background: ${(props: any) => props.theme.base.three};
+      margin-right: 4em;
+      border: 0;
+      color: ${(props: any) => props.theme.text.three};
+      border-radius: 5px;
+      border: 0px solid ${(props: any) => props.theme.aurora.four};
+      border-left-width: 0.7em;
+      padding: 0.3em;
+      font-size: 1.1em;
+      height: 5em;
+      &:focus {
+        outline: 2px solid ${(props: any) => props.theme.text.four};
+      }
+    }
+  }
+`;
+
+const FormFiller = styled.div`
+  flex-grow: 1;
+  padding: 0.1em;
+  background: ${(props: any) => props.theme.aurora.four};
+
+  @media (max-width: 680px) {
+    display: none;
+  }
+`;
 
 const KnotCreate: FC = function KnotCreate() {
   const [knot, setKnot] = useState('');
@@ -20,8 +56,9 @@ const KnotCreate: FC = function KnotCreate() {
   };
 
   return (
-    <div>
+    <KnotCreateWrapper>
       <form onSubmit={onKnotSubmit}>
+        <FormFiller />
         <textarea
           value={knot}
           name="knot-input"
@@ -29,14 +66,17 @@ const KnotCreate: FC = function KnotCreate() {
           cols={15}
           rows={5}
           onChange={onKnotInput}
+          maxLength={1500}
         />
         <Button
           type="submit"
+          status="secondary"
           textContent="Create knot"
+          padding="0.5em"
           clickHandler={() => {}}
         />
       </form>
-    </div>
+    </KnotCreateWrapper>
   );
 };
 

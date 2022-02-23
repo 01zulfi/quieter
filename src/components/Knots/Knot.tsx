@@ -12,7 +12,8 @@ const KnotWrapper = styled.section`
   flex-direction: column;
   border-radius: 5px;
   background: ${(props: any) => props.theme.base.three};
-  outline: 1px solid ${(props: any) => props.theme.frost.one};
+  border: 0px solid ${(props: any) => props.theme.frost.one};
+  border-left-width: thick;
   flex-grow: 1;
 `;
 
