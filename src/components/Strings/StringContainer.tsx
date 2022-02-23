@@ -55,6 +55,10 @@ const StringContainer: FC = function StringContainer() {
       setString(stringData);
       setIsLoaded(true);
     })();
+
+    const listener = firebase.listenForKnots(params.stringId || '');
+    const unsubscribe = listener(setString);
+    return unsubscribe();
   }, []);
 
   const isCurrentUserAuthor =

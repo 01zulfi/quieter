@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
 import { useString } from '../../context/StringContext';
+import { useSetUser } from '../../context/UserContext';
 import firebase from '../../utils/firebase';
 import Button from '../Button';
 
 const KnotCreate: FC = function KnotCreate() {
   const [knot, setKnot] = useState('');
+  const setUser = useSetUser();
   const string = useString() || { id: 'DEFAULT' };
 
   const onKnotInput = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -13,6 +15,7 @@ const KnotCreate: FC = function KnotCreate() {
   const onKnotSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await firebase.createKnot({ stringId: string.id, content: knot });
+    setUser();
     setKnot('');
   };
 

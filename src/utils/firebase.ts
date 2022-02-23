@@ -13,6 +13,7 @@ import {
   query,
   collection,
   where,
+  onSnapshot,
 } from 'firebase/firestore';
 import {
   signInAnonymously,
@@ -549,6 +550,15 @@ const deleteKnot = async ({
   await deleteDoc(knotRef);
 };
 
+const listenForKnots = (stringId: string) => (setStateFunction: any) => {
+  const stringRef = doc(db, 'strings', stringId);
+  const unsub = onSnapshot(stringRef, async () => {
+    const data = await getString(stringId);
+    setStateFunction(data);
+  });
+  return () => () => unsub();
+};
+
 const deleteBox = async (boxId: string) => {
   const boxRef = doc(db, 'boxes', boxId);
 
@@ -614,6 +624,7 @@ const firebase = {
   getKnot,
   createKnot,
   deleteKnot,
+  listenForKnots,
   getNotSignedInUserDoc,
   getFeedStrings,
   checkIfEmailExists,
