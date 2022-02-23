@@ -53,6 +53,14 @@ jest.mock(
 );
 
 jest.mock(
+  '../../components/Profile/Avatar',
+  () =>
+    function Avatar() {
+      return <h2>Avatar component rendered</h2>;
+    },
+);
+
+jest.mock(
   '../../components/Strings/String',
   () =>
     function String() {
@@ -61,22 +69,14 @@ jest.mock(
 );
 
 jest.mock(
-  '../../components/Knots/Knot',
+  '../../components/Knots/KnotsContainer',
   () =>
-    function Knot({ knotId }: { knotId: string }) {
-      return <h3>{knotId}</h3>;
+    function KnotsContainer() {
+      return <h3>KnotsContainer component rendered</h3>;
     },
 );
 
 const mockGetString = jest.fn();
-
-jest.mock(
-  '../../components/Knots/KnotCreate',
-  () =>
-    function KnotCreate() {
-      return <h3>KnotCreate component rendered</h3>;
-    },
-);
 
 jest.mock('../../utils/firebase', () => ({
   getString: async (stringId: string) => {
@@ -117,6 +117,14 @@ describe('tests StringContainer component', () => {
     expect(link).toBeInTheDocument();
   });
 
+  it('renders Avatar component', async () => {
+    render(<StringContainer />);
+    const heading = await screen.findByRole('heading', {
+      name: 'Avatar component rendered',
+    });
+    expect(heading).toBeInTheDocument();
+  });
+
   it('renders StringAuthorView when user is the author', async () => {
     render(<StringContainer />);
 
@@ -137,24 +145,14 @@ describe('tests StringContainer component', () => {
     expect(renderText).toBeInTheDocument();
   });
 
-  it('renders Knots', async () => {
+  it('renders KnotsContainer component', async () => {
     render(<StringContainer />);
 
-    const knotOne = await screen.findByRole('heading', { name: 'first knot' });
-    const knotTwo = await screen.findByRole('heading', { name: 'second knot' });
-
-    expect(knotOne).toBeInTheDocument();
-    expect(knotTwo).toBeInTheDocument();
-  });
-
-  it('renders KnotCreate component', async () => {
-    render(<StringContainer />);
-
-    const renderText = await screen.findByRole('heading', {
-      name: 'KnotCreate component rendered',
+    const heading = await screen.findByRole('heading', {
+      name: 'KnotsContainer component rendered',
     });
 
-    expect(renderText).toBeInTheDocument();
+    expect(heading).toBeInTheDocument();
   });
 
   it('does not render StringAuthorView when user is anonymous/guest', async () => {
