@@ -5,11 +5,16 @@ import { useString } from '../../context/StringContext';
 import firebase from '../../utils/firebase';
 
 const StringEditWrapper = styled.section`
+  margin: 1em;
+  border-radius: 10px;
+  box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
+  background: ${(props: any) => props.theme.base.three};
+  padding: 1em 1em;
+
   form {
     display: flex;
     flex-direction: column;
     gap: 1em;
-    margin-top: 2em;
 
     button {
       align-self: center;
