@@ -5,17 +5,14 @@ import '@testing-library/jest-dom';
 import StringDelete from '../../components/Strings/StringDelete';
 
 const mockDeleteString = jest.fn();
+const mockUseString = jest.fn();
 
 jest.mock('../../context/StringContext', () => ({
-  useString: () => ({
-    id: '0123',
-  }),
+  useString: () => mockUseString(),
 }));
 
 jest.mock('react-router-dom', () => ({
-  Link: function Link({ to, children }: { to: string; children: any }) {
-    return <a href={to}>{children}</a>;
-  },
+  useNavigate: () => () => {},
 }));
 
 jest.mock('../../utils/firebase', () => ({
@@ -23,19 +20,21 @@ jest.mock('../../utils/firebase', () => ({
 }));
 
 describe('tests StringDelete component', () => {
-  it('renders string has been deleted text when button clicks', async () => {
+  it('renders unable to load message when string is null', () => {
+    mockUseString.mockImplementation(() => undefined);
     render(<StringDelete />);
-    const deleteButton = screen.getByRole('button');
-
-    userEvent.click(deleteButton);
-
-    const heading = await screen.findByRole('heading', {
-      name: 'the string has been deleted',
+    const message = screen.getByRole('heading', {
+      name: 'Unable to load, try refreshing.',
     });
-    expect(heading).toBeInTheDocument();
+
+    expect(message).toBeInTheDocument();
   });
 
   it('invokes deleteString firebase method with string id', async () => {
+    mockUseString.mockImplementation(() => ({
+      id: '0123',
+      associatedBox: { id: '000' },
+    }));
     render(<StringDelete />);
     const deleteButton = screen.getByRole('button');
 
