@@ -52,7 +52,6 @@ describe('tests StringAuthorView component', () => {
       name: 'StringEdit component rendered',
     });
     expect(heading).toBeInTheDocument();
-    expect(editButton).not.toBeInTheDocument();
   });
 
   it('unmounts StringEdit when close modal button for StringEdit clicks', () => {
@@ -65,7 +64,6 @@ describe('tests StringAuthorView component', () => {
       name: 'StringEdit component rendered',
     });
     expect(heading).toBeInTheDocument();
-    expect(editButton).not.toBeInTheDocument();
 
     const closeModalButton = screen.getByRole('button', {
       name: 'close modal mock',
@@ -76,11 +74,9 @@ describe('tests StringAuthorView component', () => {
     const stringDeleteText = screen.queryByText(
       'StringDelete component rendered',
     );
-    const editButtonRerender = screen.getByRole('button', { name: 'Edit' });
 
     expect(stringDeleteText).not.toBeInTheDocument();
     expect(heading).not.toBeInTheDocument();
-    expect(editButtonRerender).toBeInTheDocument();
   });
 
   it('renders StringDelete component when delete button is clicked', () => {
@@ -93,7 +89,6 @@ describe('tests StringAuthorView component', () => {
       name: 'StringDelete component rendered',
     });
     expect(heading).toBeInTheDocument();
-    expect(deleteButton).not.toBeInTheDocument();
   });
 
   it('unmounts StringDelete when close modal button for StringDelete clicks', () => {
@@ -106,7 +101,6 @@ describe('tests StringAuthorView component', () => {
       name: 'StringDelete component rendered',
     });
     expect(heading).toBeInTheDocument();
-    expect(deleteButton).not.toBeInTheDocument();
 
     const closeModalButton = screen.getByRole('button', {
       name: 'close modal mock',
@@ -115,10 +109,8 @@ describe('tests StringAuthorView component', () => {
     userEvent.click(closeModalButton);
 
     const stringEditText = screen.queryByText('StringEdit component rendered');
-    const deleteButtonRerender = screen.getByRole('button', { name: 'Delete' });
 
     expect(stringEditText).not.toBeInTheDocument();
     expect(heading).not.toBeInTheDocument();
-    expect(deleteButtonRerender).toBeInTheDocument();
   });
 });
