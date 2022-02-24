@@ -33,28 +33,26 @@ const StringAuthorView: FC = function StringAuthorView() {
 
   return (
     <StringAuthorViewWrapper>
-      {!showEditModal && !showDeleteModal && (
-        <div>
-          <Button
-            textContent="Edit"
-            type="button"
-            clickHandler={onEditButtonClick}
-            status="primary"
-            padding="0.5em"
-          />
-          <Button
-            textContent="Delete"
-            type="button"
-            clickHandler={onDeleteButtonClick}
-            status="red"
-            padding="0.5em"
-          />
-        </div>
-      )}
+      <div>
+        <Button
+          textContent="Edit"
+          type="button"
+          clickHandler={onEditButtonClick}
+          status="primary"
+          padding="0.5em"
+        />
+        <Button
+          textContent="Delete"
+          type="button"
+          clickHandler={onDeleteButtonClick}
+          status="red"
+          padding="0.5em"
+        />
+      </div>
 
       {showEditModal && !showDeleteModal && (
         <Modal closeModal={onCloseEditModal}>
-          <StringEdit />
+          <StringEdit closeModal={onCloseEditModal} />
         </Modal>
       )}
 

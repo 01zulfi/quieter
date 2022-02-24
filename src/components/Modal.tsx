@@ -8,7 +8,7 @@ interface ModalProps {
 
 const ModalWrapper = styled.section`
   width: 100vw;
-  height: 100vh;
+  height: ${() => document.body.offsetHeight}px;
   position: absolute;
   left: 0;
   top: 0;
@@ -20,6 +20,10 @@ const ModalWrapper = styled.section`
 
 const ContentWrapper = styled.section`
   margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2em;
 `;
 
 const Modal: FC<ModalProps> = function Modal({ closeModal, children }) {
