@@ -79,6 +79,7 @@ const StringEdit: FC<StringEditProps> = function StringEdit({ closeModal }) {
             id="string-edit-input"
             value={title}
             onChange={onTitleChange}
+            required
           />
         </label>
         <label htmlFor="string-content-edit">
@@ -87,6 +88,7 @@ const StringEdit: FC<StringEditProps> = function StringEdit({ closeModal }) {
             value={content}
             onChange={onContentChange}
             id="string-content-input"
+            required
           />
         </label>
         <Button
