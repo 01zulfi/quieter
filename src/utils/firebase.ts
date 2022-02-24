@@ -550,7 +550,7 @@ const deleteKnot = async ({
   await deleteDoc(knotRef);
 };
 
-const listenForKnots = (stringId: string) => (setStateFunction: any) => {
+const listenForStringChanges = (stringId: string) => (setStateFunction: any) => {
   const stringRef = doc(db, 'strings', stringId);
   const unsub = onSnapshot(stringRef, async () => {
     const data = await getString(stringId);
@@ -624,7 +624,7 @@ const firebase = {
   getKnot,
   createKnot,
   deleteKnot,
-  listenForKnots,
+  listenForStringChanges,
   getNotSignedInUserDoc,
   getFeedStrings,
   checkIfEmailExists,

@@ -55,7 +55,7 @@ const StringContainer: FC = function StringContainer() {
       setIsLoaded(true);
     })();
 
-    const listener = firebase.listenForKnots(params.stringId || '');
+    const listener = firebase.listenForStringChanges(params.stringId || '');
     const unsubscribe = listener(setString);
     return unsubscribe();
   }, []);

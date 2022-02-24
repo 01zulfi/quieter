@@ -88,7 +88,7 @@ jest.mock('../../utils/firebase', () => ({
       author: { username: 'test user', id: '000' },
     };
   },
-  listenForKnots: () => () => () => () => {},
+  listenForStringChanges: () => () => () => () => {},
 }));
 
 describe('tests StringContainer component', () => {
