@@ -465,7 +465,7 @@ const deleteString = async (stringId: string) => {
   const stringRef = doc(db, 'strings', stringId);
 
   const stringData = await getString(stringId);
-  const boxId = stringData?.associatedBox;
+  const boxId = stringData?.associatedBox.id;
 
   const boxRef = doc(db, 'boxes', boxId);
 
@@ -550,14 +550,15 @@ const deleteKnot = async ({
   await deleteDoc(knotRef);
 };
 
-const listenForStringChanges = (stringId: string) => (setStateFunction: any) => {
-  const stringRef = doc(db, 'strings', stringId);
-  const unsub = onSnapshot(stringRef, async () => {
-    const data = await getString(stringId);
-    setStateFunction(data);
-  });
-  return () => () => unsub();
-};
+const listenForStringChanges =
+  (stringId: string) => (setStateFunction: any) => {
+    const stringRef = doc(db, 'strings', stringId);
+    const unsub = onSnapshot(stringRef, async () => {
+      const data = await getString(stringId);
+      setStateFunction(data);
+    });
+    return () => () => unsub();
+  };
 
 const deleteBox = async (boxId: string) => {
   const boxRef = doc(db, 'boxes', boxId);
