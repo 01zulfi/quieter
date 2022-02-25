@@ -3,7 +3,7 @@ interface KnotInterface {
   author: { username: string; id: string };
   content: string;
   id: string;
-  time: any;
+  time: number;
 }
 
 export default KnotInterface;

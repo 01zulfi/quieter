@@ -8,6 +8,7 @@ interface StringInterface {
   id: string;
   title: string;
   content: string;
+  time: number;
 }
 
 export default StringInterface;
