@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
+import linkColorDecider from '../utils/link-color-decider';
 
 const Wrapper = styled.div`
-  color: ${(props: any) => (props.black ? 'black' : props.theme.frost.three)};
+  color: ${(props: any) => props.color};
   font-size: ${(props: any) => props.size};
   font-weight: ${(props: any) => props.bold};
   text-decoration: underline;
@@ -20,24 +21,29 @@ const Wrapper = styled.div`
 interface StyledLinkInterface {
   size: string;
   bold: string;
-  black?: boolean;
+  highContrast?: boolean;
 }
 
 const StyledLink: FC<StyledLinkInterface> = function StyledLink({
   children,
   size,
   bold,
-  black,
+  highContrast,
 }) {
+  const currentTheme = useTheme();
   return (
-    <Wrapper size={size} bold={bold} black={black}>
+    <Wrapper
+      size={size}
+      bold={bold}
+      color={linkColorDecider(currentTheme, highContrast)}
+    >
       {children}
     </Wrapper>
   );
 };
 
 StyledLink.defaultProps = {
-  black: false,
+  highContrast: false,
 };
 
 export default StyledLink;
