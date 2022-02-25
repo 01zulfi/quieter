@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUser, useUserAnon } from '../../context/UserContext';
 import StringContext from '../../context/StringContext';
+import localDateFromMilliseconds from '../../utils/local-date-from-milliseconds';
 import StringAuthorView from './StringAuthorView';
 import String from './String';
 import KnotsContainer from '../Knots/KnotsContainer';
@@ -32,12 +33,17 @@ const MetaInfoWrapper = styled.div`
   font-size: 0.9em;
   opacity: 0.9;
   padding: 0 1em;
+`;
 
-  div {
-    flex-grow: 1;
-    max-width: fit-content;
-    display: flex;
-    padding: 0.3em;
+const MetaInfoItem = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  gap: 0.2em;
+
+  @media (max-width: 680px) {
+    flex-direction: column;
+    align-items: flex-start;
   }
 `;
 
@@ -74,23 +80,27 @@ const StringContainer: FC = function StringContainer() {
       <StringContext.Provider value={string}>
         <StringWrapper>
           <MetaInfoWrapper>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <MetaInfoItem>
               <p>posted in</p>
-              <StyledLink size="1em" bold="normal" black>
+              <StyledLink size="1em" bold="normal" highContrast>
                 <Link to={`../../../../box/${string.associatedBox.id}`} replace>
                   {string.associatedBox.name}
                 </Link>
               </StyledLink>
-            </div>
+            </MetaInfoItem>
 
-            <div>
+            <MetaInfoItem>
               <Avatar />
-              <StyledLink size="1em" bold="normal" black>
+              <StyledLink size="1em" bold="normal" highContrast>
                 <Link to={`../../../../profile/${string.author.id}`} replace>
                   {string.author.username}
                 </Link>
               </StyledLink>
-            </div>
+
+              <p style={{ opacity: '0.8' }}>
+                {localDateFromMilliseconds(string.time)}
+              </p>
+            </MetaInfoItem>
           </MetaInfoWrapper>
 
           {isCurrentUserAuthor && <StringAuthorView />}
