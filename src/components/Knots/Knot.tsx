@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import localDateFromMilliseconds from '../../utils/local-date-from-milliseconds';
 import firebase from '../../utils/firebase';
 import { useUser, useUserAnon } from '../../context/UserContext';
 import StyledLink from '../StyledLink';
@@ -28,6 +29,12 @@ const AuthorWrapper = styled.div`
 const ContentWrapper = styled.div`
   flex-grow: 1;
   padding: 0.3em 0.3em;
+`;
+
+const NameAndTimeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
 `;
 
 interface KnotProps {
@@ -61,11 +68,15 @@ const Knot: FC<KnotProps> = function Knot({ knotId }) {
   return (
     <KnotWrapper>
       <AuthorWrapper>
-        <StyledLink size="1em" bold="normal" black>
-          <Link to={`../../../../profile/${knot.author.id}`}>
-            {knot.author.username}
-          </Link>
-        </StyledLink>
+        <NameAndTimeWrapper>
+          <StyledLink size="1em" bold="normal" highContrast>
+            <Link to={`../../../../profile/${knot.author.id}`}>
+              {knot.author.username}
+            </Link>
+          </StyledLink>
+          <p>{localDateFromMilliseconds(knot.time)}</p>
+        </NameAndTimeWrapper>
+
         {isCurrentUserAuthor && (
           <Button
             textContent="Delete"
