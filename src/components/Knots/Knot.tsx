@@ -74,7 +74,9 @@ const Knot: FC<KnotProps> = function Knot({ knotId }) {
               {knot.author.username}
             </Link>
           </StyledLink>
-          <p>{localDateFromMilliseconds(knot.time)}</p>
+          <p style={{ opacity: '0.8' }}>
+            {localDateFromMilliseconds(knot.time)}
+          </p>
         </NameAndTimeWrapper>
 
         {isCurrentUserAuthor && (
