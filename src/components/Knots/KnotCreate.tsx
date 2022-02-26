@@ -70,7 +70,7 @@ const KnotCreate: FC = function KnotCreate() {
           maxLength={1500}
         />
         {isSubmitting ? (
-          <Loading />
+          <Loading width="30px" />
         ) : (
           <Button
             type="submit"
