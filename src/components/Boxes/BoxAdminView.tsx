@@ -50,7 +50,7 @@ const BoxAdminView: FC = function BoxAdminView() {
 
       {showEditModal && !showDeleteModal && (
         <Modal closeModal={onCloseEditModal}>
-          <BoxEdit />
+          <BoxEdit closeModal={onCloseEditModal} />
         </Modal>
       )}
 
