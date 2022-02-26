@@ -1,14 +1,30 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useUser, useSetUser, useUserAnon } from '../../context/UserContext';
+import styled from 'styled-components';
+import { useUser, useUserAnon } from '../../context/UserContext';
 import firebase from '../../utils/firebase';
 import BoxContext from '../../context/BoxContext';
 import BoxAdminView from './BoxAdminView';
 import BoxRegularView from './BoxRegularView';
 import StringCreateModal from '../Strings/StringCreateModal';
 import StringCompactView from '../Strings/StringCompactView';
-import Button from '../Button';
 import Loading from '../Loading';
+
+const BoxContainerWrapper = styled.section`
+  width: 80%;
+
+  @media (max-width: 680px) {
+    width: 100%;
+  }
+`;
+
+const MetaWrapper = styled.section`
+  background: ${(props: any) => props.theme.base.two};
+  border-radius: 10px;
+  box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
+  padding: 1em;
+  width: 100%;
+`;
 
 const BoxContainer: FC = function BoxContainer() {
   const params = useParams();
@@ -36,7 +52,7 @@ const BoxContainer: FC = function BoxContainer() {
     setIsCurrentUserMember(isUserMember);
   });
 
-  if (!isLoaded) return <Loading />;
+  if (!isLoaded) return <Loading width="50px" />;
   if (box === null) {
     return <h2>we couldn&apos;t find what you&apos;re looking for</h2>;
   }
@@ -47,46 +63,24 @@ const BoxContainer: FC = function BoxContainer() {
 
   const onCreateStringClick = (): void => setShowStringCreateModal(true);
 
-  const onJoinButtonClick = async () => {
-    await firebase.joinBox(params.boxId || '');
-    useSetUser()();
-  };
-
-  const onLeaveButtonClick = async () => {
-    await firebase.leaveBox(params.boxId || '');
-    useSetUser()();
-  };
-
   const onCloseModal = (): void => setShowStringCreateModal(false);
 
   return (
-    <div>
+    <BoxContainerWrapper>
       <BoxContext.Provider value={box}>
-        {isCurrentUserAdmin && <BoxAdminView />}
+        <MetaWrapper>
+          {isCurrentUserAdmin && <BoxAdminView />}
 
-        <BoxRegularView onButtonClick={onCreateStringClick} />
-
-        {isCurrentUserMember ? (
-          <Button
-            type="button"
-            textContent="Leave box"
-            clickHandler={onLeaveButtonClick}
-            status="secondary"
-            padding="1em"
+          <BoxRegularView
+            onButtonClick={onCreateStringClick}
+            isCurrentUserAdmin={isCurrentUserAdmin}
+            isCurrentUserMember={isCurrentUserMember}
           />
-        ) : (
-          <Button
-            textContent="Join Box"
-            type="button"
-            clickHandler={isUserAnon ? () => {} : onJoinButtonClick}
-            status="secondary"
-            padding="1em"
-          />
-        )}
 
-        {!isUserAnon && showStringCreateModal && (
-          <StringCreateModal closeModal={onCloseModal} />
-        )}
+          {!isUserAnon && showStringCreateModal && (
+            <StringCreateModal closeModal={onCloseModal} />
+          )}
+        </MetaWrapper>
 
         {box.hasStrings ? (
           <section>
@@ -100,7 +94,7 @@ const BoxContainer: FC = function BoxContainer() {
           <div>this box has no strings</div>
         )}
       </BoxContext.Provider>
-    </div>
+    </BoxContainerWrapper>
   );
 };
 
