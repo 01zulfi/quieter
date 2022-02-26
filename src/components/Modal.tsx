@@ -16,6 +16,7 @@ const ModalWrapper = styled.section`
   backdrop-filter: blur(1rem);
   display: flex;
   justify-content: center;
+  z-index: 12;
 `;
 
 const ContentWrapper = styled.section`
