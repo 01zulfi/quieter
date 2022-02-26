@@ -52,7 +52,6 @@ describe('tests BoxAdminView component', () => {
       name: 'BoxEdit component rendered',
     });
     expect(heading).toBeInTheDocument();
-    expect(editButton).not.toBeInTheDocument();
   });
 
   it('unmounts BoxEdit when close modal button for BoxEdit clicks', () => {
@@ -65,7 +64,6 @@ describe('tests BoxAdminView component', () => {
       name: 'BoxEdit component rendered',
     });
     expect(heading).toBeInTheDocument();
-    expect(editButton).not.toBeInTheDocument();
 
     const closeModalButton = screen.getByRole('button', {
       name: 'close modal mock',
@@ -74,11 +72,9 @@ describe('tests BoxAdminView component', () => {
     userEvent.click(closeModalButton);
 
     const boxDeleteText = screen.queryByText('BoxDelete component rendered');
-    const adminText = screen.queryByText('you are the admin of this box');
 
     expect(boxDeleteText).not.toBeInTheDocument();
     expect(heading).not.toBeInTheDocument();
-    expect(adminText).toBeInTheDocument();
   });
 
   it('renders BoxDelete component when delete button is clicked', () => {
@@ -91,7 +87,6 @@ describe('tests BoxAdminView component', () => {
       name: 'BoxDelete component rendered',
     });
     expect(heading).toBeInTheDocument();
-    expect(deleteButton).not.toBeInTheDocument();
   });
 
   it('unmounts BoxDelete when close modal button for BoxDelete clicks', () => {
@@ -104,7 +99,6 @@ describe('tests BoxAdminView component', () => {
       name: 'BoxDelete component rendered',
     });
     expect(heading).toBeInTheDocument();
-    expect(deleteButton).not.toBeInTheDocument();
 
     const closeModalButton = screen.getByRole('button', {
       name: 'close modal mock',
@@ -113,10 +107,8 @@ describe('tests BoxAdminView component', () => {
     userEvent.click(closeModalButton);
 
     const boxEditText = screen.queryByText('BoxEdit component rendered');
-    const adminText = screen.queryByText('you are the admin of this box');
 
     expect(boxEditText).not.toBeInTheDocument();
     expect(heading).not.toBeInTheDocument();
-    expect(adminText).toBeInTheDocument();
   });
 });
