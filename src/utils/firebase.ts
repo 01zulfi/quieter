@@ -574,7 +574,7 @@ const listenForStringChanges =
   };
 
 const listenForBoxChanges = (boxId: string) => (setStateFunction: any) => {
-  const boxRef = doc(db, 'box', boxId);
+  const boxRef = doc(db, 'boxes', boxId);
   const unsub = onSnapshot(boxRef, async () => {
     const data = await getBox(boxId);
     setStateFunction(data);
