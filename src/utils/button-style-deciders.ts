@@ -8,6 +8,12 @@ const backgroundDecider = (status: string, theme: any) => {
   if (status === 'red') {
     return theme.aurora.one;
   }
+  if (status === 'purple') {
+    return theme.aurora.five;
+  }
+  if (status === 'orange') {
+    return theme.aurora.two;
+  }
   return 'transparent';
 };
 
@@ -41,6 +47,12 @@ const hoverBackgroundDecider = (status: string, theme: any) => {
   if (status === 'red') {
     return theme.aurora.one;
   }
+  if (status === 'orange') {
+    return theme.aurora.two;
+  }
+  if (status === 'purple') {
+    return theme.aurora.five;
+  }
   return 'transparent';
 };
 
@@ -62,6 +74,12 @@ const hoverOutlineDecider = (status: string, theme: any) => {
     return `2px solid ${theme.frost.two}`;
   }
   if (status === 'red') {
+    return `2px solid ${theme.text.two}`;
+  }
+  if (status === 'purple') {
+    return `2px solid ${theme.text.two}`;
+  }
+  if (status === 'orange') {
     return `2px solid ${theme.text.two}`;
   }
   return '0';
