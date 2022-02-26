@@ -41,6 +41,10 @@ const BoxContainer: FC = function BoxContainer() {
       setBox(fetchBox);
       setIsLoaded(true);
     })();
+
+    const listener = firebase.listenForBoxChanges(params.boxId || '');
+    const unsubscribe = listener(setBox);
+    return unsubscribe();
   }, []);
 
   useEffect(() => {
