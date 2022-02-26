@@ -71,12 +71,16 @@ const BoxContainer: FC = function BoxContainer() {
             type="button"
             textContent="Leave box"
             clickHandler={onLeaveButtonClick}
+            status="secondary"
+            padding="1em"
           />
         ) : (
           <Button
             textContent="Join Box"
             type="button"
             clickHandler={isUserAnon ? () => {} : onJoinButtonClick}
+            status="secondary"
+            padding="1em"
           />
         )}
 
