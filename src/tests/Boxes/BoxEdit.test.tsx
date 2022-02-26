@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { screen, render } from '../../utils/test-utils';
+import { screen, render, waitFor } from '../../utils/test-utils';
 import '@testing-library/jest-dom';
 import BoxEdit from '../../components/Boxes/BoxEdit';
 
@@ -30,13 +30,9 @@ jest.mock('../../utils/firebase', () => ({
   }) => mockEditBox(boxId, { name, description }),
 }));
 
-jest.mock('react-router-dom', () => ({
-  useNavigate: () => () => {},
-}));
-
 describe('tests BoxEdit component', () => {
   it('inputs has correct values', () => {
-    render(<BoxEdit />);
+    render(<BoxEdit closeModal={() => {}} />);
 
     const nameEditInput = screen.getAllByRole('textbox')[0];
     const descriptionEditInput = screen.getAllByRole('textbox')[1];
@@ -45,8 +41,8 @@ describe('tests BoxEdit component', () => {
     expect(descriptionEditInput).toHaveValue('lorem ipsum test string content');
   });
 
-  it('editString is called with correct values after edit submits', () => {
-    render(<BoxEdit />);
+  it('editString is called with correct values after edit submits', async () => {
+    render(<BoxEdit closeModal={() => {}} />);
     const nameEditInput = screen.getAllByRole('textbox')[0];
     const descriptionEditInput = screen.getAllByRole('textbox')[1];
     const button = screen.getByRole('button');
@@ -57,9 +53,21 @@ describe('tests BoxEdit component', () => {
     userEvent.type(descriptionEditInput, 'edited desc');
     userEvent.click(button);
 
-    expect(mockEditBox).toHaveBeenCalledWith('123', {
-      name: 'edited name',
-      description: 'edited desc',
+    await waitFor(() => {
+      expect(mockEditBox).toHaveBeenCalledWith('123', {
+        name: 'edited name',
+        description: 'edited desc',
+      });
     });
+  });
+
+  it('invokes closeModal when submit button clicks', async () => {
+    const mockCloseModal = jest.fn();
+    render(<BoxEdit closeModal={mockCloseModal} />);
+    const button = screen.getByRole('button', { name: 'Edit box' });
+
+    userEvent.click(button);
+
+    await waitFor(() => expect(mockCloseModal).toHaveBeenCalledTimes(1));
   });
 });
