@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { useSetTheme } from '../../context/SetThemeContext';
 import theme from '../../utils/themes';
-import lightTheme from '../../icons/light_mode_white_24dp.svg';
-import darkTheme from '../../icons/dark_mode_black_24dp.svg';
+import lightTheme from '../../assets/icons/light_mode_white_24dp.svg';
+import darkTheme from '../../assets/icons/dark_mode_black_24dp.svg';
 
 const NavbarWrapper = styled.div`
   display: flex;

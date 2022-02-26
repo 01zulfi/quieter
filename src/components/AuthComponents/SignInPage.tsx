@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import SignInForm from './SignInForm';
 import StyledLink from '../StyledLink';
 import { useSetTheme } from '../../context/SetThemeContext';
-import image from '../../images/johanna-buguet-5d5H42WDT4M-unsplash.jpg';
+import image from '../../assets/images/johanna-buguet-5d5H42WDT4M-unsplash.jpg';
 import theme from '../../utils/themes';
-import lightTheme from '../../icons/light_mode_white_24dp.svg';
-import darkTheme from '../../icons/dark_mode_black_24dp.svg';
+import lightTheme from '../../assets/icons/light_mode_white_24dp.svg';
+import darkTheme from '../../assets/icons/dark_mode_black_24dp.svg';
 import StrippedNavbar from '../Navbar/StrippedNavbar';
 
 const SignInPageWrapper = styled.section`

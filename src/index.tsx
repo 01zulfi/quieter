@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RouteSwitch from './RouteSwitch';
-import './styles/reset.css';
-import './styles/normalize.css';
-import './styles/global.css';
+import './assets/styles/reset.css';
+import './assets/styles/normalize.css';
+import './assets/styles/global.css';
 
 ReactDOM.render(
   <React.StrictMode>

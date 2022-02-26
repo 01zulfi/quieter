@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import { useSetTheme } from '../../context/SetThemeContext';
 import theme from '../../utils/themes';
-import menuLight from '../../icons/menu_white_24dp.svg';
-import menuDark from '../../icons/menu_black_24dp.svg';
-import cancelLight from '../../icons/cancel_white_24dp.svg';
-import cancelDark from '../../icons/cancel_black_24dp.svg';
-import lightTheme from '../../icons/light_mode_white_24dp.svg';
-import darkTheme from '../../icons/dark_mode_black_24dp.svg';
+import menuLight from '../../assets/icons/menu_white_24dp.svg';
+import menuDark from '../../assets/icons/menu_black_24dp.svg';
+import cancelLight from '../../assets/icons/cancel_white_24dp.svg';
+import cancelDark from '../../assets/icons/cancel_black_24dp.svg';
+import lightTheme from '../../assets/icons/light_mode_white_24dp.svg';
+import darkTheme from '../../assets/icons/dark_mode_black_24dp.svg';
 
 const NavbarWrapper = styled.div`
   display: flex;
