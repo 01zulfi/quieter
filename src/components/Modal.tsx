@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 
@@ -28,6 +28,14 @@ const ContentWrapper = styled.section`
 `;
 
 const Modal: FC<ModalProps> = function Modal({ closeModal, children }) {
+  useEffect(() => {
+    const { body } = document;
+    body.style.cssText = 'overflow: hidden';
+    return () => {
+      body.style.cssText = 'overflow: auto';
+    };
+  }, []);
+
   return (
     <ModalWrapper>
       <ContentWrapper>
