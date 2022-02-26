@@ -9,6 +9,7 @@ import cancelLight from '../../assets/icons/cancel_white_24dp.svg';
 import cancelDark from '../../assets/icons/cancel_black_24dp.svg';
 import lightTheme from '../../assets/icons/light_mode_white_24dp.svg';
 import darkTheme from '../../assets/icons/dark_mode_black_24dp.svg';
+import setBodyBackground from '../../utils/set-body-background';
 
 const NavbarWrapper = styled.div`
   display: flex;
@@ -101,9 +102,11 @@ const Navbar: FC = function Navbar() {
   const switchTheme = () => {
     if (currentTheme.name === 'light') {
       setCurrentTheme(theme.dark);
+      setBodyBackground(theme.dark.base.one);
       return;
     }
     setCurrentTheme(theme.light);
+    setBodyBackground(theme.light.base.one);
   };
 
   const onMenuToggle = () => setShowMenu((prev) => !prev);
