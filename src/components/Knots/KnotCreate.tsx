@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { useString } from '../../context/StringContext';
-import { useSetUser } from '../../context/UserContext';
 import firebase from '../../utils/firebase';
 import Button from '../Button';
+import Loading from '../Loading';
 
 const KnotCreateWrapper = styled.div`
   form {
@@ -41,8 +41,8 @@ const FormFiller = styled.div`
 `;
 
 const KnotCreate: FC = function KnotCreate() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [knot, setKnot] = useState('');
-  const setUser = useSetUser();
   const string = useString() || { id: 'DEFAULT' };
 
   const onKnotInput = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -50,9 +50,10 @@ const KnotCreate: FC = function KnotCreate() {
 
   const onKnotSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await firebase.createKnot({ stringId: string.id, content: knot });
-    setUser();
+    setIsSubmitting(true);
     setKnot('');
+    await firebase.createKnot({ stringId: string.id, content: knot });
+    setIsSubmitting(false);
   };
 
   return (
@@ -68,13 +69,17 @@ const KnotCreate: FC = function KnotCreate() {
           onChange={onKnotInput}
           maxLength={1500}
         />
-        <Button
-          type="submit"
-          status="secondary"
-          textContent="Create knot"
-          padding="0.5em"
-          clickHandler={() => {}}
-        />
+        {isSubmitting ? (
+          <Loading />
+        ) : (
+          <Button
+            type="submit"
+            status="secondary"
+            textContent="Create knot"
+            padding="0.5em"
+            clickHandler={() => {}}
+          />
+        )}
       </form>
     </KnotCreateWrapper>
   );
