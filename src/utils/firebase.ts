@@ -554,15 +554,14 @@ const deleteKnot = async ({
   await deleteDoc(knotRef);
 };
 
-const listenForUserChanges =
-  () => (setStateFunction: any) => {
-    const userRef = doc(db, 'users', userId);
-    const unsub = onSnapshot(userRef, async () => {
-      const data = await getUserDoc();
-      setStateFunction(data);
-    });
-    return () => () => unsub();
-  };
+const listenForUserChanges = () => (setStateFunction: any) => {
+  const userRef = doc(db, 'users', userId);
+  const unsub = onSnapshot(userRef, async () => {
+    const data = await getUserDoc();
+    setStateFunction(data);
+  });
+  return () => () => unsub();
+};
 
 const listenForStringChanges =
   (stringId: string) => (setStateFunction: any) => {
@@ -573,6 +572,15 @@ const listenForStringChanges =
     });
     return () => () => unsub();
   };
+
+const listenForBoxChanges = (boxId: string) => (setStateFunction: any) => {
+  const boxRef = doc(db, 'box', boxId);
+  const unsub = onSnapshot(boxRef, async () => {
+    const data = await getBox(boxId);
+    setStateFunction(data);
+  });
+  return () => () => unsub();
+};
 
 const deleteBox = async (boxId: string) => {
   const boxRef = doc(db, 'boxes', boxId);
@@ -644,6 +652,7 @@ const firebase = {
   getFeedStrings,
   checkIfEmailExists,
   listenForUserChanges,
+  listenForBoxChanges,
 };
 
 export default firebase;
