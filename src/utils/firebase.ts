@@ -554,6 +554,16 @@ const deleteKnot = async ({
   await deleteDoc(knotRef);
 };
 
+const listenForUserChanges =
+  () => (setStateFunction: any) => {
+    const userRef = doc(db, 'users', userId);
+    const unsub = onSnapshot(userRef, async () => {
+      const data = await getUserDoc();
+      setStateFunction(data);
+    });
+    return () => () => unsub();
+  };
+
 const listenForStringChanges =
   (stringId: string) => (setStateFunction: any) => {
     const stringRef = doc(db, 'strings', stringId);
@@ -633,6 +643,7 @@ const firebase = {
   getNotSignedInUserDoc,
   getFeedStrings,
   checkIfEmailExists,
+  listenForUserChanges,
 };
 
 export default firebase;
