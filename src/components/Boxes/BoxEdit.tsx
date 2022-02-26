@@ -81,6 +81,7 @@ const BoxEdit: FC<BoxEditInterface> = function BoxEdit({ closeModal }) {
             value={name}
             onChange={onNameEdit}
             required
+            maxLength={25}
           />
         </label>
         <label htmlFor="box-description-input">
@@ -92,6 +93,7 @@ const BoxEdit: FC<BoxEditInterface> = function BoxEdit({ closeModal }) {
             value={description}
             onChange={onDescriptionEdit}
             required
+            maxLength={70}
           />
         </label>
         <Button
