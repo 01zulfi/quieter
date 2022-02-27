@@ -1,9 +1,56 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { useBox } from '../../context/BoxContext';
+import StyledLink from '../StyledLink';
 import firebase from '../../utils/firebase';
 import uniqueId from '../../utils/unique-id';
 import Button from '../Button';
+
+const StringCreateFormWrapper = styled.section`
+  margin: 1em;
+  border-radius: 10px;
+  box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
+  background: ${(props: any) => props.theme.base.three};
+  padding: 1em 1em;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    button {
+      align-self: center;
+    }
+  }
+  label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  input,
+  textarea {
+    background: ${(props: any) => props.theme.frost.one};
+    border: 0;
+    border: 1px solid ${(props: any) => props.theme.frost.four};
+    font-weight: normal;
+    border-radius: 5px;
+    padding: 1em;
+    font-size: 1.1em;
+    &:focus {
+      outline: 2px solid ${(props: any) => props.theme.text.four};
+    }
+  }
+  textarea {
+    height: fit-content;
+  }
+`;
+
+const SuccessWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const StringCreateForm: FC = function StringCreateForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -35,35 +82,51 @@ const StringCreateForm: FC = function StringCreateForm() {
   };
 
   return (
-    <div>
+    <StringCreateFormWrapper>
       {isSubmitted ? (
-        <div>
-          <h1>Success! Your string has started.</h1>
-          <Link to={`/box/${box.id}/string/${stringId}`}>view it here</Link>
-        </div>
+        <SuccessWrapper>
+          <h2>Success! Your string has started.</h2>
+          <StyledLink bold="600" size="1.2em">
+            <Link to={`/box/${box.id}/string/${stringId}`}>view it here</Link>
+          </StyledLink>
+        </SuccessWrapper>
       ) : (
         <form onSubmit={submitHandler}>
-          <input
-            type="text"
-            onChange={onTitleInput}
-            placeholder="give a title to your string"
-          />
-          <textarea
-            name="string-content-input"
-            id="string-content-input"
-            cols={30}
-            rows={10}
-            placeholder="populate your string with content by writing something here"
-            onChange={onContentInput}
-          />
+          <label htmlFor="string-title-input">
+            Title: (max: 50 characters)
+            <input
+              type="text"
+              id="string-title-input"
+              onChange={onTitleInput}
+              placeholder="give a title to your string"
+              required
+              maxLength={50}
+            />
+          </label>
+
+          <label htmlFor="string-content-input">
+            Content: (max: 1000 characters)
+            <textarea
+              name="string-content-input"
+              id="string-content-input"
+              cols={30}
+              rows={10}
+              placeholder="populate your string with content by writing something here"
+              onChange={onContentInput}
+              required
+              maxLength={1000}
+            />
+          </label>
+
           <Button
+            status="primary"
             textContent="Start String"
             type="submit"
             clickHandler={() => {}}
           />
         </form>
       )}
-    </div>
+    </StringCreateFormWrapper>
   );
 };
 
