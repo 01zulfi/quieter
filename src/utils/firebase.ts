@@ -14,6 +14,7 @@ import {
   collection,
   where,
   onSnapshot,
+  limit,
 } from 'firebase/firestore';
 import {
   signInAnonymously,
@@ -605,6 +606,21 @@ const deleteBox = async (boxId: string) => {
   await deleteDoc(boxRef);
 };
 
+const getBoxList = async () => {
+  const listQuery = query(collection(db, 'boxes'), limit(5));
+  const listSnapshot = await getDocs(listQuery);
+  const array: any = [];
+  listSnapshot.forEach((data: any) => {
+    if (!data.exists()) return;
+    array.push({
+      id: data.data().id,
+      time: data.data().time,
+      name: data.data().name,
+    });
+  });
+  return array.sort((a: any, b: any) => b - a);
+};
+
 const getFeedStrings = async () => {
   const user = await getUserDoc();
   const boxStrings: string[] = [];
@@ -655,6 +671,7 @@ const firebase = {
   getFeedStrings,
   checkIfEmailExists,
   listenForUserChanges,
+  getBoxList,
   listenForBoxChanges,
 };
 
