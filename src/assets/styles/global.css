@@ -15,5 +15,9 @@ h3 {
 }
 
 * {
-  transition: background ease-out 200ms;
+  transition: background ease-out 100ms;
+}
+
+body {
+  background: #eceff4;
 }
