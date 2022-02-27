@@ -47,7 +47,12 @@ const BoxRegularView: FC<BoxRegularViewProps> = function BoxRegularView({
   isCurrentUserMember,
 }) {
   const [isButtonLoaded, setIsButtonLoaded] = useState(true);
-  const box = useBox() || { id: 'DEFAULT', name: '', description: '' };
+  const box = useBox() || {
+    id: 'DEFAULT',
+    name: '',
+    description: '',
+    joinedUsersCount: 0,
+  };
   const isUserAnon = useUserAnon();
 
   if (box.id === 'DEFAULT') {
@@ -101,6 +106,8 @@ const BoxRegularView: FC<BoxRegularViewProps> = function BoxRegularView({
           <Loading width="2em" />
         )}
       </DescAndButtonWrapper>
+
+      <p style={{ opacity: '0.8' }}>{`${box.joinedUsersCount} members`}</p>
 
       <Line />
 
