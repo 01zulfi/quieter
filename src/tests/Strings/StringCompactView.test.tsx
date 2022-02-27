@@ -11,28 +11,19 @@ jest.mock(
     },
 );
 
-jest.mock(
-  '../../components/Strings/String',
-  () =>
-    function StringMock() {
-      return <h2>String component rendered</h2>;
-    },
-);
-
-jest.mock(
-  '../../components/Knots/Knot',
-  () =>
-    function KnotMock({ knotId }: { knotId: string }) {
-      return <h2>{knotId}</h2>;
-    },
-);
+jest.mock('react-router-dom', () => ({
+  useNavigate: () => () => {},
+  Link: function MockLink() {
+    return <h2>Link component rendered</h2>;
+  },
+}));
 
 const mockGetString = jest.fn();
 
 jest.mock('../../utils/firebase', () => ({
   getString: async (stringId: string) => {
     mockGetString(stringId);
-    return { latestTwoKnots: ['first knot', 'second knot'] };
+    return { author: { username: 'authored', id: '3331' } };
   },
 }));
 
@@ -50,27 +41,5 @@ describe('tests StringCompactView', () => {
     render(<StringCompactView stringId="223e4" />);
 
     await waitFor(() => expect(mockGetString).toHaveBeenCalledWith('223e4'));
-  });
-
-  it('renders String component', async () => {
-    render(<StringCompactView stringId="" />);
-    const renderText = await screen.findByRole('heading', {
-      name: 'String component rendered',
-    });
-
-    expect(renderText).toBeInTheDocument();
-  });
-
-  it('renders Knot component according to latestTwoKnots array data', async () => {
-    render(<StringCompactView stringId="" />);
-    const firstKnot = await screen.findByRole('heading', {
-      name: 'first knot',
-    });
-    const secondKnot = await screen.findByRole('heading', {
-      name: 'second knot',
-    });
-
-    expect(firstKnot).toBeInTheDocument();
-    expect(secondKnot).toBeInTheDocument();
   });
 });
