@@ -26,6 +26,10 @@ const ButtonWrapper = styled.button`
     outline: ${(props: any) => hoverOutlineDecider(props.status, props.theme)};
     cursor: pointer;
   }
+
+  &:focus {
+    outline: 2px solid black;
+  }
 `;
 
 interface ButtonProps {
