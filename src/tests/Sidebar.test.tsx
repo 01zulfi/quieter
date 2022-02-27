@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '../utils/test-utils';
+import { waitFor, render, screen } from '../utils/test-utils';
 import '@testing-library/jest-dom';
 import Sidebar from '../components/Sidebar';
 
@@ -19,17 +19,35 @@ jest.mock(
     },
 );
 
+jest.mock('react-router-dom', () => ({
+  Link: function Link({ to, children }: { to: string; children: any }) {
+    return <a href={to}>{children}</a>;
+  },
+  useNavigate: () => () => {},
+}));
+
 const mockUseUserAnon = jest.fn(() => false);
+const mockGetBoxList = jest.fn();
 
 jest.mock('../context/UserContext', () => ({
   useUserAnon: () => mockUseUserAnon(),
 }));
 
+jest.mock('../utils/firebase.ts', () => ({
+  getBoxList: async () => {
+    mockGetBoxList();
+    return [
+      { name: 'test', id: '231232' },
+      { name: 'test2', id: 'afd' },
+    ];
+  },
+}));
+
 describe('tests Sidebar component', () => {
   describe('when user is not anonymous/guest', () => {
-    it('renders BoxCreateModal component when create box button clicks', () => {
+    it('renders BoxCreateModal component when create box button clicks', async () => {
       render(<Sidebar />);
-      const createBoxButton = screen.getByRole('button', {
+      const createBoxButton = await screen.findByRole('button', {
         name: 'Create box',
       });
 
@@ -42,9 +60,9 @@ describe('tests Sidebar component', () => {
       ).toBeInTheDocument();
     });
 
-    it('dismounts BoxCreateModal component when close modal button clicks', () => {
+    it('dismounts BoxCreateModal component when close modal button clicks', async () => {
       render(<Sidebar />);
-      const createBoxButton = screen.getByRole('button', {
+      const createBoxButton = await screen.findByRole('button', {
         name: 'Create box',
       });
 
@@ -65,15 +83,31 @@ describe('tests Sidebar component', () => {
   });
 
   describe('when user is anonymous/guest', () => {
-    it('does not render create box button', () => {
+    it('does not render create box button', async () => {
       mockUseUserAnon.mockImplementation(() => true);
       render(<Sidebar />);
 
-      const createBoxButton = screen.queryByRole('button', {
-        name: 'Create box',
-      });
+      await waitFor(() => {
+        const createBoxButton = screen.queryByRole('button', {
+          name: 'Create box',
+        });
 
-      expect(createBoxButton).not.toBeInTheDocument();
+        expect(createBoxButton).not.toBeInTheDocument();
+      });
     });
+  });
+
+  it('invokes firebase.getBoxList', async () => {
+    render(<Sidebar />);
+    await waitFor(() => expect(mockGetBoxList).toHaveBeenCalledTimes(1));
+  });
+
+  it('renders box links as per data', async () => {
+    render(<Sidebar />);
+    const boxOne = await screen.findByText('test');
+    const boxTwo = await screen.findByText('test2');
+
+    expect(boxOne).toBeInTheDocument();
+    expect(boxTwo).toBeInTheDocument();
   });
 });
