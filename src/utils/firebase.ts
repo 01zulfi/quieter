@@ -340,6 +340,7 @@ const createBox = async ({
     hasStrings: false,
     joinedUsers: [userId],
     joinedUsersCount: 1,
+    time: Date.now(),
   };
 
   await setDoc(doc(db, 'boxes', boxId), boxData);
