@@ -606,8 +606,8 @@ const deleteBox = async (boxId: string) => {
   await deleteDoc(boxRef);
 };
 
-const getBoxList = async () => {
-  const listQuery = query(collection(db, 'boxes'), limit(5));
+const getBoxList = async (number: number) => {
+  const listQuery = query(collection(db, 'boxes'), limit(number));
   const listSnapshot = await getDocs(listQuery);
   const array: any = [];
   listSnapshot.forEach((data: any) => {

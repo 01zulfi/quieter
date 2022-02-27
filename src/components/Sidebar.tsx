@@ -35,7 +35,7 @@ const Sidebar: FC = function Sidebar() {
 
   useEffect(() => {
     (async () => {
-      const fetchData = await firebase.getBoxList();
+      const fetchData = await firebase.getBoxList(5);
       setBoxes(fetchData);
       setIsLoaded(true);
     })();
