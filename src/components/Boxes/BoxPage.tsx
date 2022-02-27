@@ -7,6 +7,7 @@ const BoxPageWrapper = styled.section`
   display: flex;
   flex-direction: row;
   margin: 1em;
+  gap: 1em;
 
   @media (max-width: 680px) {
     flex-direction: column;
