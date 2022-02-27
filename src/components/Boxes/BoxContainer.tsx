@@ -95,7 +95,7 @@ const BoxContainer: FC = function BoxContainer() {
             ))}
           </section>
         ) : (
-          <div>this box has no strings</div>
+          <div>This box has no strings.</div>
         )}
       </BoxContext.Provider>
     </BoxContainerWrapper>
