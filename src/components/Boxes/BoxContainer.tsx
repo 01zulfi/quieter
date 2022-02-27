@@ -90,7 +90,7 @@ const BoxContainer: FC = function BoxContainer() {
           <section>
             {box.associatedStrings.map((stringId: string) => (
               <div key={stringId}>
-                <StringCompactView stringId={stringId} />
+                <StringCompactView stringId={stringId} inBoxPage />
               </div>
             ))}
           </section>
