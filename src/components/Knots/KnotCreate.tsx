@@ -68,6 +68,7 @@ const KnotCreate: FC = function KnotCreate() {
           rows={5}
           onChange={onKnotInput}
           maxLength={1500}
+          required
         />
         {isSubmitting ? (
           <Loading width="30px" />
