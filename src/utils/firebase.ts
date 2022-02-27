@@ -593,11 +593,13 @@ const deleteBox = async (boxId: string) => {
   });
 
   const boxData = await getBox(boxId);
-  const stringIds = boxData?.associatedStrings;
 
-  stringIds.forEach(async (stringId: string) => {
-    await deleteString(stringId);
-  });
+  if (boxData?.hasStrings) {
+    const stringIds = boxData?.associatedStrings;
+    stringIds.forEach(async (stringId: string) => {
+      await deleteString(stringId);
+    });
+  }
 
   await deleteDoc(boxRef);
 };
