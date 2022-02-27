@@ -55,7 +55,7 @@ const Knot: FC<KnotProps> = function Knot({ knotId }) {
     })();
   }, []);
 
-  if (!isLoaded) return <Loading />;
+  if (!isLoaded) return <Loading width="15px" />;
   if (!knot) return <h4>Unable to load</h4>;
 
   const isCurrentUserAuthor =

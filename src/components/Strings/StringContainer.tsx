@@ -70,7 +70,7 @@ const StringContainer: FC = function StringContainer() {
     !isUserAnon &&
     user.authoredStrings.some((id: string) => id === params.stringId);
 
-  if (!isLoaded) return <Loading />;
+  if (!isLoaded) return <Loading width="45px" />;
   if (string === null) {
     return <h2>we couldn&apos;t find what you&apos;re looking for</h2>;
   }
