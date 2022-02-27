@@ -74,8 +74,6 @@ jest.mock(
 );
 
 const mockGetBox = jest.fn();
-const mockLeaveBox = jest.fn();
-const mockJoinBox = jest.fn();
 
 jest.mock('../../utils/firebase', () => ({
   getBox: (boxId: string) => {
@@ -85,8 +83,7 @@ jest.mock('../../utils/firebase', () => ({
       associatedStrings: ['first string', 'second string'],
     };
   },
-  leaveBox: (boxId: string) => mockLeaveBox(boxId),
-  joinBox: (boxId: string) => mockJoinBox(boxId),
+  listenForBoxChanges: () => () => () => () => {},
 }));
 
 describe('tests BoxContainer component', () => {
@@ -127,28 +124,6 @@ describe('tests BoxContainer component', () => {
       });
 
       expect(renderText).toBeInTheDocument();
-    });
-
-    it('renders leave box button when user is member', async () => {
-      render(<BoxContainer />);
-
-      const leaveButton = await screen.findByRole('button', {
-        name: 'Leave box',
-      });
-
-      expect(leaveButton).toBeInTheDocument();
-    });
-
-    it('clicking leave box invokes firebase.leaveBox', async () => {
-      render(<BoxContainer />);
-
-      const leaveButton = await screen.findByRole('button', {
-        name: 'Leave box',
-      });
-
-      userEvent.click(leaveButton);
-
-      expect(mockLeaveBox).toHaveBeenCalledWith('001122');
     });
 
     it('clicking button in BoxRegularView renders StringCreateModal', async () => {
