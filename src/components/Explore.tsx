@@ -17,7 +17,7 @@ const Explore: FC = function Explore() {
   return (
     <section>
       {isLoaded ? (
-        boxes.map((box: any) => <div>{box.name}</div>)
+        boxes.map((box: any) => <div key={box.id}>{box.name}</div>)
       ) : (
         <Loading width="50px" />
       )}
