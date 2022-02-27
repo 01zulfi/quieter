@@ -7,6 +7,7 @@ import BoxPage from './components/Boxes/BoxPage';
 import Profile from './components/Profile/Profile';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home';
+import Explore from './components/Explore';
 
 const App: FC = function App() {
   const isUserSignedIn = localStorage.getItem('isSignedIn') === 'true';
@@ -22,6 +23,7 @@ const App: FC = function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
           <Route path="/box/:boxId/string/:stringId" element={<StringPage />} />
           <Route path="/box/:boxId" element={<BoxPage />} />
           <Route path="/profile/:userId" element={<Profile />} />
