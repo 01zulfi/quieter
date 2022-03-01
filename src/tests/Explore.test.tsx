@@ -22,6 +22,14 @@ jest.mock(
     },
 );
 
+jest.mock(
+  '../components/Explore/ExploreItem',
+  () =>
+    function ExploreItemMock({ boxName }: { boxName: string }) {
+      return <h4>{boxName}</h4>;
+    },
+);
+
 describe('tests Explore component', () => {
   it('renders Loading component, then dismounts it', async () => {
     render(<Explore />);

@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import firebase from '../../utils/firebase';
 import Loading from '../Loading';
+import ExploreItem from './ExploreItem';
 
 const Explore: FC = function Explore() {
   const [boxes, setBoxes] = useState<any>([]);
@@ -17,7 +18,15 @@ const Explore: FC = function Explore() {
   return (
     <section>
       {isLoaded ? (
-        boxes.map((box: any) => <div key={box.id}>{box.name}</div>)
+        boxes.map((box: any) => (
+          <div key={box.id}>
+            <ExploreItem
+              boxName={box.name}
+              boxDescription={box.description}
+              boxId={box.id}
+            />
+          </div>
+        ))
       ) : (
         <Loading width="50px" />
       )}
