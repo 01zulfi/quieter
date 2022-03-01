@@ -616,6 +616,7 @@ const getBoxList = async (number: number) => {
       id: data.data().id,
       time: data.data().time,
       name: data.data().name,
+      description: data.data().description,
     });
   });
   return array.sort((a: any, b: any) => b - a);
