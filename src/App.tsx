@@ -7,7 +7,7 @@ import BoxPage from './components/Boxes/BoxPage';
 import Profile from './components/Profile/Profile';
 import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home';
-import Explore from './components/Explore';
+import Explore from './components/Explore/Explore';
 
 const App: FC = function App() {
   const isUserSignedIn = localStorage.getItem('isSignedIn') === 'true';

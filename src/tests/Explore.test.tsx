@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { waitFor, render, screen } from '../utils/test-utils';
-import Explore from '../components/Explore';
+import Explore from '../components/Explore/Explore';
 
 const mockGetBoxList = jest.fn();
 jest.mock('../utils/firebase', () => ({

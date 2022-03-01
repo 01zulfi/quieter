@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
-import firebase from '../utils/firebase';
-import Loading from './Loading';
+import firebase from '../../utils/firebase';
+import Loading from '../Loading';
 
 const Explore: FC = function Explore() {
   const [boxes, setBoxes] = useState<any>([]);
