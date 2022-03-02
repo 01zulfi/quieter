@@ -633,7 +633,10 @@ const getFeedStrings = async () => {
     }
   });
 
-  const allStrings = [...user.associatedStrings, ...boxStrings];
+  const allStrings = [
+    ...[...user.associatedStrings].reverse(),
+    ...[...boxStrings].reverse(),
+  ];
 
   const uniqueArray = allStrings.filter(
     (item: any, index: any, self: any) => self.indexOf(item) === index,
