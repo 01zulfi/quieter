@@ -1,5 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 import { waitFor, render, screen } from '../utils/test-utils';
 import Explore from '../components/Explore/Explore';
 
@@ -30,7 +31,83 @@ jest.mock(
     },
 );
 
+jest.mock(
+  '../components/Boxes/BoxCreateModal',
+  () =>
+    function BoxCreateModalMock({ closeModal }: { closeModal: any }) {
+      return (
+        <>
+          <h2>BoxCreateModal component rendered</h2>
+          <button type="button" onClick={closeModal}>
+            close modal mock
+          </button>
+        </>
+      );
+    },
+);
+
+const mockUseUserAnon = jest.fn(() => false);
+jest.mock('../context/UserContext', () => ({
+  useUserAnon: () => mockUseUserAnon(),
+}));
+
 describe('tests Explore component', () => {
+  it('does not render create box button when user is anonymous/guest', async () => {
+    mockUseUserAnon.mockImplementation(() => true);
+    render(<Explore />);
+
+    await waitFor(() => {
+      const createBoxButton = screen.queryByRole('button', {
+        name: 'Create box',
+      });
+      expect(createBoxButton).not.toBeInTheDocument();
+    });
+  });
+
+  it('renders create box button when user is not anonymous/guest', async () => {
+    render(<Explore />);
+    const createBoxButton = await screen.findByRole('button', {
+      name: 'Create box',
+    });
+    expect(createBoxButton).toBeInTheDocument();
+  });
+
+  it('renders BoxCreateModal component when create box button clicks', async () => {
+    render(<Explore />);
+    const createBoxButton = await screen.findByRole('button', {
+      name: 'Create box',
+    });
+
+    userEvent.click(createBoxButton);
+
+    expect(
+      screen.getByRole('heading', {
+        name: 'BoxCreateModal component rendered',
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it('dismounts BoxCreateModal component when close modal button clicks', async () => {
+    render(<Explore />);
+    const createBoxButton = await screen.findByRole('button', {
+      name: 'Create box',
+    });
+
+    userEvent.click(createBoxButton);
+
+    const closeModalButton = screen.getByRole('button', {
+      name: 'close modal mock',
+    });
+
+    userEvent.click(closeModalButton);
+
+    expect(
+      screen.queryByRole('heading', {
+        name: 'BoxCreateModal component rendered',
+      }),
+    ).not.toBeInTheDocument();
+  });
+
   it('renders Loading component, then dismounts it', async () => {
     render(<Explore />);
     await waitFor(() =>
