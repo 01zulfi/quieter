@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import { useSetTheme } from '../../context/SetThemeContext';
 import theme from '../../utils/themes';
@@ -27,6 +27,10 @@ const HeadingWrapper = styled.div`
   align-items: center;
   gap: 3px;
   margin-left: 1em;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const H1Wrapper = styled.h1`
@@ -98,6 +102,7 @@ const Navbar: FC = function Navbar() {
   const currentTheme = useTheme();
   const setCurrentTheme = useSetTheme();
   const [showMenu, setShowMenu] = useState(screen.width > 680);
+  const navigate = useNavigate();
 
   const switchTheme = () => {
     if (currentTheme.name === 'light') {
@@ -110,6 +115,9 @@ const Navbar: FC = function Navbar() {
   };
 
   const onMenuToggle = () => setShowMenu((prev) => !prev);
+  const navigateToHome = () => {
+    navigate('/');
+  };
 
   const iconDecider = () => {
     if (showMenu) {
@@ -125,7 +133,7 @@ const Navbar: FC = function Navbar() {
         currentTheme.name === 'light' ? 'white' : currentTheme.base.one
       }
     >
-      <HeadingWrapper>
+      <HeadingWrapper onClick={navigateToHome}>
         <H1Wrapper>Q</H1Wrapper>
         <H2Wrapper>uieter</H2Wrapper>
       </HeadingWrapper>
