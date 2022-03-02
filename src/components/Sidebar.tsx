@@ -18,12 +18,26 @@ const SidebarWrapper = styled.section`
   align-items: stretch;
   justify-content: baseline;
   height: fit-content;
+
+  @media (max-width: 680px) {
+    flex-direction: row;
+  }
+`;
+
+const ResponsiveWrapper = styled.div`
+  @media (max-width: 680px) {
+    display: none;
+  }
 `;
 
 const Line = styled.div`
   height: 0.2em;
   width: 100%;
   background: ${(props: any) => props.theme.aurora.four};
+
+  @media (max-width: 680px) {
+    display: none;
+  }
 `;
 
 const Sidebar: FC = function Sidebar() {
@@ -49,21 +63,23 @@ const Sidebar: FC = function Sidebar() {
 
   return (
     <SidebarWrapper>
-      <h3>Trending Boxes</h3>
+      <ResponsiveWrapper>
+        <h3>Trending Boxes</h3>
 
-      {isLoaded ? (
-        <ol>
-          {boxes.map((box: any) => (
-            <li key={box.id}>
-              <StyledLink bold="600" size="1.1em">
-                <Link to={`/box/${box.id}`}>{box.name}</Link>
-              </StyledLink>
-            </li>
-          ))}
-        </ol>
-      ) : (
-        <Loading width="15px" />
-      )}
+        {isLoaded ? (
+          <ol>
+            {boxes.map((box: any) => (
+              <li key={box.id}>
+                <StyledLink bold="600" size="1.1em">
+                  <Link to={`/box/${box.id}`}>{box.name}</Link>
+                </StyledLink>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <Loading width="15px" />
+        )}
+      </ResponsiveWrapper>
 
       <Button
         type="button"
