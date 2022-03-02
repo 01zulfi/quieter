@@ -48,7 +48,7 @@ const SignOutPage: FC = function SignOutPage() {
           </StyledLink>
         </MessageWrapper>
       ) : (
-        <Loading />
+        <Loading width="35px" />
       )}
     </SignOutPageWrapper>
   );
