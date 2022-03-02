@@ -1,8 +1,51 @@
 import React, { FC, useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import firebase from '../../utils/firebase';
+import StyledLink from '../StyledLink';
 import uniqueId from '../../utils/unique-id';
 import Button from '../Button';
+
+const BoxCreateFormWrapper = styled.section`
+  margin: 1em;
+  border-radius: 10px;
+  box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
+  background: ${(props: any) => props.theme.base.three};
+  padding: 1em 1em;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    button {
+      align-self: center;
+    }
+  }
+  label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  input {
+    background: ${(props: any) => props.theme.frost.one};
+    border: 0;
+    border: 1px solid ${(props: any) => props.theme.frost.four};
+    font-weight: normal;
+    border-radius: 5px;
+    padding: 1em;
+    font-size: 1.1em;
+    &:focus {
+      outline: 2px solid ${(props: any) => props.theme.text.four};
+    }
+  }
+`;
+
+const SuccessWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const BoxCreateForm: FC = function BoxCreateForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -27,12 +70,15 @@ const BoxCreateForm: FC = function BoxCreateForm() {
   };
 
   return (
-    <div>
+    <BoxCreateFormWrapper>
       {isSubmitted ? (
-        <div>
+        <SuccessWrapper>
           <h1>Success! The box has been created.</h1>
-          <Link to={`/box/${boxId}`}>view it here</Link>
-        </div>
+
+          <StyledLink bold="600" size="1.2em">
+            <Link to={`/box/${boxId}`}>view it here</Link>
+          </StyledLink>
+        </SuccessWrapper>
       ) : (
         <form onSubmit={submitHandler}>
           <label htmlFor="box-name-input">
@@ -61,10 +107,11 @@ const BoxCreateForm: FC = function BoxCreateForm() {
             textContent="Create box"
             type="submit"
             clickHandler={() => {}}
+            status="primary"
           />
         </form>
       )}
-    </div>
+    </BoxCreateFormWrapper>
   );
 };
 
