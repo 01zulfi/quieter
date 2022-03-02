@@ -42,6 +42,8 @@ const BoxCreateForm: FC = function BoxCreateForm() {
               id="box-name-input"
               placeholder="enter box's name here"
               onChange={onNameInput}
+              required
+              maxLength={25}
             />
           </label>
           <label htmlFor="box-description-input">
@@ -50,6 +52,8 @@ const BoxCreateForm: FC = function BoxCreateForm() {
               type="text"
               id="box-description-input"
               placeholder="description goes here"
+              required
+              maxLength={70}
               onChange={onDescriptionInput}
             />
           </label>
