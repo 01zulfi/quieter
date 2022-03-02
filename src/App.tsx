@@ -27,6 +27,7 @@ const App: FC = function App() {
           <Route path="/box/:boxId/string/:stringId" element={<StringPage />} />
           <Route path="/box/:boxId" element={<BoxPage />} />
           <Route path="/profile/:userId" element={<Profile />} />
+          <Route path="*" element={<h2>Nothing here</h2>} />
         </Routes>
       </UserProvider>
     </div>

@@ -30,6 +30,7 @@ const RouteSwitch: FC = function RouteSwitch() {
               <Route path="/sign-in" element={<SignInPage />} />
               <Route path="/sign-out" element={<SignOutPage />} />
               <Route path="/*" element={<App />} />
+              <Route path="*" element={<h2>Nothing here</h2>} />
             </Routes>
           </BrowserRouter>
         </AppWrapper>
