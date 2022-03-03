@@ -7,10 +7,20 @@ import ProfileEditableView from '../../components/Profile/ProfileEditableView';
 jest.mock(
   '../../components/Profile/ProfileEditModal',
   () =>
-    function ProfileEditModalMock({ onCloseModal }: { onCloseModal: any }) {
+    function ProfileEditModalMock({
+      onCloseModal,
+      forAvatarSelection,
+    }: {
+      onCloseModal: any;
+      forAvatarSelection: boolean;
+    }) {
       return (
         <>
-          <h1>ProfileEditModal component rendered</h1>
+          {forAvatarSelection ? (
+            <h2>AvatarSelection component rendered</h2>
+          ) : (
+            <h2>ProfileEditModal component rendered</h2>
+          )}
           <button type="button" onClick={onCloseModal}>
             close modal mock
           </button>
