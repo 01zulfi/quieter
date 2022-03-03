@@ -34,7 +34,12 @@ const ProfileEditForm: FC = function ProfileEditForm() {
               value={username}
             />
           </label>
-          <Button type="submit" textContent="Update" clickHandler={() => {}} />
+          <Button
+            status="primary"
+            type="submit"
+            textContent="Update"
+            clickHandler={() => {}}
+          />
         </form>
       )}
     </div>

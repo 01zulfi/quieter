@@ -14,6 +14,7 @@ const ProfileEditableView: FC = function ProfileEditableView() {
         type="button"
         textContent="Edit profile"
         clickHandler={onEditProfileClick}
+        status="secondary"
       />
 
       {showProfileEditModal && <ProfileEditModal onCloseModal={onCloseModal} />}
