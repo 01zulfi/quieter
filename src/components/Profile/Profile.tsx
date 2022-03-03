@@ -30,7 +30,7 @@ const Profile: FC = function Profile() {
 
   const isCurrentUserProfile = params.userId === signedInUser.id;
 
-  if (!isLoaded) return <Loading />;
+  if (!isLoaded) return <Loading width="35px" />;
 
   return (
     <div>
