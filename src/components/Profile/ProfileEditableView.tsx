@@ -17,7 +17,12 @@ const ProfileEditableView: FC = function ProfileEditableView() {
         status="secondary"
       />
 
-      {showProfileEditModal && <ProfileEditModal onCloseModal={onCloseModal} />}
+      {showProfileEditModal && (
+        <ProfileEditModal
+          onCloseModal={onCloseModal}
+          forAvatarSelection={false}
+        />
+      )}
     </div>
   );
 };

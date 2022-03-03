@@ -4,14 +4,16 @@ import ProfileEditForm from './ProfileEditForm';
 
 interface ProfileEditModalProps {
   onCloseModal: () => void;
+  forAvatarSelection: boolean;
 }
 
 const ProfileEditModal: FC<ProfileEditModalProps> = function ProfileEditModal({
   onCloseModal,
+  forAvatarSelection,
 }) {
   return (
     <Modal closeModal={onCloseModal}>
-      <ProfileEditForm />
+      {forAvatarSelection ? <AvatarSelection /> : <ProfileEditForm />}
     </Modal>
   );
 };
