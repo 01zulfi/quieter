@@ -132,6 +132,14 @@ const getUserAvatarId = async (id: string) => {
   return userSnap.data().avatarId;
 };
 
+const setUserAvatarId = async (avatarId: string) => {
+  const userRef = doc(db, 'users', userId);
+
+  await updateDoc(userRef, {
+    avatarId,
+  });
+};
+
 const getNotSignedInUserDoc = async (id: string) => {
   if (id === '') return { id: 'DEFAULT', username: 'DEFAULT' };
 
@@ -689,6 +697,7 @@ const firebase = {
   getBoxList,
   listenForBoxChanges,
   getUserAvatarId,
+  setUserAvatarId,
 };
 
 export default firebase;
