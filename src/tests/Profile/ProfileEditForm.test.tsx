@@ -34,7 +34,7 @@ describe('tests ProfileEditForm component', () => {
 
     expect(
       await screen.findByRole('heading', {
-        name: 'Profile updated',
+        name: 'Profile updated.',
       }),
     ).toBeInTheDocument();
   });
