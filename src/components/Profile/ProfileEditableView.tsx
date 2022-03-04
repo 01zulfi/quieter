@@ -4,16 +4,27 @@ import Button from '../Button';
 
 const ProfileEditableView: FC = function ProfileEditableView() {
   const [showProfileEditModal, setShowProfileEditModal] = useState(false);
+  const [showUpdateAvatarModal, setShowUpdateAvatarModal] = useState(false);
 
   const onEditProfileClick = () => setShowProfileEditModal(true);
-  const onCloseModal = () => setShowProfileEditModal(false);
-
+  const onUpdateProfileClick = () => setShowUpdateAvatarModal(true);
+  const onCloseModal = () => {
+    setShowProfileEditModal(false);
+    setShowUpdateAvatarModal(false);
+  };
   return (
     <div>
       <Button
         type="button"
         textContent="Edit profile"
         clickHandler={onEditProfileClick}
+        status="primary"
+      />
+
+      <Button
+        type="button"
+        textContent="Update Avatar"
+        clickHandler={onUpdateProfileClick}
         status="secondary"
       />
 
@@ -22,6 +33,10 @@ const ProfileEditableView: FC = function ProfileEditableView() {
           onCloseModal={onCloseModal}
           forAvatarSelection={false}
         />
+      )}
+
+      {showUpdateAvatarModal && (
+        <ProfileEditModal onCloseModal={onCloseModal} forAvatarSelection />
       )}
     </div>
   );
