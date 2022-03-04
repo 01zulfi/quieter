@@ -1,7 +1,6 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
 import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import avatarManager from '../../utils/avatar-manager';
 import firebase from '../../utils/firebase';
 import Loading from '../Loading';
 
@@ -48,12 +47,7 @@ const Avatar: FC<AvatarProps> = function Avatar({ userId, knotId }) {
 
   if (!isAvatarLoaded) return <Loading width="5px" />;
 
-  return (
-    <ImageWrapper
-      alt="avatar"
-      src={require(`../../assets/icons/avatars/${avatarId}.svg`)}
-    />
-  );
+  return <ImageWrapper alt="avatar" src={avatarManager.find(avatarId).src} />;
 };
 
 Avatar.defaultProps = {
