@@ -7,6 +7,7 @@ interface UserInterface {
   id: string;
   username: string;
   email?: string;
+  avatarId?: string;
 }
 
 export default UserInterface;
