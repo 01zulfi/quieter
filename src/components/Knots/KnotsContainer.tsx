@@ -43,7 +43,7 @@ const KnotsContainer: FC<KnotsContainerInterface> = function KnotsContainer({
       {string.hasKnots ? (
         string.associatedKnots.map((knotId: string) => (
           <KnotWrapper key={knotId}>
-            <Avatar />
+            <Avatar knotId={knotId} />
             <KnotLeft />
             <Knot knotId={knotId} />
           </KnotWrapper>

@@ -90,7 +90,7 @@ const StringContainer: FC = function StringContainer() {
             </MetaInfoItem>
 
             <MetaInfoItem>
-              <Avatar />
+              <Avatar userId={string.author.id} />
               <StyledLink size="1em" bold="normal" highContrast>
                 <Link to={`../../../../profile/${string.author.id}`} replace>
                   {string.author.username}
