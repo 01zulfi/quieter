@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import Modal from '../Modal';
 import ProfileEditForm from './ProfileEditForm';
+import AvatarSelection from './AvatarSelection';
 
 interface ProfileEditModalProps {
   onCloseModal: () => void;
