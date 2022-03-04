@@ -41,7 +41,7 @@ const AvatarFactory = () => {
     }));
   };
 
-  const setIsSelected = (id: string) => {
+  const setIsSelectedTrue = (id: string) => {
     setEveryIsSelectedFalse();
 
     const avatar = find(id);
@@ -53,7 +53,7 @@ const AvatarFactory = () => {
     get avatars() {
       return [...avatars];
     },
-    setIsSelected,
+    setIsSelectedTrue,
     add,
     find,
   };
