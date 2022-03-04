@@ -6,17 +6,40 @@ import firebase from '../../utils/firebase';
 import Button from '../Button';
 import Loading from '../Loading';
 
-const AvatarsWrapper = styled.div``;
+const AvatarSelectionWrapper = styled.section`
+  background: ${(props: any) => props.theme.base.two};
+  border-radius: 5px;
+  padding: 1em;
+  width: 85vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1em;
+`;
+
+const AvatarsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+`;
 
 const ImageWrapper = styled.div`
+  border-radius: 4px;
   border-color: ${(props: any) => props.theme.aurora.four};
-  border-radius: ${(props: any) => (props.greenBorder ? '5px' : '0px')};
+  border-width: ${(props: any) => (props.greenBorder ? '5px' : '0px')};
   border-style: ${(props: any) => (props.greenBorder ? 'solid' : 'none')};
   display: flex;
+  width: fit-content;
 
   img {
-    width: 1em;
+    width: 4em;
     aspect-ratio: 1;
+  }
+
+  &:hover {
+    outline: 1px solid ${(props: any) => props.theme.aurora.four};
   }
 `;
 
@@ -51,19 +74,28 @@ const AvatarSelection: FC = function AvatarSelection() {
   };
 
   if (isLoading) {
-    return <Loading width="15px" />;
+    return (
+      <AvatarSelectionWrapper>
+        <h2>Select your avatar!</h2>
+        <Loading width="15px" />
+      </AvatarSelectionWrapper>
+    );
   }
 
   return (
-    <section>
+    <AvatarSelectionWrapper>
       <h2>Select your avatar!</h2>
       {isSubmitted ? (
         <h4>New avatar selected!</h4>
       ) : (
         <>
-          <AvatarsWrapper onClick={onAvatarClick}>
+          <AvatarsWrapper>
             {avatars.map((avatar: any) => (
-              <ImageWrapper greenBorder={avatar.isSelected} data-id={avatar.id}>
+              <ImageWrapper
+                onClick={onAvatarClick}
+                greenBorder={avatar.isSelected}
+                data-id={avatar.id}
+              >
                 <img src={avatar.src} alt="avatar" data-id={avatar.id} />
               </ImageWrapper>
             ))}
@@ -77,7 +109,7 @@ const AvatarSelection: FC = function AvatarSelection() {
           />
         </>
       )}
-    </section>
+    </AvatarSelectionWrapper>
   );
 };
 
