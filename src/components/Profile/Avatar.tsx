@@ -1,5 +1,9 @@
-import React, { FC } from 'react';
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
+import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import firebase from '../../utils/firebase';
+import Loading from '../Loading';
 
 const ImageWrapper = styled.img`
   height: 2.5em;
@@ -12,13 +16,49 @@ const ImageWrapper = styled.img`
   }
 `;
 
-const Avatar: FC = function Avatar() {
+interface AvatarProps {
+  userId?: string;
+  knotId?: string;
+}
+
+const Avatar: FC<AvatarProps> = function Avatar({ userId, knotId }) {
+  const [avatarId, setAvatarId] = useState('00');
+  const [isAvatarLoaded, setIsAvatarLoaded] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      let desiredUserId: string;
+
+      if (knotId !== '') {
+        const fetchKnot = await firebase.getKnot(knotId || '');
+        if (fetchKnot) {
+          desiredUserId = fetchKnot.author.id;
+        } else {
+          desiredUserId = '';
+        }
+      } else {
+        desiredUserId = userId || '';
+      }
+
+      const fetchAvatarId = await firebase.getUserAvatarId(desiredUserId);
+      setAvatarId(fetchAvatarId);
+      setIsAvatarLoaded(true);
+    })();
+  }, []);
+
+  if (!isAvatarLoaded) return <Loading width="5px" />;
+
   return (
     <ImageWrapper
-      src="https://www.svgrepo.com/show/401095/alien-monster.svg"
       alt="avatar"
+      src={require(`../../assets/icons/avatars/${avatarId}.svg`)}
     />
   );
+};
+
+Avatar.defaultProps = {
+  userId: '',
+  knotId: '',
 };
 
 export default Avatar;
