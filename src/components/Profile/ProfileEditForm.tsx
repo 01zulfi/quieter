@@ -16,6 +16,7 @@ const ProfileEditFormWrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 1em;
+    align-items: center;
 
     button {
       align-self: center;
@@ -68,7 +69,7 @@ const ProfileEditForm: FC = function ProfileEditForm() {
           ) : (
             <form onSubmit={onEditFormSubmit}>
               <label htmlFor="username-edit">
-                Edit username:
+                Edit username: (max: 10 characters)
                 <input
                   type="text"
                   id="username-edit"
@@ -78,6 +79,10 @@ const ProfileEditForm: FC = function ProfileEditForm() {
                   maxLength={10}
                 />
               </label>
+              <span style={{ width: '50%', textAlign: 'center' }}>
+                Note: changing your username will not change all references
+                across quieter, but it&apos;ll still link to your profile page.
+              </span>
               <Button
                 status="primary"
                 type="submit"
