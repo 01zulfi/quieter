@@ -65,7 +65,11 @@ const Profile: FC = function Profile() {
   const isUserAnon = useUserAnon();
 
   useEffect(() => {
+    if (isUserAnon) {
       setIsLoaded(true);
+      return;
+    }
+
     if (params.userId === signedInUser.id) {
       setUser(signedInUser);
       setIsLoaded(true);
@@ -90,8 +94,6 @@ const Profile: FC = function Profile() {
 
   const isCurrentUserProfile = params.userId === signedInUser.id;
 
-  if (!isLoaded) return <Loading width="35px" />;
-
   const onOverviewButtonClick = () => {
     setActiveTab('Overview');
   };
@@ -102,10 +104,12 @@ const Profile: FC = function Profile() {
     setActiveTab('Admined');
   };
 
+  const showData = isCurrentUserProfile || user.isDataPrivate;
+
   return (
     <ProfileWrapper>
       {isCurrentUserProfile && (
-        <ProfileContext.Provider value={user}>
+        <ProfileContext.Provider value={signedInUser}>
           <ProfileEditableView />
         </ProfileContext.Provider>
       )}
@@ -119,35 +123,49 @@ const Profile: FC = function Profile() {
 
       <Line />
 
-      <ButtonsPanel>
-        <Button
-          type="button"
-          textContent="Overview"
-          clickHandler={onOverviewButtonClick}
-          status={activeTab === 'Overview' ? 'purple' : 'secondary'}
-          padding="0.5em"
-        />
-        <Button
-          type="button"
-          textContent="Authored"
-          clickHandler={onAuthoredButtonClick}
-          status={activeTab === 'Authored' ? 'purple' : 'secondary'}
-          padding="0.5em"
-        />
-        <Button
-          type="button"
-          textContent="Admined"
-          clickHandler={onAdminedButtonClick}
-          status={activeTab === 'Admined' ? 'purple' : 'secondary'}
-          padding="0.5em"
-        />
-      </ButtonsPanel>
-
-      {activeTab === 'Overview' && <Overview user={user} />}
-      {activeTab === 'Authored' && (
-        <AuthoredTab authoredStrings={user.authoredStrings} />
+      {isCurrentUserProfile && (
+        <p>
+          {signedInUser.isDataPrivate
+            ? "Only you can view the below tabs because you've set your data to private."
+            : 'Everyone can view the below tabs. Edit your profile if you wish to hide your data.'}
+        </p>
       )}
-      {activeTab === 'Admined' && <AdminedTab adminedBoxes={user.adminBoxes} />}
+
+      {showData && (
+        <>
+          <ButtonsPanel>
+            <Button
+              type="button"
+              textContent="Overview"
+              clickHandler={onOverviewButtonClick}
+              status={activeTab === 'Overview' ? 'purple' : 'secondary'}
+              padding="0.5em"
+            />
+            <Button
+              type="button"
+              textContent="Authored"
+              clickHandler={onAuthoredButtonClick}
+              status={activeTab === 'Authored' ? 'purple' : 'secondary'}
+              padding="0.5em"
+            />
+            <Button
+              type="button"
+              textContent="Admined"
+              clickHandler={onAdminedButtonClick}
+              status={activeTab === 'Admined' ? 'purple' : 'secondary'}
+              padding="0.5em"
+            />
+          </ButtonsPanel>
+
+          {activeTab === 'Overview' && <Overview user={user} />}
+          {activeTab === 'Authored' && (
+            <AuthoredTab authoredStrings={user.authoredStrings} />
+          )}
+          {activeTab === 'Admined' && (
+            <AdminedTab adminedBoxes={user.adminBoxes} />
+          )}
+        </>
+      )}
     </ProfileWrapper>
   );
 };
