@@ -111,6 +111,7 @@ const getUserDoc = async () => {
     authoredKnots,
     joinedBoxes,
     avatarId,
+    time,
   } = userSnap.data();
   return {
     id,
@@ -121,6 +122,7 @@ const getUserDoc = async () => {
     joinedBoxes,
     authoredKnots,
     avatarId,
+    time,
   };
 };
 
@@ -185,6 +187,7 @@ const createUserDoc = async ({
     adminBoxes: [],
     email,
     avatarId: '00',
+    time: Date.now(),
   };
 
   await setDoc(doc(db, 'users', id), userData);
