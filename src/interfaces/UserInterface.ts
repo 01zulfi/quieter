@@ -9,6 +9,7 @@ interface UserInterface {
   email?: string;
   avatarId?: string;
   time?: number;
+  isDataPrivate?: boolean;
 }
 
 export default UserInterface;
