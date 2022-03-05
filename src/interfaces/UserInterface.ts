@@ -8,6 +8,7 @@ interface UserInterface {
   username: string;
   email?: string;
   avatarId?: string;
+  time?: number;
 }
 
 export default UserInterface;
