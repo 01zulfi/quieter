@@ -1,6 +1,16 @@
 import React, { useState, FC } from 'react';
+import styled from 'styled-components';
 import ProfileEditModal from './ProfileEditModal';
 import Button from '../Button';
+
+const ProfileEditableViewWrapper = styled.section`
+  display: flex;
+  align-items: center;
+  background: ${(props: any) => props.theme.aurora.five};
+  padding: 0.3em 1em;
+  gap: 1em;
+  border-radius: 5px;
+`;
 
 const ProfileEditableView: FC = function ProfileEditableView() {
   const [showProfileEditModal, setShowProfileEditModal] = useState(false);
@@ -13,19 +23,21 @@ const ProfileEditableView: FC = function ProfileEditableView() {
     setShowUpdateAvatarModal(false);
   };
   return (
-    <div>
+    <ProfileEditableViewWrapper>
       <Button
         type="button"
         textContent="Edit profile"
         clickHandler={onEditProfileClick}
         status="primary"
+        padding="0.6em"
       />
 
       <Button
         type="button"
         textContent="Update Avatar"
         clickHandler={onUpdateProfileClick}
-        status="secondary"
+        status="orange"
+        padding="0.6em"
       />
 
       {showProfileEditModal && (
@@ -38,7 +50,7 @@ const ProfileEditableView: FC = function ProfileEditableView() {
       {showUpdateAvatarModal && (
         <ProfileEditModal onCloseModal={onCloseModal} forAvatarSelection />
       )}
-    </div>
+    </ProfileEditableViewWrapper>
   );
 };
 
