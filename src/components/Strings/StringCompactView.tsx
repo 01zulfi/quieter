@@ -49,10 +49,17 @@ const MetaInfoWrapper = styled.div`
   padding-left: 0.5em;
   padding-right: 0.5em;
   padding-bottom: 0.8em;
+  font-size: 0.95em;
 `;
 
 const AuthorWrapper = styled.div`
   display: flex;
+  align-items: center;
+`;
+
+const BoxLinkWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const KnotNumberWrapper = styled.div`
@@ -112,6 +119,18 @@ const StringCompactView: FC<StringCompactViewProps> =
                 </Link>
               </StyledLink>
             </AuthorWrapper>
+
+            {inFeedPage && (
+              <BoxLinkWrapper>
+                <p>posted in</p>
+                <StyledLink bold="normal" size="0.9em" highContrast>
+                  <Link to={`/box/${string.associatedBox.id}`}>
+                    {string.associatedBox.name}
+                  </Link>
+                </StyledLink>
+              </BoxLinkWrapper>
+            )}
+
             <KnotNumberWrapper>
               <p>{string.hasKnots ? string.associatedKnots.length : 0}</p>
               <div>
