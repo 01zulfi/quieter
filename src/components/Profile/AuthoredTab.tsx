@@ -1,5 +1,10 @@
 import React, { FC } from 'react';
+import styled from 'styled-components';
 import StringCompactView from '../Strings/StringCompactView';
+
+const AuthoredTabWrapper = styled.section`
+display: flex;
+flex-direction: column-reverse;`;
 
 interface AuthoredTabProps {
   authoredStrings: any[];
@@ -13,13 +18,13 @@ const AuthoredTab: FC<AuthoredTabProps> = function AuthoredTab({
   }
 
   return (
-    <div>
+    <AuthoredTabWrapper>
       {authoredStrings.map((stringId) => (
         <div key={stringId}>
           <StringCompactView stringId={stringId} inFeedPage />
         </div>
       ))}
-    </div>
+    </AuthoredTabWrapper>
   );
 };
 
