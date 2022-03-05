@@ -26,6 +26,9 @@ const ProfileEditFormWrapper = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: ${(props: any) => props.theme.base.four};
+    padding: 0.5em;
+    border-radius: 5px;
   }
   input {
     background: ${(props: any) => props.theme.frost.one};
@@ -39,21 +42,43 @@ const ProfileEditFormWrapper = styled.section`
       outline: 2px solid ${(props: any) => props.theme.text.four};
     }
   }
+  input[type='checkbox'] {
+    padding: 1em;
+    appearance: none;
+    border-radius: 50%;
+    background: ${(props: any) => props.theme.aurora.one};
+
+    &:checked {
+      background: ${(props: any) => props.theme.aurora.four};
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const ProfileEditForm: FC = function ProfileEditForm() {
-  const profile = useProfile() || { username: '' };
+  const profile = useProfile() || { username: 'DEFAULT', isDataPrivate: false };
   const [username, setUsername] = useState(profile.username);
+  const [isDataPrivate, setIsDataPrivate] = useState(profile.isDataPrivate);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  if (username === 'DEFAULT') {
+    return <h4>Unable to load, try refreshing.</h4>;
+  }
 
   const onUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setUsername(event.target.value);
 
+  const onIsDataPrivateChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setIsDataPrivate(event.target.checked);
+
   const onEditFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
     event.preventDefault();
-    await firebase.editUserDoc({ username });
+    await firebase.editUserDoc({ username, isDataPrivate });
     setIsSubmitted(true);
     setIsLoading(false);
   };
@@ -79,10 +104,36 @@ const ProfileEditForm: FC = function ProfileEditForm() {
                   maxLength={10}
                 />
               </label>
+
               <span style={{ width: '50%', textAlign: 'center' }}>
                 Note: changing your username will not change all references
                 across quieter, but it&apos;ll still link to your profile page.
               </span>
+
+              <label htmlFor="is-data-private-edit">
+                Set data private:
+                <span>
+                  (this will hide overview, authored, and admined tabs on your
+                  profile)
+                </span>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.2em',
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    name="is-data-private-edit"
+                    id="is-data-private-edit"
+                    onChange={onIsDataPrivateChange}
+                    checked={isDataPrivate}
+                  />
+                  <span>{`${isDataPrivate}`}</span>
+                </div>
+              </label>
+
               <Button
                 status="primary"
                 type="submit"
