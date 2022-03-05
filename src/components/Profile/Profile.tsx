@@ -8,6 +8,9 @@ import firebase from '../../utils/firebase';
 import Loading from '../Loading';
 import ProfileEditableView from './ProfileEditableView';
 import ProfileContext from '../../context/ProfileContext';
+import Overview from './Overview';
+import AuthoredTab from './AuthoredTab';
+import AdminedTab from './AdminedTab';
 
 const ProfileWrapper = styled.section`
   width: 65%;
@@ -122,6 +125,12 @@ const Profile: FC = function Profile() {
           padding="0.5em"
         />
       </ButtonsPanel>
+
+      {activeTab === 'Overview' && <Overview user={user} />}
+      {activeTab === 'Authored' && (
+        <AuthoredTab authoredStrings={user.authoredStrings} />
+      )}
+      {activeTab === 'Admined' && <AdminedTab adminedBoxes={user.adminBoxes} />}
     </ProfileWrapper>
   );
 };
