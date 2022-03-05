@@ -74,6 +74,8 @@ const ProfileEditForm: FC = function ProfileEditForm() {
                   id="username-edit"
                   onChange={onUsernameChange}
                   value={username}
+                  required
+                  maxLength={10}
                 />
               </label>
               <Button
