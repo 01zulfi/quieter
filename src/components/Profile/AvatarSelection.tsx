@@ -86,7 +86,10 @@ const AvatarSelection: FC = function AvatarSelection() {
     <AvatarSelectionWrapper>
       <h2>Select your avatar!</h2>
       {isSubmitted ? (
-        <h4>New avatar selected!</h4>
+        <>
+          <h4>New avatar selected!</h4>
+          <p>Refresh to apply changes.</p>
+        </>
       ) : (
         <>
           <AvatarsWrapper>
@@ -95,6 +98,7 @@ const AvatarSelection: FC = function AvatarSelection() {
                 onClick={onAvatarClick}
                 greenBorder={avatar.isSelected}
                 data-id={avatar.id}
+                key={avatar.id}
               >
                 <img src={avatar.src} alt="avatar" data-id={avatar.id} />
               </ImageWrapper>
