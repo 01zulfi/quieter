@@ -656,14 +656,15 @@ const getBoxList = async (number: number) => {
 
 const getFeedStrings = async () => {
   const user = await getUserDoc();
-  const boxStrings: string[] = [];
+  let boxStrings: any[] = [];
 
-  user.joinedBoxes.forEach(async (boxId: string) => {
-    const box = await getBox(boxId);
-    if (box) {
-      boxStrings.concat(box.associatedStrings);
+  for (let i = 0; i < user.joinedBoxes.length; i += 1) {
+    /* eslint-disable no-await-in-loop */
+    const box = await getBox(user.joinedBoxes[i]);
+    if (box?.hasStrings) {
+      boxStrings = [...boxStrings, ...box.associatedStrings];
     }
-  });
+  }
 
   const allStrings = [
     ...[...user.associatedStrings].reverse(),
