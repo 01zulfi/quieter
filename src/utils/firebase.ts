@@ -145,7 +145,7 @@ const setUserAvatarId = async (avatarId: string) => {
 const getNotSignedInUserDoc = async (id: string) => {
   if (id === '') return { id: 'DEFAULT', username: 'DEFAULT' };
 
-  const userRef = doc(db, 'users', userId);
+  const userRef = doc(db, 'users', id);
   const userSnap = await getDoc(userRef);
   if (!userSnap.exists()) return { id: 'DEFAULT', username: 'DEFAULT' };
 
