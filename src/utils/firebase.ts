@@ -293,10 +293,17 @@ const checkIfEmailExists = async (email: string) => {
   return exists;
 };
 
-const editUserDoc = async ({ username }: { username: string }) => {
+const editUserDoc = async ({
+  username,
+  isDataPrivate,
+}: {
+  username: string;
+  isDataPrivate: boolean;
+}) => {
   const userRef = doc(db, 'users', userId);
   await updateDoc(userRef, {
     username,
+    isDataPrivate,
   });
 };
 
