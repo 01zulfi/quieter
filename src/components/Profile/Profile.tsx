@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Avatar from './Avatar';
-import { useUser } from '../../context/UserContext';
+import { useUser, useUserAnon } from '../../context/UserContext';
 import Button from '../Button';
 import firebase from '../../utils/firebase';
 import Loading from '../Loading';
@@ -48,14 +48,24 @@ const ButtonsPanel = styled.div`
   border-radius: 5px;
 `;
 
+const GuestWrapper = styled.h4`
+  margin: 2em auto;
+  padding: 1em;
+  background: ${(props: any) => props.theme.base.two};
+  border-radius: 5px;
+  text-align: center;
+`;
+
 const Profile: FC = function Profile() {
   const params = useParams();
   const [user, setUser] = useState<any>({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState('Overview');
   const signedInUser = useUser();
+  const isUserAnon = useUserAnon();
 
   useEffect(() => {
+      setIsLoaded(true);
     if (params.userId === signedInUser.id) {
       setUser(signedInUser);
       setIsLoaded(true);
@@ -70,6 +80,13 @@ const Profile: FC = function Profile() {
       setIsLoaded(true);
     })();
   }, []);
+
+  if (!isLoaded) return <Loading width="35px" />;
+  if (isUserAnon) {
+    return (
+      <GuestWrapper>Guest users cannot view other user profiles.</GuestWrapper>
+    );
+  }
 
   const isCurrentUserProfile = params.userId === signedInUser.id;
 
