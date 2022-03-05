@@ -91,7 +91,7 @@ const StringCompactView: FC<StringCompactViewProps> =
     }, []);
 
     if (!hasFetched) {
-      return <Loading width="45px" />;
+      return <Loading width="30px" />;
     }
 
     const navigateToStringPage = () => {

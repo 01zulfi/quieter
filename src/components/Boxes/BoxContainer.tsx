@@ -56,7 +56,13 @@ const BoxContainer: FC = function BoxContainer() {
     setIsCurrentUserMember(isUserMember);
   });
 
-  if (!isLoaded) return <Loading width="50px" />;
+  if (!isLoaded) {
+    return (
+      <BoxContainerWrapper>
+        <Loading width="35px" />
+      </BoxContainerWrapper>
+    );
+  }
   if (box === null) {
     return <h2>we couldn&apos;t find what you&apos;re looking for</h2>;
   }

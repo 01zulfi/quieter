@@ -86,7 +86,7 @@ const Explore: FC = function Explore() {
             </ItemWrapper>
           ))
         ) : (
-          <Loading width="50px" />
+          <Loading width="30px" />
         )}
       </BoxWrapper>
 

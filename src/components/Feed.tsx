@@ -26,7 +26,13 @@ const Feed: FC = function Feed() {
     })();
   }, []);
 
-  if (!isLoaded) return <Loading width="35px" />;
+  if (!isLoaded) {
+    return (
+      <FeedWrapper>
+        <Loading width="35px" />
+      </FeedWrapper>
+    );
+  }
 
   if (!feedStrings) {
     return <h2>No feed available. Populate it by getting involved!</h2>;

@@ -103,7 +103,7 @@ const BoxRegularView: FC<BoxRegularViewProps> = function BoxRegularView({
             )}
           </div>
         ) : (
-          <Loading width="2em" />
+          <Loading width="15px" />
         )}
       </DescAndButtonWrapper>
 
