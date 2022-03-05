@@ -1,7 +1,15 @@
 import React, { FC, useState, useEffect } from 'react';
+import styled from 'styled-components';
 import firebase from '../../utils/firebase';
 import ExploreItem from '../Explore/ExploreItem';
 import Loading from '../Loading';
+
+const AdminedTabWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin: 1em 0em;
+  gap: 1em;
+`;
 
 interface AdminedTabProps {
   adminedBoxes: any[];
@@ -42,7 +50,7 @@ const AdminedTab: FC<AdminedTabProps> = function AdminedTab({ adminedBoxes }) {
   }
 
   return (
-    <section>
+    <AdminedTabWrapper>
       {boxes.map((box: any) => (
         <div key={box.id}>
           <ExploreItem
@@ -52,7 +60,7 @@ const AdminedTab: FC<AdminedTabProps> = function AdminedTab({ adminedBoxes }) {
           />
         </div>
       ))}
-    </section>
+    </AdminedTabWrapper>
   );
 };
 
