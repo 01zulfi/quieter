@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Avatar from './Avatar';
 import { useUser } from '../../context/UserContext';
+import Button from '../Button';
 import firebase from '../../utils/firebase';
 import Loading from '../Loading';
 import ProfileEditableView from './ProfileEditableView';
@@ -31,15 +32,24 @@ const UsernameWrapper = styled.h3`
 `;
 
 const Line = styled.div`
-  height: 0.1em;
-  padding-top: 0.5em;
+  height: 0.3em;
+  margin: 0.5em 0em;
   background: ${(props: any) => props.theme.base.four};
+`;
+
+const ButtonsPanel = styled.div`
+  background: ${(props: any) => props.theme.base.two};
+  display: flex;
+  justify-content: space-around;
+  padding: 0.3em 0em;
+  border-radius: 5px;
 `;
 
 const Profile: FC = function Profile() {
   const params = useParams();
   const [user, setUser] = useState<any>({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [activeTab, setActiveTab] = useState('Overview');
   const signedInUser = useUser();
 
   useEffect(() => {
@@ -62,6 +72,16 @@ const Profile: FC = function Profile() {
 
   if (!isLoaded) return <Loading width="35px" />;
 
+  const onOverviewButtonClick = () => {
+    setActiveTab('Overview');
+  };
+  const onAuthoredButtonClick = () => {
+    setActiveTab('Authored');
+  };
+  const onAdminedButtonClick = () => {
+    setActiveTab('Admined');
+  };
+
   return (
     <ProfileWrapper>
       {isCurrentUserProfile && (
@@ -78,6 +98,30 @@ const Profile: FC = function Profile() {
       </UsernameAndAvatarWrapper>
 
       <Line />
+
+      <ButtonsPanel>
+        <Button
+          type="button"
+          textContent="Overview"
+          clickHandler={onOverviewButtonClick}
+          status={activeTab === 'Overview' ? 'purple' : 'secondary'}
+          padding="0.5em"
+        />
+        <Button
+          type="button"
+          textContent="Authored"
+          clickHandler={onAuthoredButtonClick}
+          status={activeTab === 'Authored' ? 'purple' : 'secondary'}
+          padding="0.5em"
+        />
+        <Button
+          type="button"
+          textContent="Admined"
+          clickHandler={onAdminedButtonClick}
+          status={activeTab === 'Admined' ? 'purple' : 'secondary'}
+          padding="0.5em"
+        />
+      </ButtonsPanel>
     </ProfileWrapper>
   );
 };
