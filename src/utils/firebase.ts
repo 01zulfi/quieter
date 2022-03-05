@@ -247,7 +247,7 @@ const signUpWithEmail = async ({
       localStorage.setItem('isAnon', 'false');
       localStorage.setItem('userId', user.uid);
       userId = user.uid;
-      createUserDoc({ username: user.displayName || '', id: user.uid, email });
+      createUserDoc({ username: email, id: user.uid, email });
       location.reload();
     })
     .catch((error) => {
