@@ -7,7 +7,8 @@ import Loading from '../Loading';
 const ImageWrapper = styled.img`
   height: 2.5em;
   aspect-ratio: 1;
-  border: 1px solid ${(props: any) => props.theme.aurora.five};
+  border: 1px solid ${(props: any) => props.theme.base.four};
+  border-radius: 50%;
 
   &:hover {
     box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
