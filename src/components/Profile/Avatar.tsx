@@ -5,7 +5,7 @@ import firebase from '../../utils/firebase';
 import Loading from '../Loading';
 
 const ImageWrapper = styled.img`
-  height: 2.5em;
+  height: ${(props:any) => props.height};
   aspect-ratio: 1;
   border: 1px solid ${(props: any) => props.theme.base.four};
   border-radius: 50%;
@@ -19,9 +19,10 @@ const ImageWrapper = styled.img`
 interface AvatarProps {
   userId?: string;
   knotId?: string;
+  height?: string;
 }
 
-const Avatar: FC<AvatarProps> = function Avatar({ userId, knotId }) {
+const Avatar: FC<AvatarProps> = function Avatar({ userId, knotId, height }) {
   const [avatarId, setAvatarId] = useState('00');
   const [isAvatarLoaded, setIsAvatarLoaded] = useState(false);
 
@@ -48,10 +49,11 @@ const Avatar: FC<AvatarProps> = function Avatar({ userId, knotId }) {
 
   if (!isAvatarLoaded) return <Loading width="5px" />;
 
-  return <ImageWrapper alt="avatar" src={avatarManager.find(avatarId).src} />;
+  return <ImageWrapper alt="avatar" src={avatarManager.find(avatarId).src} height={height} />;
 };
 
 Avatar.defaultProps = {
+  height: '2.5em',
   userId: '',
   knotId: '',
 };
