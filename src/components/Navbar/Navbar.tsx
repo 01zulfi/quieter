@@ -6,11 +6,14 @@ import theme from '../../utils/themes';
 import menuLight from '../../assets/icons/menu_white_24dp.svg';
 import menuDark from '../../assets/icons/menu_black_24dp.svg';
 import cancelLight from '../../assets/icons/cancel_white_24dp.svg';
+import StyledLink from '../StyledLink';
 import cancelDark from '../../assets/icons/cancel_black_24dp.svg';
 import lightTheme from '../../assets/icons/light_mode_white_24dp.svg';
 import darkTheme from '../../assets/icons/dark_mode_black_24dp.svg';
 import setBodyBackground from '../../utils/set-body-background';
 import { setThemeNameInLocalStorage } from '../../utils/theme-local-storage';
+import { useUser } from '../../context/UserContext';
+import Avatar from '../Profile/Avatar';
 
 const NavbarWrapper = styled.div`
   display: flex;
@@ -97,6 +100,23 @@ const Icon = styled.button`
 const Icon2 = styled.button`
   background: transparent;
   border: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ListItem = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  padding: 0.2em;
+
+  &:hover {
+    background: ${(props: any) => props.theme.base.four};
+    cursor: pointer;
+  }
 `;
 
 const Navbar: FC = function Navbar() {
@@ -104,6 +124,7 @@ const Navbar: FC = function Navbar() {
   const setCurrentTheme = useSetTheme();
   const [showMenu, setShowMenu] = useState(screen.width > 680);
   const navigate = useNavigate();
+  const user = useUser();
 
   const switchTheme = () => {
     if (currentTheme.name === 'light') {
@@ -147,19 +168,33 @@ const Navbar: FC = function Navbar() {
 
       <NavWrapper shouldShow={showMenu}>
         <List>
-          <li>About</li>
-          <li>Profile</li>
-          <li>
+          <ListItem>
+            <Link to="/about">About</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/explore">Explore</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/home">Home</Link>
+          </ListItem>
+          <ListItem>
+            <Link to={`/profile/${user.id}`}>
+              <Avatar userId={user.id} height="2em" />
+            </Link>
+          </ListItem>
+          <ListItem>
             <Icon2 onClick={switchTheme}>
               <img
                 src={currentTheme.name === 'light' ? darkTheme : lightTheme}
                 alt="theme"
               />
             </Icon2>
-          </li>
-          <li>
-            <Link to="/sign-out">Sign out</Link>
-          </li>
+          </ListItem>
+          <ListItem>
+            <StyledLink size="1em" bold="650">
+              <Link to="/sign-out">Sign out</Link>
+            </StyledLink>
+          </ListItem>
         </List>
       </NavWrapper>
     </NavbarWrapper>
