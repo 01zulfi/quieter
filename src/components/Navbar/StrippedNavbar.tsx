@@ -4,6 +4,7 @@ import { useSetTheme } from '../../context/SetThemeContext';
 import theme from '../../utils/themes';
 import lightTheme from '../../assets/icons/light_mode_white_24dp.svg';
 import darkTheme from '../../assets/icons/dark_mode_black_24dp.svg';
+import { setThemeNameInLocalStorage } from '../../utils/theme-local-storage';
 
 const NavbarWrapper = styled.div`
   display: flex;
@@ -49,9 +50,11 @@ const StrippedNavbar: FC = function StrippedNavbar() {
 
   const switchTheme = () => {
     if (currentTheme.name === 'light') {
+      setThemeNameInLocalStorage('dark');
       setCurrentTheme(theme.dark);
       return;
     }
+    setThemeNameInLocalStorage('light');
     setCurrentTheme(theme.light);
   };
 

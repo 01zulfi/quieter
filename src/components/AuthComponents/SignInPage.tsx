@@ -9,6 +9,7 @@ import theme from '../../utils/themes';
 import lightTheme from '../../assets/icons/light_mode_white_24dp.svg';
 import darkTheme from '../../assets/icons/dark_mode_black_24dp.svg';
 import StrippedNavbar from '../Navbar/StrippedNavbar';
+import { setThemeNameInLocalStorage } from '../../utils/theme-local-storage';
 
 const SignInPageWrapper = styled.section`
   display: flex;
@@ -119,9 +120,11 @@ const SignInPage: FC = function SignInPage() {
 
   const switchTheme = () => {
     if (currentTheme.name === 'light') {
+      setThemeNameInLocalStorage('dark');
       setCurrentTheme(theme.dark);
       return;
     }
+    setThemeNameInLocalStorage('light');
     setCurrentTheme(theme.light);
   };
 
