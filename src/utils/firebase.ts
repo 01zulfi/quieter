@@ -424,9 +424,11 @@ const getString = async (stringId: string) => {
     author,
     associatedUsers,
     time,
+    starredUsers,
   } = stringSnap.data();
   const hasKnots = associatedKnots ? associatedKnots.length > 0 : false;
   const latestTwoKnots = hasKnots ? associatedKnots.slice(0, 2) : [];
+  const hasStars = starredUsers ? starredUsers.length > 0 : false;
   return {
     associatedBox,
     associatedKnots,
@@ -438,6 +440,8 @@ const getString = async (stringId: string) => {
     associatedUsers,
     latestTwoKnots,
     time,
+    hasStars,
+    starredUsers,
   };
 };
 
@@ -463,6 +467,7 @@ const createString = async ({
     associatedUsers: [userId],
     hasKnots: false,
     time: Date.now(),
+    starredUsers: [],
   };
 
   await setDoc(doc(db, 'strings', stringId), stringData);
