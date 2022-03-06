@@ -26,6 +26,19 @@ const MetaWrapper = styled.section`
   width: 100%;
 `;
 
+const MessageWrapper = styled.h4`
+  background: ${(props: any) => props.theme.base.two};
+  border-radius: 5px;
+  color: ${(props: any) => props.theme.text.two};
+  padding: 1em;
+  margin: 1em 0em;
+`;
+
+const StringSection = styled.section`
+  display: flex;
+  flex-direction: column-reverse;
+`;
+
 const BoxContainer: FC = function BoxContainer() {
   const params = useParams();
   const [box, setBox] = useState<any>({});
@@ -93,15 +106,15 @@ const BoxContainer: FC = function BoxContainer() {
         </MetaWrapper>
 
         {box.hasStrings ? (
-          <section>
+          <StringSection>
             {box.associatedStrings.map((stringId: string) => (
               <div key={stringId}>
                 <StringCompactView stringId={stringId} inBoxPage />
               </div>
             ))}
-          </section>
+          </StringSection>
         ) : (
-          <div>This box has no strings.</div>
+          <MessageWrapper>This box has no strings.</MessageWrapper>
         )}
       </BoxContext.Provider>
     </BoxContainerWrapper>
