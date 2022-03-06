@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import styled, { useTheme } from 'styled-components';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import StyledLink from '../StyledLink';
 import firebase from '../../utils/firebase';
 import StringContext from '../../context/StringContext';
@@ -78,7 +78,6 @@ const StringCompactView: FC<StringCompactViewProps> =
   function StringCompactView({ stringId, inBoxPage, inFeedPage }) {
     const [hasFetched, setHasFetched] = useState(false);
     const [string, setString] = useState<any>({});
-    const navigate = useNavigate();
     const currentTheme = useTheme();
 
     useEffect(() => {
@@ -94,22 +93,19 @@ const StringCompactView: FC<StringCompactViewProps> =
       return <Loading width="30px" />;
     }
 
-    const navigateToStringPage = () => {
+    const navigateToStringPage = (): string => {
       if (inBoxPage) {
-        navigate(`string/${stringId}`);
-        return;
+        return `string/${stringId}`;
       }
-      if (inFeedPage) {
-        navigate(`/box/${string.associatedBox.id}/string/${stringId}`);
-      }
+      return `/box/${string.associatedBox.id}/string/${stringId}`;
     };
 
     return (
       <StringCompactViewWrapper>
         <StringContext.Provider value={string}>
-          <StringTitleWrapper onClick={navigateToStringPage}>
-            {string.title}
-          </StringTitleWrapper>
+          <Link to={navigateToStringPage()} style={{ width: '100%' }}>
+            <StringTitleWrapper>{string.title}</StringTitleWrapper>
+          </Link>
           <MetaInfoWrapper>
             <AuthorWrapper>
               <p>started by</p>
