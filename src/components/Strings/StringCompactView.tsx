@@ -7,6 +7,8 @@ import StringContext from '../../context/StringContext';
 import Loading from '../Loading';
 import commentLight from '../../assets/icons/chat_bubble_outline_white_24dp.svg';
 import commentDark from '../../assets/icons/chat_bubble_outline_black_24dp.svg';
+import starDark from '../../assets/icons/star_border_black_24dp.svg';
+import starLight from '../../assets/icons/star_border_white_24dp.svg';
 
 const StringCompactViewWrapper = styled.section`
   background: ${(props: any) => props.theme.base.two};
@@ -62,10 +64,28 @@ const BoxLinkWrapper = styled.div`
   align-items: center;
 `;
 
+const IconsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+
+  @media (max-width: 680px) {
+    flex-direction: column;
+  }
+`;
+
 const KnotNumberWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.2em;
+`;
+
+const StarNumberWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
 `;
 
 interface StringCompactViewProps {
@@ -127,18 +147,30 @@ const StringCompactView: FC<StringCompactViewProps> =
               </BoxLinkWrapper>
             )}
 
-            <KnotNumberWrapper>
-              <p>{string.hasKnots ? string.associatedKnots.length : 0}</p>
-              <div>
-                <img
-                  style={{ opacity: '0.6' }}
-                  src={
-                    currentTheme.name === 'light' ? commentDark : commentLight
-                  }
-                  alt="comment-bubble"
-                />
-              </div>
-            </KnotNumberWrapper>
+            <IconsWrapper>
+              <StarNumberWrapper>
+                <p>{string.hasStars ? string.starredUsers.length : 0}</p>
+                <div>
+                  <img
+                    style={{ opacity: '0.6' }}
+                    src={currentTheme.name === 'light' ? starDark : starLight}
+                    alt="star"
+                  />
+                </div>
+              </StarNumberWrapper>
+              <KnotNumberWrapper>
+                <p>{string.hasKnots ? string.associatedKnots.length : 0}</p>
+                <div>
+                  <img
+                    style={{ opacity: '0.6' }}
+                    src={
+                      currentTheme.name === 'light' ? commentDark : commentLight
+                    }
+                    alt="comment-bubble"
+                  />
+                </div>
+              </KnotNumberWrapper>
+            </IconsWrapper>
           </MetaInfoWrapper>
         </StringContext.Provider>
       </StringCompactViewWrapper>
