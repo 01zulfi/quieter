@@ -72,7 +72,7 @@ const ProfileEditForm: FC = function ProfileEditForm() {
   const onUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setUsername(event.target.value);
 
-  const onIsDataPrivateChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+  const onIsDataPrivateChange = (event: any) =>
     setIsDataPrivate(event.target.checked);
 
   const onEditFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -127,8 +127,9 @@ const ProfileEditForm: FC = function ProfileEditForm() {
                     type="checkbox"
                     name="is-data-private-edit"
                     id="is-data-private-edit"
-                    onChange={onIsDataPrivateChange}
+                    onClick={onIsDataPrivateChange}
                     checked={isDataPrivate}
+                    readOnly
                   />
                   <span>{`${isDataPrivate}`}</span>
                 </div>
