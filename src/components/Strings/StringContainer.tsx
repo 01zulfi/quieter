@@ -9,10 +9,15 @@ import String from './String';
 import KnotsContainer from '../Knots/KnotsContainer';
 import Loading from '../Loading';
 import firebase from '../../utils/firebase';
+import StarColumn from './StarColumn';
 import StyledLink from '../StyledLink';
 import Avatar from '../Profile/Avatar';
 
 const StringContainerWrapper = styled.section``;
+
+const Wrapper = styled.section`
+  display: flex;
+`;
 
 const StringWrapper = styled.section`
   display: flex;
@@ -84,37 +89,50 @@ const StringContainer: FC = function StringContainer() {
   return (
     <StringContainerWrapper>
       <StringContext.Provider value={string}>
-        <StringWrapper>
-          <MetaInfoWrapper>
-            <MetaInfoItem>
-              <p>posted in</p>
-              <StyledLink size="1em" bold="normal" highContrast>
-                <Link to={`../../../../box/${string.associatedBox.id}`} replace>
-                  {string.associatedBox.name}
-                </Link>
-              </StyledLink>
-            </MetaInfoItem>
+        <Wrapper>
+          <StarColumn
+            hasCurrentUserStarred={
+              !isUserAnon &&
+              string.starredUsers.some((id: string) => id === user.id)
+            }
+            starsCount={string.hasStars ? string.starredUsers.length : 0}
+            stringId={string.id}
+          />
+          <StringWrapper>
+            <MetaInfoWrapper>
+              <MetaInfoItem>
+                <p>posted in</p>
+                <StyledLink size="1em" bold="normal" highContrast>
+                  <Link
+                    to={`../../../../box/${string.associatedBox.id}`}
+                    replace
+                  >
+                    {string.associatedBox.name}
+                  </Link>
+                </StyledLink>
+              </MetaInfoItem>
 
-            <MetaInfoItem>
-              <Avatar userId={string.author.id} />
-              <StyledLink size="1em" bold="normal" highContrast>
-                <Link to={`../../../../profile/${string.author.id}`} replace>
-                  {string.author.username}
-                </Link>
-              </StyledLink>
+              <MetaInfoItem>
+                <Avatar userId={string.author.id} />
+                <StyledLink size="1em" bold="normal" highContrast>
+                  <Link to={`../../../../profile/${string.author.id}`} replace>
+                    {string.author.username}
+                  </Link>
+                </StyledLink>
 
-              <p style={{ opacity: '0.8' }}>
-                {localDateFromMilliseconds(string.time)}
-              </p>
-            </MetaInfoItem>
-          </MetaInfoWrapper>
+                <p style={{ opacity: '0.8' }}>
+                  {localDateFromMilliseconds(string.time)}
+                </p>
+              </MetaInfoItem>
+            </MetaInfoWrapper>
 
-          {isCurrentUserAuthor && <StringAuthorView />}
+            {isCurrentUserAuthor && <StringAuthorView />}
 
-          <div>
-            <String />
-          </div>
-        </StringWrapper>
+            <div>
+              <String />
+            </div>
+          </StringWrapper>
+        </Wrapper>
 
         <KnotsContainer string={string} isUserAnon={isUserAnon} />
       </StringContext.Provider>
