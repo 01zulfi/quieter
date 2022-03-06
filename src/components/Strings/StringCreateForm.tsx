@@ -94,14 +94,14 @@ const StringCreateForm: FC = function StringCreateForm() {
       ) : (
         <form onSubmit={submitHandler}>
           <label htmlFor="string-title-input">
-            Title: (max: 50 characters)
+            Title: (max: 100 characters)
             <input
               type="text"
               id="string-title-input"
               onChange={onTitleInput}
               placeholder="give a title to your string"
               required
-              maxLength={50}
+              maxLength={100}
             />
           </label>
 
@@ -119,7 +119,9 @@ const StringCreateForm: FC = function StringCreateForm() {
             />
           </label>
 
-          {isLoading ? <Loading width="20px" /> : (
+          {isLoading ? (
+            <Loading width="20px" />
+          ) : (
             <Button
               status="primary"
               textContent="Start String"

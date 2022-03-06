@@ -77,7 +77,7 @@ const StringEdit: FC<StringEditProps> = function StringEdit({ closeModal }) {
     <StringEditWrapper>
       <form onSubmit={onFormSubmit}>
         <label htmlFor="string-edit-input">
-          Title:
+          Title: (max: 100 characters)
           <input
             type="text"
             name="string-edit-input"
@@ -85,15 +85,17 @@ const StringEdit: FC<StringEditProps> = function StringEdit({ closeModal }) {
             value={title}
             onChange={onTitleChange}
             required
+            maxLength={100}
           />
         </label>
         <label htmlFor="string-content-edit">
-          Content:
+          Content: (max: 1000 characters)
           <textarea
             value={content}
             onChange={onContentChange}
             id="string-content-input"
             required
+            maxLength={1000}
           />
         </label>
         <Button
