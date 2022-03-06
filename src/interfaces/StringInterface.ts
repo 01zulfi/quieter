@@ -9,6 +9,8 @@ interface StringInterface {
   title: string;
   content: string;
   time: number;
+  hasStars: boolean;
+  starredUsers: string[];
 }
 
 export default StringInterface;
