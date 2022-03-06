@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../Button';
 import { useString } from '../../context/StringContext';
 import firebase from '../../utils/firebase';
+import Loading from '../Loading';
 
 const StringEditWrapper = styled.section`
   margin: 1em;
@@ -15,10 +16,7 @@ const StringEditWrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 1em;
-
-    button {
-      align-self: center;
-    }
+    align-items: center;
   }
   label {
     display: flex;
@@ -56,6 +54,7 @@ const StringEdit: FC<StringEditProps> = function StringEdit({ closeModal }) {
   };
   const [title, setTitle] = useState(string.title);
   const [content, setContent] = useState(string.content);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setTitle(event.target.value);
@@ -64,8 +63,10 @@ const StringEdit: FC<StringEditProps> = function StringEdit({ closeModal }) {
     setContent(event.target.value);
 
   const onFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     await firebase.editString({ stringId: string.id, title, content });
+    setIsLoading(false);
     closeModal();
   };
 
@@ -98,12 +99,16 @@ const StringEdit: FC<StringEditProps> = function StringEdit({ closeModal }) {
             maxLength={1000}
           />
         </label>
-        <Button
-          type="submit"
-          status="secondary"
-          textContent="Submit changes"
-          clickHandler={() => {}}
-        />
+        {isLoading ? (
+          <Loading width="20px" />
+        ) : (
+          <Button
+            type="submit"
+            status="secondary"
+            textContent="Submit changes"
+            clickHandler={() => {}}
+          />
+        )}
       </form>
     </StringEditWrapper>
   );
