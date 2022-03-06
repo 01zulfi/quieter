@@ -5,6 +5,7 @@ import firebase from '../../utils/firebase';
 import StyledLink from '../StyledLink';
 import uniqueId from '../../utils/unique-id';
 import Button from '../Button';
+import Loading from '../Loading';
 
 const BoxCreateFormWrapper = styled.section`
   margin: 1em;
@@ -17,10 +18,7 @@ const BoxCreateFormWrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 1em;
-
-    button {
-      align-self: center;
-    }
+    align-items: center;
   }
   label {
     display: flex;
@@ -49,6 +47,7 @@ const SuccessWrapper = styled.div`
 
 const BoxCreateForm: FC = function BoxCreateForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [boxId, setBoxId] = useState('');
@@ -64,9 +63,12 @@ const BoxCreateForm: FC = function BoxCreateForm() {
     setDescription(event.target.value);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     await firebase.createBox({ name, description, boxId });
     setIsSubmitted(true);
+
+    setIsLoading(false);
   };
 
   return (
@@ -103,12 +105,16 @@ const BoxCreateForm: FC = function BoxCreateForm() {
               onChange={onDescriptionInput}
             />
           </label>
-          <Button
-            textContent="Create box"
-            type="submit"
-            clickHandler={() => {}}
-            status="primary"
-          />
+          {isLoading ? (
+            <Loading width="25px" />
+          ) : (
+            <Button
+              textContent="Create box"
+              type="submit"
+              clickHandler={() => {}}
+              status="primary"
+            />
+          )}
         </form>
       )}
     </BoxCreateFormWrapper>
