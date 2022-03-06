@@ -29,6 +29,14 @@ const KnotLeft = styled.div`
   }
 `;
 
+const MessageWrapper = styled.p`
+  background: ${(props: any) => props.theme.base.four};
+  color: ${(props: any) => props.theme.text.two};
+  padding: 0.5em 0.5em;
+  margin: 1em 0em;
+  border-radius: 5px;
+`;
+
 interface KnotsContainerInterface {
   string: any;
   isUserAnon: boolean;
@@ -49,7 +57,7 @@ const KnotsContainer: FC<KnotsContainerInterface> = function KnotsContainer({
           </KnotWrapper>
         ))
       ) : (
-        <p>This string has no knots</p>
+        <MessageWrapper>This string has no knots</MessageWrapper>
       )}
       {!isUserAnon && <KnotCreate />}
     </KnotSectionWrapper>
