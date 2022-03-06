@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useBox } from '../../context/BoxContext';
 import StyledLink from '../StyledLink';
+import Loading from '../Loading';
 import firebase from '../../utils/firebase';
 import uniqueId from '../../utils/unique-id';
 import Button from '../Button';
@@ -18,10 +19,7 @@ const StringCreateFormWrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 1em;
-
-    button {
-      align-self: center;
-    }
+    align-items: center;
   }
   label {
     display: flex;
@@ -54,6 +52,7 @@ const SuccessWrapper = styled.div`
 
 const StringCreateForm: FC = function StringCreateForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [stringId, setStringId] = useState('');
@@ -70,6 +69,7 @@ const StringCreateForm: FC = function StringCreateForm() {
     setContent(event.target.value);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     await firebase.createString({
       boxName: box.name,
@@ -79,6 +79,7 @@ const StringCreateForm: FC = function StringCreateForm() {
       stringId,
     });
     setIsSubmitted(true);
+    setIsLoading(false);
   };
 
   return (
@@ -118,12 +119,14 @@ const StringCreateForm: FC = function StringCreateForm() {
             />
           </label>
 
-          <Button
-            status="primary"
-            textContent="Start String"
-            type="submit"
-            clickHandler={() => {}}
-          />
+          {isLoading ? <Loading width="20px" /> : (
+            <Button
+              status="primary"
+              textContent="Start String"
+              type="submit"
+              clickHandler={() => {}}
+            />
+          )}
         </form>
       )}
     </StringCreateFormWrapper>
