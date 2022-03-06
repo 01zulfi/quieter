@@ -86,6 +86,8 @@ jest.mock('../../utils/firebase', () => ({
       hasKnots: true,
       associatedBox: { name: 'test box', id: 'hello' },
       author: { username: 'test user', id: '000' },
+      hasStars: false,
+      starredUsers: [],
     };
   },
   listenForStringChanges: () => () => () => () => {},
