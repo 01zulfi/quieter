@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useBox } from '../../context/BoxContext';
 import firebase from '../../utils/firebase';
 import Button from '../Button';
+import Loading from '../Loading';
 
 const BoxEditWrapper = styled.section`
   margin: 1em;
@@ -15,10 +16,7 @@ const BoxEditWrapper = styled.section`
     display: flex;
     flex-direction: column;
     gap: 1em;
-
-    button {
-      align-self: center;
-    }
+    align-items: center;
   }
   label {
     display: flex;
@@ -52,6 +50,7 @@ const BoxEdit: FC<BoxEditInterface> = function BoxEdit({ closeModal }) {
   };
   const [name, setName] = useState(box.name);
   const [description, setDescription] = useState(box.description);
+  const [isLoading, setIsLoading] = useState(false);
 
   if (box.id === 'DEFAULT') {
     return <h4>Unable to load, try refreshing.</h4>;
@@ -64,8 +63,11 @@ const BoxEdit: FC<BoxEditInterface> = function BoxEdit({ closeModal }) {
     setDescription(event.target.value);
 
   const onFinishEditing = async (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     await firebase.editBox({ boxId: box.id, name, description });
+
+    setIsLoading(false);
     closeModal();
   };
 
@@ -96,12 +98,16 @@ const BoxEdit: FC<BoxEditInterface> = function BoxEdit({ closeModal }) {
             maxLength={70}
           />
         </label>
-        <Button
-          type="submit"
-          status="secondary"
-          textContent="Edit box"
-          clickHandler={() => {}}
-        />
+        {isLoading ? (
+          <Loading width="15px" />
+        ) : (
+          <Button
+            type="submit"
+            status="secondary"
+            textContent="Edit box"
+            clickHandler={() => {}}
+          />
+        )}
       </form>
     </BoxEditWrapper>
   );
