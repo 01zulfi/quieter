@@ -6,6 +6,7 @@ import SignOutPage from './components/AuthComponents/SignOutPage';
 import SetThemeContext from './context/SetThemeContext';
 import theme from './utils/themes';
 import App from './App';
+import { getThemeNameFromLocalStorage } from './utils/theme-local-storage';
 
 const AppWrapper = styled.section`
   background: ${(props: any) => props.theme.base.one};
@@ -19,7 +20,9 @@ const AppWrapper = styled.section`
 `;
 
 const RouteSwitch: FC = function RouteSwitch() {
-  const [currentTheme, setCurrentTheme] = useState<any>(theme.light);
+  const [currentTheme, setCurrentTheme] = useState<any>(
+    getThemeNameFromLocalStorage() === 'light' ? theme.light : theme.dark,
+  );
 
   return (
     <ThemeProvider theme={currentTheme}>
