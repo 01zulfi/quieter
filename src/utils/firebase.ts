@@ -503,6 +503,20 @@ const editString = async ({
   });
 };
 
+const addStarredUser = async (stringId: string) => {
+  const stringRef = doc(db, 'strings', stringId);
+  await updateDoc(stringRef, {
+    starredUsers: arrayUnion(userId),
+  });
+};
+
+const removeStarredUser = async (stringId: string) => {
+  const stringRef = doc(db, 'strings', stringId);
+  await updateDoc(stringRef, {
+    starredUsers: arrayRemove(userId),
+  });
+};
+
 const deleteString = async (stringId: string) => {
   const stringRef = doc(db, 'strings', stringId);
 
@@ -717,6 +731,8 @@ const firebase = {
   listenForBoxChanges,
   getUserAvatarId,
   setUserAvatarId,
+  addStarredUser,
+  removeStarredUser,
 };
 
 export default firebase;
