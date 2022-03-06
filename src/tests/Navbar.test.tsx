@@ -3,6 +3,18 @@ import { render, screen } from '../utils/test-utils';
 import '@testing-library/jest-dom';
 import Navbar from '../components/Navbar/Navbar';
 
+jest.mock('../context/UserContext', () => ({
+  useUser: () => ({ id: '1' }),
+}));
+
+jest.mock(
+  '../components/Profile/Avatar',
+  () =>
+    function AvatarMock() {
+      return <p>Avatar component rendered</p>;
+    },
+);
+
 jest.mock('react-router-dom', () => ({
   Link: function Link({ to, children }: { to: string; children: any }) {
     return (
@@ -12,14 +24,15 @@ jest.mock('react-router-dom', () => ({
       </h2>
     );
   },
+  useNavigate: () => () => {},
 }));
 
 describe('tests Navbar component', () => {
-  it.skip('renders heading and headline', () => {
+  it('renders heading and headline', () => {
     render(<Navbar />);
-    const heading = screen.getByRole('heading', { name: 'quieter' });
+    const heading = screen.getByRole('heading', { name: 'Q' });
     const headline = screen.getByRole('heading', {
-      name: 'social media for quiet folks',
+      name: 'uieter',
     });
 
     expect(heading).toBeInTheDocument();
