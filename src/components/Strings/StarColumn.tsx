@@ -8,8 +8,27 @@ import firebase from '../../utils/firebase';
 import Loading from '../Loading';
 
 const StarColumnWrapper = styled.div`
-  padding: 1em 0.4em;
-  background: ${(props: any) => props.theme.base.four};
+  padding-top: 1.3em;
+  background: ${(props: any) => props.theme.base.three};
+  width: 3em;
+  border-bottom-left-radius: 10px;
+  box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StarIcon = styled.img`
+  width: 2em;
+
+  &:hover {
+    box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
+    cursor: pointer;
+  }
+`;
+
+const CountWrapper = styled.p`
+  color: ${(props: any) => props.theme.text.three};
 `;
 
 interface StarColumnProps {
@@ -52,10 +71,10 @@ const StarColumn: FC<StarColumnProps> = function StarColumn({
         <Loading width="15px" />
       ) : (
         <div onClick={onStarClick}>
-          <img src={starIconDecider()} alt="star" />
+          <StarIcon src={starIconDecider()} alt="star" />
         </div>
       )}
-      <p>{starsCount}</p>
+      <CountWrapper>{starsCount}</CountWrapper>
     </StarColumnWrapper>
   );
 };

@@ -17,15 +17,16 @@ const StringContainerWrapper = styled.section``;
 
 const Wrapper = styled.section`
   display: flex;
+  margin: 1em;
 `;
 
 const StringWrapper = styled.section`
+  flex: 1;
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
+  border-bottm-left-radius: 10px;
   box-shadow: rgb(36 41 51 / 15%) 0px 5px 10px 0px;
   background: ${(props: any) => props.theme.base.two};
-  margin: 1em;
 `;
 
 const MetaInfoWrapper = styled.div`
@@ -98,6 +99,7 @@ const StringContainer: FC = function StringContainer() {
             starsCount={string.hasStars ? string.starredUsers.length : 0}
             stringId={string.id}
           />
+
           <StringWrapper>
             <MetaInfoWrapper>
               <MetaInfoItem>
