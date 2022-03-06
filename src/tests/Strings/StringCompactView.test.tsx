@@ -23,7 +23,10 @@ const mockGetString = jest.fn();
 jest.mock('../../utils/firebase', () => ({
   getString: async (stringId: string) => {
     mockGetString(stringId);
-    return { author: { username: 'authored', id: '3331' } };
+    return {
+      author: { username: 'authored', id: '3331' },
+      associatedBox: { name: 'test', id: '123' },
+    };
   },
 }));
 
