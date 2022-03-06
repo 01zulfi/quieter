@@ -56,6 +56,14 @@ const GuestWrapper = styled.h4`
   text-align: center;
 `;
 
+const MessageWrapper = styled.p`
+  margin: 1em;
+  padding: 1em;
+  background: ${(props: any) => props.theme.base.two};
+  border-radius: 5px;
+  text-align: center;
+`;
+
 const Profile: FC = function Profile() {
   const params = useParams();
   const [user, setUser] = useState<any>({});
@@ -131,7 +139,7 @@ const Profile: FC = function Profile() {
         </p>
       )}
 
-      {showData && (
+      {showData ? (
         <>
           <ButtonsPanel>
             <Button
@@ -165,6 +173,10 @@ const Profile: FC = function Profile() {
             <AdminedTab adminedBoxes={user.adminBoxes} />
           )}
         </>
+      ) : (
+        <MessageWrapper>
+          Cannot view their data because it&apos;s set to private.
+        </MessageWrapper>
       )}
     </ProfileWrapper>
   );
