@@ -7,6 +7,7 @@ import SetThemeContext from './context/SetThemeContext';
 import theme from './utils/themes';
 import App from './App';
 import { getThemeNameFromLocalStorage } from './utils/theme-local-storage';
+import setBodyBackground from './utils/set-body-background';
 
 const AppWrapper = styled.section`
   background: ${(props: any) => props.theme.base.one};
@@ -23,6 +24,8 @@ const RouteSwitch: FC = function RouteSwitch() {
   const [currentTheme, setCurrentTheme] = useState<any>(
     getThemeNameFromLocalStorage() === 'light' ? theme.light : theme.dark,
   );
+
+  setBodyBackground(currentTheme.base.one);
 
   return (
     <ThemeProvider theme={currentTheme}>
