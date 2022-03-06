@@ -132,11 +132,11 @@ const Profile: FC = function Profile() {
       <Line />
 
       {isCurrentUserProfile && (
-        <p>
+        <MessageWrapper>
           {signedInUser.isDataPrivate
             ? "Only you can view the below tabs because you've set your data to private."
             : 'Everyone can view the below tabs. Edit your profile if you wish to hide your data.'}
-        </p>
+        </MessageWrapper>
       )}
 
       {showData ? (
