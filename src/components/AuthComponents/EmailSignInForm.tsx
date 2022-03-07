@@ -51,7 +51,7 @@ const EmailSignInForm: FC = function EmailSignInForm() {
             minLength={6}
           />
         </label>
-        {isError && <p>User already exists</p>}
+        {isError && <p>Invalid email/password or user already exists.</p>}
         <Button
           status="primary"
           textContent="Sign In with Email"
