@@ -9,6 +9,7 @@ const AdminedTabWrapper = styled.section`
   flex-direction: column;
   margin: 1em 0em;
   gap: 1em;
+  padding-bottom: 2em;
 `;
 
 const MessageWrapper = styled.p`
