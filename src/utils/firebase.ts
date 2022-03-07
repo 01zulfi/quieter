@@ -207,6 +207,7 @@ const signInAsGuest = async () => {
     localStorage.setItem('isSignedIn', 'true');
     localStorage.setItem('isAnon', 'true');
     localStorage.setItem('userId', userId);
+    location.reload();
   });
 };
 
