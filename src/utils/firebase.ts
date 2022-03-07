@@ -194,6 +194,7 @@ const createUserDoc = async ({
   };
 
   await setDoc(doc(db, 'users', id), userData);
+  location.reload();
 };
 
 const signInAsGuest = async () => {
@@ -206,7 +207,6 @@ const signInAsGuest = async () => {
     localStorage.setItem('isSignedIn', 'true');
     localStorage.setItem('isAnon', 'true');
     localStorage.setItem('userId', userId);
-    location.reload();
   });
 };
 
@@ -226,7 +226,6 @@ const signInWithGoogle = async () => {
         return;
       }
       createUserDoc({ username: user.displayName || '', id: user.uid });
-      location.reload();
       // eslint-disable no-console
     })
     .catch((error) => console.error(error));
@@ -248,7 +247,6 @@ const signUpWithEmail = async ({
       localStorage.setItem('userId', user.uid);
       userId = user.uid;
       createUserDoc({ username: email, id: user.uid, email });
-      location.reload();
     })
     .catch((error) => {
       localStorage.setItem('isSignedIn', 'false');
