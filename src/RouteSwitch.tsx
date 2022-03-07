@@ -28,20 +28,20 @@ const RouteSwitch: FC = function RouteSwitch() {
   setBodyBackground(currentTheme.base.one);
 
   return (
-    <ThemeProvider theme={currentTheme}>
-      <SetThemeContext.Provider value={setCurrentTheme}>
-        <AppWrapper>
-          <BrowserRouter basename="/">
+    <BrowserRouter basename="/">
+      <ThemeProvider theme={currentTheme}>
+        <SetThemeContext.Provider value={setCurrentTheme}>
+          <AppWrapper>
             <Routes>
               <Route path="/sign-in" element={<SignInPage />} />
               <Route path="/sign-out" element={<SignOutPage />} />
               <Route path="/*" element={<App />} />
               <Route path="*" element={<h2>Nothing here</h2>} />
             </Routes>
-          </BrowserRouter>
-        </AppWrapper>
-      </SetThemeContext.Provider>
-    </ThemeProvider>
+          </AppWrapper>
+        </SetThemeContext.Provider>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 
