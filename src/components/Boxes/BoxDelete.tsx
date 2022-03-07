@@ -38,6 +38,7 @@ const BoxDelete: FC = function BoxDelete() {
           with it.
         </strong>
       </p>
+      <p>Deleting a box might take up to a few seconds.</p>
       <Button
         type="submit"
         textContent="Delete box"
