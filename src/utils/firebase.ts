@@ -187,7 +187,7 @@ const createUserDoc = async ({
     authoredKnots: [],
     authoredStrings: [],
     adminBoxes: [],
-    email,
+    email: email || 'none',
     avatarId: '00',
     time: Date.now(),
     isDataPrivate: false,
