@@ -24,10 +24,12 @@ const Overview: FC<OverviewProps> = function Overview({ user }) {
   return (
     <OverviewWrapper>
       <div>Joined on {localDateFromMilliseconds(time)}</div>
-      <div>Admin at {adminBoxes.length} boxes.</div>
-      <div>Member at {joinedBoxes.length} boxes.</div>
-      <div>Authored {authoredStrings.length} strings.</div>
-      <div>Authored {authoredKnots.length} knots.</div>
+      <div>Admin at {adminBoxes ? adminBoxes.length : 0} boxes.</div>
+      <div>Member at {joinedBoxes ? joinedBoxes.length : 0} boxes.</div>
+      <div>
+        Authored {authoredStrings ? authoredStrings.length : 0} strings.
+      </div>
+      <div>Authored {authoredKnots ? authoredKnots.length : 0} knots.</div>
     </OverviewWrapper>
   );
 };
