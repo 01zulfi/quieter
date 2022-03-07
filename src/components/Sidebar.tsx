@@ -66,7 +66,7 @@ const Sidebar: FC = function Sidebar() {
       <ResponsiveWrapper>
         <h3>Trending Boxes</h3>
 
-        {isLoaded ? (
+        {isLoaded && boxes.length > 0 ? (
           <ol>
             {boxes.map((box: any) => (
               <li key={box.id}>
