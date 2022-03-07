@@ -679,6 +679,8 @@ const getFeedStrings = async () => {
   const user = await getUserDoc();
   let boxStrings: any[] = [];
 
+  if (!user.joinedBoxes) return [];
+
   for (let i = 0; i < user.joinedBoxes.length; i += 1) {
     /* eslint-disable no-await-in-loop */
     const box = await getBox(user.joinedBoxes[i]);
