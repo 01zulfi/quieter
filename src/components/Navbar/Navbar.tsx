@@ -12,7 +12,7 @@ import lightTheme from '../../assets/icons/light_mode_white_24dp.svg';
 import darkTheme from '../../assets/icons/dark_mode_black_24dp.svg';
 import setBodyBackground from '../../utils/set-body-background';
 import { setThemeNameInLocalStorage } from '../../utils/theme-local-storage';
-import { useUser } from '../../context/UserContext';
+import { useUser, useUserAnon } from '../../context/UserContext';
 import Avatar from '../Profile/Avatar';
 
 const NavbarWrapper = styled.div`
@@ -125,6 +125,7 @@ const Navbar: FC = function Navbar() {
   const [showMenu, setShowMenu] = useState(screen.width > 680);
   const navigate = useNavigate();
   const user = useUser();
+  const isUserAnon = useUserAnon();
 
   const switchTheme = () => {
     if (currentTheme.name === 'light') {
@@ -177,11 +178,13 @@ const Navbar: FC = function Navbar() {
           <ListItem>
             <Link to="/home">Home</Link>
           </ListItem>
-          <ListItem>
-            <Link to={`/profile/${user.id}`}>
-              <Avatar userId={user.id} height="2em" />
-            </Link>
-          </ListItem>
+          {!isUserAnon && (
+            <ListItem>
+              <Link to={`/profile/${user.id}`}>
+                <Avatar userId={user.id} height="2em" />
+              </Link>
+            </ListItem>
+          )}
           <ListItem>
             <Icon2 onClick={switchTheme}>
               <img
