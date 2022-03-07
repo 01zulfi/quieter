@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useUser, useUserAnon } from '../../context/UserContext';
 import StringContext from '../../context/StringContext';
 import localDateFromMilliseconds from '../../utils/local-date-from-milliseconds';

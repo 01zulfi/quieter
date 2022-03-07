@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import BoxContainer from './BoxContainer';
 import Sidebar from '../Sidebar';
 

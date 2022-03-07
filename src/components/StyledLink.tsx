@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled, { useTheme } from 'styled-components/macro';
 import linkColorDecider from '../utils/link-color-decider';
 
 const Wrapper = styled.div`

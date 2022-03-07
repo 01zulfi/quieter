@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useUserAnon } from '../../context/UserContext';
 import firebase from '../../utils/firebase';
 import BoxCreateModal from '../Boxes/BoxCreateModal';

@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled, { useTheme } from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import StyledLink from '../StyledLink';
 import firebase from '../../utils/firebase';

@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useNavigate } from 'react-router-dom';
 import firebase from '../../utils/firebase';
 import { useString } from '../../context/StringContext';

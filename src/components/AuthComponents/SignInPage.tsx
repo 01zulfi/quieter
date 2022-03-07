@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled, { useTheme } from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import SignInForm from './SignInForm';
 import StyledLink from '../StyledLink';

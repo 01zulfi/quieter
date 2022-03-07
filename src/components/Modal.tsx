@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Button from './Button';
 
 interface ModalProps {

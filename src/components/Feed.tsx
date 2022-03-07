@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import StringCompactView from './Strings/StringCompactView';
 import firebase from '../utils/firebase';
 import Loading from './Loading';

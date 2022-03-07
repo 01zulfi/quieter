@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import firebase from '../../utils/firebase';
 import ExploreItem from '../Explore/ExploreItem';
 import Loading from '../Loading';

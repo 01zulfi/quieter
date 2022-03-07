@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Link, useNavigate } from 'react-router-dom';
 import StyledLink from './StyledLink';
 import { useUserAnon } from '../context/UserContext';

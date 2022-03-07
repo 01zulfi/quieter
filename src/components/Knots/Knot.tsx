@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import localDateFromMilliseconds from '../../utils/local-date-from-milliseconds';
 import firebase from '../../utils/firebase';

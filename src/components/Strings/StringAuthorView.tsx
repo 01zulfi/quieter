@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Modal from '../Modal';
 import Button from '../Button';
 import StringDelete from './StringDelete';

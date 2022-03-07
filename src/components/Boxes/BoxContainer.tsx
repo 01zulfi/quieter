@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useUser, useUserAnon } from '../../context/UserContext';
 import firebase from '../../utils/firebase';
 import BoxContext from '../../context/BoxContext';

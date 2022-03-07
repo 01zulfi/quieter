@@ -1,5 +1,5 @@
 import React, { useState, FC } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import ProfileEditModal from './ProfileEditModal';
 import Button from '../Button';
 

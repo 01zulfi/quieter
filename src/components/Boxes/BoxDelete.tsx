@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useBox } from '../../context/BoxContext';
 import firebase from '../../utils/firebase';
 import Button from '../Button';

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import StyledLink from '../StyledLink';
 import StrippedNavbar from '../Navbar/StrippedNavbar';
 

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styled, { useTheme } from 'styled-components';
+import styled, { useTheme } from 'styled-components/macro';
 import { useSetTheme } from '../../context/SetThemeContext';
 import theme from '../../utils/themes';
 import menuLight from '../../assets/icons/menu_white_24dp.svg';

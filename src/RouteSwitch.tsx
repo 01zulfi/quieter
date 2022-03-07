@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components/macro';
 import SignInPage from './components/AuthComponents/SignInPage';
 import SignOutPage from './components/AuthComponents/SignOutPage';
 import SetThemeContext from './context/SetThemeContext';

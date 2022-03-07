@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React, { FC, ReactElement } from 'react';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components/macro';
 import theme from './themes';
 
 declare module 'styled-components';

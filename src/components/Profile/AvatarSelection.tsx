@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useUser } from '../../context/UserContext';
 import avatarManager from '../../utils/avatar-manager';
 import firebase from '../../utils/firebase';

@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useBox } from '../../context/BoxContext';
 import StyledLink from '../StyledLink';
 import Loading from '../Loading';

@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import firebase from '../../utils/firebase';
 import Button from '../Button';
 import EmailSignInForm from './EmailSignInForm';

@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled, { useTheme } from 'styled-components/macro';
 import starFilled from '../../assets/icons/star_filled.svg';
 import starDark from '../../assets/icons/star_border_black_24dp.svg';
 import starLight from '../../assets/icons/star_border_white_24dp.svg';
