@@ -11,6 +11,14 @@ const AdminedTabWrapper = styled.section`
   gap: 1em;
 `;
 
+const MessageWrapper = styled.p`
+  margin: 1em 0em;
+  padding: 0.6em;
+  background: ${(props: any) => props.theme.base.three};
+  border-radius: 5px;
+  text-align: center;
+`;
+
 interface AdminedTabProps {
   adminedBoxes: any[];
 }
@@ -46,7 +54,7 @@ const AdminedTab: FC<AdminedTabProps> = function AdminedTab({ adminedBoxes }) {
   }
 
   if (adminedBoxes.length === 0) {
-    return <p>User has no admin boxes.</p>;
+    return <MessageWrapper>User has no admin boxes.</MessageWrapper>;
   }
 
   return (
