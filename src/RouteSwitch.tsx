@@ -31,7 +31,7 @@ const RouteSwitch: FC = function RouteSwitch() {
     <ThemeProvider theme={currentTheme}>
       <SetThemeContext.Provider value={setCurrentTheme}>
         <AppWrapper>
-          <BrowserRouter>
+          <BrowserRouter basename="/">
             <Routes>
               <Route path="/sign-in" element={<SignInPage />} />
               <Route path="/sign-out" element={<SignOutPage />} />
