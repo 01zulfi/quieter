@@ -540,7 +540,7 @@ const deleteString = async (stringId: string) => {
     for (let i = 0; i < knotIds.length; i += 1) {
       const knotRef = doc(db, 'knots', knotIds[i]);
       await updateDoc(userRef, {
-        associatedKnots: arrayRemove(knotIds[i]),
+        authoredKnots: arrayRemove(knotIds[i]),
       });
       await deleteDoc(knotRef);
     }
