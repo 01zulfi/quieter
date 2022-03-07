@@ -29,18 +29,18 @@ const RouteSwitch: FC = function RouteSwitch() {
 
   return (
     <BrowserRouter basename="/">
-      <ThemeProvider theme={currentTheme}>
-        <SetThemeContext.Provider value={setCurrentTheme}>
-          <AppWrapper>
-            <Routes>
+      <Routes>
+        <ThemeProvider theme={currentTheme}>
+          <SetThemeContext.Provider value={setCurrentTheme}>
+            <AppWrapper>
               <Route path="/sign-in" element={<SignInPage />} />
               <Route path="/sign-out" element={<SignOutPage />} />
               <Route path="/*" element={<App />} />
               <Route path="*" element={<h2>Nothing here</h2>} />
-            </Routes>
-          </AppWrapper>
-        </SetThemeContext.Provider>
-      </ThemeProvider>
+            </AppWrapper>
+          </SetThemeContext.Provider>
+        </ThemeProvider>
+      </Routes>
     </BrowserRouter>
   );
 };
