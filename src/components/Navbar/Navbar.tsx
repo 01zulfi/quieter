@@ -88,8 +88,8 @@ const Icon = styled.button`
   background: transparent;
   border: 0;
   position: fixed;
-  right: 2em;
-  top: 1em;
+  right: 1.8em;
+  top: 0.7em;
   z-index: 999;
 
   @media only screen and (min-width: 680px) {
@@ -163,7 +163,7 @@ const Navbar: FC = function Navbar() {
       </HeadingWrapper>
 
       <Icon onClick={onMenuToggle}>
-        <img src={iconDecider()} alt="hamburger" style={{ width: '3em' }} />
+        <img src={iconDecider()} alt="hamburger" style={{ width: '2.5em' }} />
       </Icon>
 
       <NavWrapper shouldShow={showMenu}>
