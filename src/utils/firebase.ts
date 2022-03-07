@@ -529,8 +529,6 @@ const deleteString = async (stringId: string) => {
     associatedStrings: arrayRemove(stringId),
   });
 
-  await deleteDoc(stringRef);
-
   const userRef = doc(db, 'users', userId);
 
   await updateDoc(userRef, {
@@ -539,13 +537,18 @@ const deleteString = async (stringId: string) => {
   });
 
   const knotIds = stringData?.associatedKnots;
-  knotIds.forEach(async (knotId: string) => {
-    const knotRef = doc(db, 'knots', knotId);
-    await updateDoc(userRef, {
-      associatedKnots: arrayRemove(knotId),
-    });
-    await deleteDoc(knotRef);
-  });
+  if (knotIds) {
+    /* eslint-disable no-await-in-loop */
+    for (let i = 0; i < knotIds.length; i += 1) {
+      const knotRef = doc(db, 'knots', knotIds[i]);
+      await updateDoc(userRef, {
+        associatedKnots: arrayRemove(knotIds[i]),
+      });
+      await deleteDoc(knotRef);
+    }
+  }
+
+  await deleteDoc(stringRef);
 };
 
 const getKnot = async (knotId: string) => {
@@ -649,9 +652,10 @@ const deleteBox = async (boxId: string) => {
 
   if (boxData?.hasStrings) {
     const stringIds = boxData?.associatedStrings;
-    stringIds.forEach(async (stringId: string) => {
-      await deleteString(stringId);
-    });
+    /* eslint-disable no-await-in-loop */
+    for (let i = 0; i < stringIds.length; i += 1) {
+      await deleteString(stringIds[i]);
+    }
   }
 
   await deleteDoc(boxRef);
