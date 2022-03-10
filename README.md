@@ -47,3 +47,9 @@ npm start
 - Users have a personalized feed at their homepage. It shows posts from their joined communities and from the communities they're admin at. It will also show posts that they have created.
 - Users can view their profile stats at their page. They can choose to hide their profile stats if they wish.
 - Users can select avatars from a predefined selection.
+
+## Attributions
+
+1. Image in Sign in Page from [unsplash](https://unsplash.com/photos/5d5H42WDT4M).
+2. "Rubik" font and icons from [google](https://fonts.google.com/).
+3. Avatar SVGs from [svgrepo.com](https://www.svgrepo.com/).
