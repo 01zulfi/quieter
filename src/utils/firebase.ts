@@ -158,6 +158,8 @@ const getNotSignedInUserDoc = async (id: string) => {
     authoredStrings,
     authoredKnots,
     joinedBoxes,
+    isDataPrivate,
+    time,
   } = userSnap.data();
   return {
     id,
@@ -167,6 +169,8 @@ const getNotSignedInUserDoc = async (id: string) => {
     authoredStrings,
     joinedBoxes,
     authoredKnots,
+    isDataPrivate,
+    time,
   };
 };
 
