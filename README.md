@@ -43,7 +43,7 @@ npm start
 - Users can create new communities; the user who creates a community will now be the admin. Admins can edit community details and delete the community at their discretion
 - Users can create posts. Posts are always linked to a community. The user who creates a post is referred to as the author. Authors can edit post details and delete the post at their discretion.
 - Users can create comments on posts. The user who creates a comment is referred to as the author. Authors can delete the comment at their discretion.
-- Users can join/leave communities. Joining a community is not mandatory for user to create a post in it.
+- Users can join/leave communities. Joining a community is not mandatory for a user to create a post in it.
 - Users have a personalized feed at their homepage. It shows posts from their joined communities and from the communities they're admin at. It will also show posts that they have created.
 - Users can view their profile stats at their page. They can choose to hide their profile stats if they wish.
 - Users can select avatars from a predefined selection.
