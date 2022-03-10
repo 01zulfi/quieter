@@ -28,6 +28,7 @@ import {
 } from 'firebase/auth';
 import uniqueId from './unique-id';
 import firebaseConfig from './firebase-config';
+import getUsernameFromEmail from './get-username-from-email';
 
 initializeApp(firebaseConfig);
 const db = getFirestore();
@@ -251,7 +252,11 @@ const signUpWithEmail = async ({
       localStorage.setItem('isAnon', 'false');
       localStorage.setItem('userId', user.uid);
       userId = user.uid;
-      createUserDoc({ username: email, id: user.uid, email });
+      createUserDoc({
+        username: getUsernameFromEmail(email),
+        id: user.uid,
+        email,
+      });
     })
     .catch((error) => {
       localStorage.setItem('isSignedIn', 'false');
