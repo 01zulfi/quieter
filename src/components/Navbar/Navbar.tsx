@@ -112,6 +112,7 @@ const ListItem = styled.li`
   align-items: center;
   border-radius: 5px;
   padding: 0.2em;
+  font-weight: normal;
 
   &:hover {
     background: ${(props: any) => props.theme.base.four};
