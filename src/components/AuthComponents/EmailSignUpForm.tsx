@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import firebase from '../../utils/firebase';
 import Button from '../Button';
+import Loading from '../Loading';
 import EmailFormWrapper from './EmailFormWrapper';
 
 const EmailSignUpForm: FC = function EmailSignUpForm() {
@@ -8,6 +9,7 @@ const EmailSignUpForm: FC = function EmailSignUpForm() {
   const [password, setPassword] = useState('');
   const [exists, setExists] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onEmailInput = (event: React.ChangeEvent<HTMLInputElement>): void =>
     setEmail(event.target.value);
@@ -15,6 +17,7 @@ const EmailSignUpForm: FC = function EmailSignUpForm() {
     setPassword(event.target.value);
 
   const emailFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     const checkExists = await firebase.checkIfEmailExists(email);
     if (checkExists) {
@@ -22,9 +25,11 @@ const EmailSignUpForm: FC = function EmailSignUpForm() {
       setSubmitted(true);
       setEmail('');
       setPassword('');
+      setIsLoading(false);
       return;
     }
     await firebase.signUpWithEmail({ email, password });
+    setIsLoading(false);
   };
 
   return (
@@ -54,12 +59,16 @@ const EmailSignUpForm: FC = function EmailSignUpForm() {
           />
         </label>
         {submitted && exists && <p>Email already exists</p>}
-        <Button
-          status="primary"
-          textContent="Sign Up with Email"
-          clickHandler={() => {}}
-          type="submit"
-        />
+        {isLoading ? (
+          <Loading width="20px" />
+        ) : (
+          <Button
+            status="primary"
+            textContent="Sign Up with Email"
+            clickHandler={() => {}}
+            type="submit"
+          />
+        )}
       </form>
     </EmailFormWrapper>
   );
