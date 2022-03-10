@@ -15,6 +15,10 @@ const AboutWrapper = styled.article`
     text-decoration: underline;
     margin-bottom: 0.6em;
   }
+
+  h4 {
+    margin-top: 0.6em;
+  }
 `;
 
 const Wrapper = styled.div`
