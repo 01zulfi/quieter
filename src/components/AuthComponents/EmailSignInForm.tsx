@@ -1,12 +1,14 @@
 import React, { FC, useState } from 'react';
 import firebase from '../../utils/firebase';
 import Button from '../Button';
+import Loading from '../Loading';
 import EmailFormWrapper from './EmailFormWrapper';
 
 const EmailSignInForm: FC = function EmailSignInForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onEmailInput = (event: React.ChangeEvent<HTMLInputElement>): void =>
     setEmail(event.target.value);
@@ -14,6 +16,7 @@ const EmailSignInForm: FC = function EmailSignInForm() {
     setPassword(event.target.value);
 
   const emailFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
 
     await firebase.signInWithEmail({
@@ -23,6 +26,7 @@ const EmailSignInForm: FC = function EmailSignInForm() {
     });
     setEmail('');
     setPassword('');
+    setIsLoading(false);
   };
 
   return (
@@ -52,12 +56,14 @@ const EmailSignInForm: FC = function EmailSignInForm() {
           />
         </label>
         {isError && <p>Invalid email/password or user already exists.</p>}
-        <Button
-          status="primary"
-          textContent="Sign In with Email"
-          clickHandler={() => {}}
-          type="submit"
-        />
+        {isLoading ? <Loading width="20px" /> : (
+          <Button
+            status="primary"
+            textContent="Sign In with Email"
+            clickHandler={() => {}}
+            type="submit"
+          />
+        )}
       </form>
     </EmailFormWrapper>
   );
