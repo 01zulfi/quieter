@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar/Navbar';
 
 jest.mock('../context/UserContext', () => ({
   useUser: () => ({ id: '1' }),
+  useUserAnon: () => {},
 }));
 
 jest.mock(
