@@ -35,11 +35,19 @@ const Feed: FC = function Feed() {
   }
 
   if (!feedStrings) {
-    return <h2>No feed available. Populate it by getting involved!</h2>;
+    return (
+      <FeedWrapper>
+        <h3>No feed available. Populate it by getting involved!</h3>
+      </FeedWrapper>
+    );
   }
 
   if (feedStrings.length === 0) {
-    return <h2>No feed available. Populate it by getting involved!</h2>;
+    return (
+      <FeedWrapper>
+        <h3>No feed available. Populate it by getting involved!</h3>
+      </FeedWrapper>
+    );
   }
 
   return (
