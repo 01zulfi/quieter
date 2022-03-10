@@ -45,7 +45,7 @@ const Avatar: FC<AvatarProps> = function Avatar({ userId, knotId, height }) {
       setAvatarId(fetchAvatarId);
       setIsAvatarLoaded(true);
     })();
-  }, []);
+  }, [userId, knotId]);
 
   if (!isAvatarLoaded) return <Loading width="5px" />;
 
