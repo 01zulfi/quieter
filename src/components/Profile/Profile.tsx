@@ -91,7 +91,7 @@ const Profile: FC = function Profile() {
       setUser(fetchUser);
       setIsLoaded(true);
     })();
-  }, []);
+  }, [params.userId]);
 
   if (!isLoaded) return <Loading width="35px" />;
   if (isUserAnon) {
