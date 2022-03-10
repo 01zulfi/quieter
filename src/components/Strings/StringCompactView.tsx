@@ -30,16 +30,20 @@ const StringCompactViewWrapper = styled.section`
   }
 `;
 
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable indent */
 const StringTitleWrapper = styled.h4`
   width: 100%;
   padding: 1em 0.1em;
   border-bottom: 2px solid ${(props: any) => props.theme.base.four};
-  color: ${(props: any) => props.theme.text.two};
+  color: ${(props: any) => props.theme.text.one};
   text-align: start;
+  font-weight: normal;
 
   &:hover {
     text-decoration: underline;
-    color: ${(props: any) => props.theme.text.four};
+    color: ${(props: any) =>
+      props.theme.name === 'light' ? 'black' : 'white'};
     cursor: pointer;
   }
 `;
