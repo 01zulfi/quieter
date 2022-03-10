@@ -112,7 +112,7 @@ const Profile: FC = function Profile() {
     setActiveTab('Admined');
   };
 
-  const showData = isCurrentUserProfile || user.isDataPrivate;
+  const showData = isCurrentUserProfile || !user.isDataPrivate;
 
   return (
     <ProfileWrapper>
