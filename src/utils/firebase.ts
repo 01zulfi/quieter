@@ -685,6 +685,21 @@ const getBoxList = async (number: number) => {
   return array.sort((a: any, b: any) => b - a);
 };
 
+const sortStringByTime = async (stringIds: any[]) => {
+  let strings: any[] = [];
+  for (let i = 0; i < stringIds.length; i += 1) {
+    /* eslint-disable no-await-in-loop */
+    const string = await getString(stringIds[i]);
+    if (string) {
+      strings = [...strings, string];
+    }
+  }
+
+  strings.sort((a, b) => b.time - a.time);
+
+  return strings.map((stringObj) => stringObj.id);
+};
+
 const getFeedStrings = async () => {
   const user = await getUserDoc();
   let boxStrings: any[] = [];
@@ -708,7 +723,8 @@ const getFeedStrings = async () => {
     (item: any, index: any, self: any) => self.indexOf(item) === index,
   );
 
-  return uniqueArray;
+  const sorted = await sortStringByTime(uniqueArray);
+  return sorted;
 };
 
 const firebase = {
