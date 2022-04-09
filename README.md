@@ -39,10 +39,11 @@ npm start
 
 ## Features
 
-- Users can login the app through email and google. There's also a sign in as guest option, though guest users can only view certain parts of the app with no interaction.
+- Users can login the app through email and google. There's also a sign in as guest option, though guest users can only view certain parts of the app. Guest users cannot interact with quieter i.e. they cannot post, comment, and like.
 - Users can create new communities; the user who creates a community will now be the admin. Admins can edit community details and delete the community at their discretion
 - Users can create posts. Posts are always linked to a community. The user who creates a post is referred to as the author. Authors can edit post details and delete the post at their discretion.
 - Users can create comments on posts. The user who creates a comment is referred to as the author. Authors can delete the comment at their discretion.
+- Users can like posts. 
 - Users can join/leave communities. Joining a community is not mandatory for a user to create a post in it.
 - Users have a personalized feed at their homepage. It shows posts from their joined communities and from the communities they're admin at. It will also show posts that they have created.
 - Users can view their profile stats at their page. They can choose to hide their profile stats if they wish.
