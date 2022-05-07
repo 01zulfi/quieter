@@ -56,3 +56,34 @@ npm start
 2. "Rubik" font and icons from [google](https://fonts.google.com/).
 3. Avatar SVGs from [svgrepo.com](https://www.svgrepo.com/).
 4. Color palette for light and dark theme from [nordtheme](https://www.nordtheme.com/).
+
+-----
+
+### Sign in page (dark mode):
+![image](https://user-images.githubusercontent.com/85733202/167252656-09cda424-2874-40ba-a72b-7700113f2f97.png)
+
+### Homepage in light and dark mode:
+![image](https://user-images.githubusercontent.com/85733202/167252214-f71de822-afc8-4a2d-9107-840a9c6e6ba2.png)
+![image](https://user-images.githubusercontent.com/85733202/167252223-db003b4d-08c7-45fc-bfe4-ca89f8448cb5.png)
+
+<details>
+    <summary>
+       <h2>More Screenshots</h2>
+   </summary>
+   
+   #### Signed in user's profile page: 
+   ![image](https://user-images.githubusercontent.com/85733202/167252256-609d4ae8-4f7a-43e2-a086-be936e6adfcf.png)
+   #### Avatar selection page: 
+   ![image](https://user-images.githubusercontent.com/85733202/167252318-ebfca082-1dcd-4259-8fcc-d91a905bdae5.png)
+   #### About page:
+   ![image](https://user-images.githubusercontent.com/85733202/167252441-17059119-d6ff-437b-a9fc-d18128282d2d.png)
+   #### Box (quieter's term for groups/communities) page:
+   ![image](https://user-images.githubusercontent.com/85733202/167252484-0cfb28fb-151a-4942-9968-b6cdf057ec70.png)
+   #### String (quieter's term for posts/threads) page:
+   ![image](https://user-images.githubusercontent.com/85733202/167252551-bd95e31b-142a-45ce-bfa0-a54669ae86d7.png)
+   #### Another user's profile page with and without their privacy turned on:
+   ![image](https://user-images.githubusercontent.com/85733202/167252586-e9da0e22-72d9-45cc-a63b-96112cef278d.png)
+   ![image](https://user-images.githubusercontent.com/85733202/167252601-faae56ac-1dfd-406f-a5d7-ec9221a4269c.png)
+
+
+</details>
